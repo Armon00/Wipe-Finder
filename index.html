@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wipe Radarı</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --kok:#14120E; --panel:#1C1914; --panel2:#232019; --cizgi:#332E24;
+  --kemik:#E9E3D5; --sonuk:#948B78; --sonuk2:#6B6455;
+  --pas:#B4482A; --sodyum:#E3A32B; --sinyal:#7FA24E; --mor:#7C6BA8;
+  --disp:"Saira Condensed",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --body:system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--kok); color:var(--kemik); font-family:var(--body);
+  font-size:14px; line-height:1.45;
+  background-image:radial-gradient(ellipse 80% 50% at 50% -10%, rgba(180,72,42,.10), transparent 70%);
+  background-attachment:fixed;
+}
+.kabuk{max-width:1180px;margin:0 auto;padding:0 16px 80px}
+
+/* --- ust bant --- */
+.ust{display:flex;align-items:flex-end;gap:18px;flex-wrap:wrap;padding:22px 0 14px;border-bottom:1px solid var(--cizgi)}
+.marka{font-family:var(--disp);font-weight:700;font-size:30px;letter-spacing:.03em;text-transform:uppercase;line-height:1}
+.marka span{color:var(--pas)}
+.saat{font-family:var(--mono);font-size:12px;color:var(--sonuk);margin-left:auto;text-align:right}
+.saat b{display:block;font-size:19px;font-weight:600;color:var(--kemik);letter-spacing:.02em}
+
+/* --- force wipe seridi --- */
+.force{
+  margin-top:14px;padding:9px 14px;border:1px solid #5A4A1E;border-left:4px solid var(--sodyum);
+  background:rgba(227,163,43,.07);font-size:13px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;
+}
+.force b{font-family:var(--disp);text-transform:uppercase;letter-spacing:.06em;color:var(--sodyum);font-size:15px}
+
+/* --- sekmeler --- */
+.sekmeler{display:flex;gap:2px;margin:18px 0 0}
+.sekme{
+  font-family:var(--disp);font-size:16px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;
+  background:none;border:1px solid var(--cizgi);border-bottom:none;color:var(--sonuk);
+  padding:9px 20px;cursor:pointer;
+}
+.sekme[aria-selected="true"]{background:var(--panel);color:var(--kemik);border-color:var(--pas);position:relative}
+.sekme[aria-selected="true"]::after{content:"";position:absolute;left:-1px;right:-1px;top:-1px;height:2px;background:var(--pas)}
+.sekme:focus-visible{outline:2px solid var(--sodyum);outline-offset:2px}
+
+/* --- filtreler --- */
+.filtre{
+  background:var(--panel);border:1px solid var(--cizgi);padding:12px 14px;
+  display:flex;gap:20px;flex-wrap:wrap;align-items:center;
+}
+.fgrup{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.fetiket{font-family:var(--disp);font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:var(--sonuk2);margin-right:2px}
+.cip{
+  font-family:var(--mono);font-size:11px;padding:4px 9px;border:1px solid var(--cizgi);
+  background:var(--panel2);color:var(--sonuk);cursor:pointer;
+}
+.cip[aria-pressed="true"]{background:var(--pas);border-color:var(--pas);color:#fff}
+.cip:focus-visible{outline:2px solid var(--sodyum);outline-offset:1px}
+select{
+  font-family:var(--mono);font-size:11px;background:var(--panel2);color:var(--kemik);
+  border:1px solid var(--cizgi);padding:4px 6px;
+}
+
+/* --- durum satiri --- */
+.durum{font-family:var(--mono);font-size:11px;color:var(--sonuk2);padding:8px 2px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.nokta{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:5px;vertical-align:1px}
+.btn{
+  font-family:var(--disp);font-size:13px;text-transform:uppercase;letter-spacing:.06em;
+  background:var(--panel2);border:1px solid var(--cizgi);color:var(--kemik);padding:5px 12px;cursor:pointer;
+}
+.btn:hover{border-color:var(--pas)}
+.btn:focus-visible{outline:2px solid var(--sodyum);outline-offset:2px}
+
+/* --- satirlar --- */
+.liste{border:1px solid var(--cizgi);border-top:none;background:var(--panel)}
+.satir{
+  display:grid;grid-template-columns:82px 1fr 150px 120px 96px;gap:14px;align-items:center;
+  padding:10px 14px;border-top:1px solid var(--cizgi);position:relative;
+}
+.satir.gecmis{background:rgba(0,0,0,.22)}
+.satir.gecmis .ad{color:var(--sonuk)}
+.zaman{font-family:var(--mono);font-size:16px;font-weight:600;letter-spacing:-.02em;text-align:right}
+.zaman small{display:block;font-size:10px;font-weight:400;color:var(--sonuk2);letter-spacing:.04em}
+.yakin{color:var(--sodyum)}
+.taze{color:var(--sinyal)}
+.eski{color:var(--sonuk)}
+.ad{font-family:var(--disp);font-size:17px;font-weight:600;letter-spacing:.01em;line-height:1.15}
+.altbilgi{font-family:var(--mono);font-size:10.5px;color:var(--sonuk2);margin-top:3px;display:flex;gap:9px;flex-wrap:wrap}
+.rozet{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.07em;padding:1px 5px;border:1px solid currentColor}
+.r-full{color:var(--sinyal)}
+.r-map{color:var(--sonuk2)}
+.r-kit{color:var(--pas)}
+.r-ogren{color:var(--mor)}
+.r-sapma{color:var(--sodyum)}
+.pop{font-family:var(--mono);font-size:13px;text-align:right}
+.pop small{display:block;font-size:10px;color:var(--sonuk2)}
+.olcer{height:3px;background:var(--panel2);margin-top:5px;overflow:hidden}
+.olcer i{display:block;height:100%;background:var(--sinyal)}
+.olcer i.az{background:var(--pas)}
+.olcer i.orta{background:var(--sodyum)}
+.gir{
+  font-family:var(--mono);font-size:10.5px;color:var(--sonuk);text-decoration:none;
+  border:1px solid var(--cizgi);padding:4px 7px;display:inline-block;
+}
+.gir:hover{border-color:var(--pas);color:var(--kemik)}
+
+/* --- IMZA: su an cizgisi --- */
+.suan{
+  display:flex;align-items:center;gap:14px;padding:0 14px;height:34px;
+  background:repeating-linear-gradient(135deg,#2A241A 0 9px,#171410 9px 18px);
+  border-top:1px solid var(--sodyum);border-bottom:1px solid var(--sodyum);
+}
+.suan b{
+  font-family:var(--disp);font-size:14px;text-transform:uppercase;letter-spacing:.16em;color:var(--sodyum);
+  background:var(--kok);padding:2px 10px;border:1px solid var(--sodyum);
+}
+.suan span{font-family:var(--mono);font-size:12px;color:var(--sodyum);opacity:.85}
+
+/* --- hafta gorunumu --- */
+.hafta{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--cizgi);border:1px solid var(--cizgi)}
+.gun{background:var(--panel);min-height:220px;padding:0 0 8px}
+.gun.bugun{background:var(--panel2)}
+.gunbas{
+  font-family:var(--disp);font-size:13px;text-transform:uppercase;letter-spacing:.08em;
+  padding:7px 9px;border-bottom:1px solid var(--cizgi);color:var(--sonuk);
+  display:flex;justify-content:space-between;align-items:baseline;
+}
+.gun.bugun .gunbas{color:var(--sodyum);border-bottom-color:var(--sodyum)}
+.gunbas em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--sonuk2)}
+.kart{padding:6px 9px;border-bottom:1px solid rgba(51,46,36,.55)}
+.kart .s{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--sodyum)}
+.kart .n{font-family:var(--disp);font-size:14px;line-height:1.15;margin-top:1px}
+.kart .m{font-family:var(--mono);font-size:9.5px;color:var(--sonuk2);margin-top:2px}
+.bos{padding:14px 9px;font-family:var(--mono);font-size:10.5px;color:var(--sonuk2)}
+
+/* --- tam liste --- */
+table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--cizgi);border-top:none}
+th{
+  font-family:var(--disp);font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--sonuk2);
+  text-align:left;padding:8px 10px;border-bottom:1px solid var(--cizgi);font-weight:600;white-space:nowrap;
+}
+td{padding:8px 10px;border-bottom:1px solid rgba(51,46,36,.5);font-family:var(--mono);font-size:11.5px;vertical-align:top}
+td.isim{font-family:var(--disp);font-size:15px;letter-spacing:.01em}
+tbody tr:hover{background:var(--panel2)}
+
+.aciklama{font-size:12.5px;color:var(--sonuk);max-width:70ch;margin:14px 2px 0;line-height:1.6}
+.aciklama code{font-family:var(--mono);font-size:11px;color:var(--kemik);background:var(--panel2);padding:1px 4px}
+dialog{background:var(--panel);color:var(--kemik);border:1px solid var(--pas);max-width:640px;width:92%;padding:18px}
+dialog::backdrop{background:rgba(0,0,0,.7)}
+textarea{width:100%;height:260px;background:var(--kok);color:var(--kemik);border:1px solid var(--cizgi);font-family:var(--mono);font-size:11px;padding:8px}
+
+@media (max-width:900px){
+  .satir{grid-template-columns:70px 1fr;gap:8px 12px}
+  .satir .pop,.satir .sag{grid-column:2}
+  .hafta{grid-template-columns:1fr;}
+  .gun{min-height:0}
+  .marka{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="kabuk">
+
+  <header class="ust">
+    <div>
+      <div class="marka">Wipe <span>Radarı</span></div>
+    </div>
+    <div class="saat">
+      <b id="saatKutu">--:--</b>
+      <span id="tarihKutu">—</span>
+    </div>
+  </header>
+
+  <div class="force" id="forceBant" hidden></div>
+
+  <div class="sekmeler" role="tablist">
+    <button class="sekme" role="tab" aria-selected="true" data-sekme="simdi">Şimdi</button>
+    <button class="sekme" role="tab" aria-selected="false" data-sekme="hafta">Hafta</button>
+    <button class="sekme" role="tab" aria-selected="false" data-sekme="tum">Tüm serverlar</button>
+  </div>
+
+  <div class="filtre">
+    <div class="fgrup">
+      <span class="fetiket">Grup</span>
+      <button class="cip" data-f="grup" data-v="1" aria-pressed="false">solo</button>
+      <button class="cip" data-f="grup" data-v="2" aria-pressed="false">duo</button>
+      <button class="cip" data-f="grup" data-v="3" aria-pressed="true">trio</button>
+      <button class="cip" data-f="grup" data-v="4" aria-pressed="false">quad</button>
+      <button class="cip" data-f="grup" data-v="5+" aria-pressed="false">5+</button>
+      <button class="cip" data-f="grup" data-v="0" aria-pressed="false">limitsiz</button>
+    </div>
+    <div class="fgrup">
+      <span class="fetiket">Kasma</span>
+      <button class="cip" data-f="gather" data-v="1x" aria-pressed="true">1x</button>
+      <button class="cip" data-f="gather" data-v="2x" aria-pressed="true">2x</button>
+      <button class="cip" data-f="gather" data-v="5x" aria-pressed="false">5x</button>
+    </div>
+    <div class="fgrup">
+      <span class="fetiket">Wipe</span>
+      <button class="cip" data-f="tip" data-v="full" aria-pressed="true">full</button>
+      <button class="cip" data-f="tip" data-v="map" aria-pressed="true">map</button>
+    </div>
+    <div class="fgrup">
+      <span class="fetiket">Kit</span>
+      <button class="cip" data-f="kit" data-v="gizle" aria-pressed="true">kitli olanları gizle</button>
+    </div>
+    <div class="fgrup">
+      <span class="fetiket">En az zirve</span>
+      <select id="minPop">
+        <option value="0">hepsi</option>
+        <option value="150">150+</option>
+        <option value="300" selected>300+</option>
+        <option value="600">600+</option>
+      </select>
+    </div>
+    <div class="fgrup">
+      <span class="fetiket">Topluluk</span>
+      <select id="orgSec"><option value="">hepsi</option></select>
+    </div>
+  </div>
+
+  <div class="durum">
+    <span id="bmDurum"><span class="nokta" style="background:var(--sonuk2)"></span>BattleMetrics: bekliyor</span>
+    <span id="ogrDurum"></span>
+    <button class="btn" id="yenile">Verileri yenile</button>
+    <button class="btn" id="disaAktar">Düzeltmeleri dışa aktar</button>
+    <button class="btn" id="teshisBtn" hidden>Teşhis</button>
+  </div>
+
+  <div id="panelSimdi"></div>
+  <div id="panelHafta" hidden></div>
+  <div id="panelTum" hidden></div>
+
+  <p class="aciklama" id="altNot"></p>
+</div>
+
+<dialog id="teshis">
+  <div style="font-family:var(--disp);font-size:20px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Bağlantı teşhisi</div>
+  <p style="font-size:12.5px;color:var(--sonuk);margin:0 0 10px">Dört yol denendi. Hangisinin nerede takıldığı aşağıda.</p>
+  <div id="teshisIcerik" style="font-family:var(--mono);font-size:11.5px;line-height:1.8"></div>
+  <div id="teshisOneri" style="font-size:12.5px;color:var(--kemik);margin-top:14px;border-top:1px solid var(--cizgi);padding-top:12px"></div>
+  <div style="margin-top:12px"><button class="btn" id="teshisKapat">Kapat</button></div>
+</dialog>
+
+<dialog id="ihracat">
+  <div style="font-family:var(--disp);font-size:20px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Öğrenilen saatler</div>
+  <p style="font-size:12.5px;color:var(--sonuk);margin:0 0 10px">Bu düzeltmeler senin tarayıcında duruyor. Aşağıdakini kopyalayıp <code>servers.json</code> içindeki ilgili satırlara işlersen üçünüz de aynı doğru saatleri görür.</p>
+  <textarea id="ihracatMetin" readonly></textarea>
+  <div style="margin-top:10px;display:flex;gap:8px">
+    <button class="btn" id="kopyala">Kopyala</button>
+    <button class="btn" id="kapat">Kapat</button>
+  </div>
+</dialog>
+
+<script>
+/* Asagidaki veri YEDEKtir. Sayfa bir adresten (http/https) servis ediliyorsa
+   yanindaki servers.json okunur ve bunun yerine gecer. Boylece server eklemek
+   icin bu dosyaya degil, sadece servers.json'a dokunman yeterli olur. */
+let VERI = {
+  "schema_version": 2,
+  "guncelleme_tarihi": "2026-08-19",
+  "aciklama": "Rust wipe bulucu aracinin veri kaynagi. Saatler ASLA TR'ye cevrilmis halde saklanmaz - server ne yaziyorsa o saat dilimiyle durur, cevirmeyi tarayici yapar.",
+
+  "force_wipe": {
+    "kural": "her_ayin_ilk_persembesi",
+    "saat": "19:00",
+    "tz": "Europe/London",
+    "not": "Facepunch aylik guncellemeyi burada atar. TUM serverlar bu gun wipe yer. Cogu server o haftaki normal wipe'ini atlar veya kaydirir. Takvimde ayri isaretlenmeli."
+  },
+
+  "alan_sozlugu": {
+    "wipeler[].tip": "full = harita + blueprint | map = sadece harita, blueprintler durur",
+    "wipeler[].dongu": "haftalik | iki_haftada | aylik_force",
+    "site_kaynak": "Server ORGANIZASYONUNUN kendi yazdigi takvim metni. Bos/YOK = organizasyon takvimini hicbir yerde yayinlamiyor.",
+    "bm_id": "battlemetrics.com/servers/rust/<id> - canli pop, harita boyutu, son wipe buradan cekilir",
+    "guven": "yuksek = gun+saat organizasyonun kendi metninde net | orta = metinde var ama pratikte kayiyor | dusuk = kismen gozlemden cikarildi | yok = takvim bulunamadi, arac gozlemleyerek ogrenecek",
+    "grup_limiti": "0 = limit yok",
+    "kit": "true = wipe basinda hazir esya veriliyor veya satiliyor",
+    "wipe_zirvesi": "gozlemlenen tepe oyuncu sayisi",
+    "yarilanma_saat": "zirvenin yarisina dusme suresi (saat)"
+  },
+
+  "arastirma_notu": {
+    "kapsam": "60 EU server / 13 organizasyon.",
+    "kaynak_yontemi": "Rustafied kendi sitesinden (rustafied.com/server) tek tek alindi. Rustoria, Rustopia, Rusticated, Rusty Moose, Survivors, Repulsion, Stevious icin organizasyonun KENDI yazdigi takvim metni kullanildi. Rustplatz, SWANT, NovaProspect Steam grubu / server listesi ilanlarindan.",
+    "site_takvimi_bulunamayanlar": "Survivors.gg'nin /servers sayfasi takvimi JavaScript ile yukluyor, ham metinde yok - metni yine Survivors'in yazdigi server aciklamalari kullanildi. WarBandits hicbir yerde gun/saat yayinlamiyor (sadece Discord) - o satirlar guven:yok ile bos. Stevious 'weekly' diyor ama saat vermiyor.",
+    "eksikler": "WarBandits 8 server (gun+saat), Stevious saatleri, Rustoria EU Long takvimi, Rustmore. Bunlar aracin wipe defteriyle 2-3 hafta icinde kendiliginden dolacak."
+  },
+
+  "serverlar": [
+
+    { "id": "rustafied-eu-main", "ad": "Rustafied.com - EU Main", "topluluk": "Rustafied", "bm_id": 3332713, "bolge": "EU", "gather": "1x", "grup_limiti": 16, "harita_boyutu": 4250,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 967, "yarilanma_saat": null, "guven": "orta",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'High pop EU action - Weekly wipe cycle' + 'EU servers wipe at 3pm GMT on wipe days'",
+      "not": "BP'ler sadece force wipe'ta siliniyor." },
+
+    { "id": "rustafied-eu-friday", "ad": "Rustafied.com - EU Friday", "topluluk": "Rustafied", "bm_id": 1002256, "bolge": "EU", "gather": "1x", "grup_limiti": 16, "harita_boyutu": 4500,
+      "wipeler": [{ "gun": "cuma", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 774, "yarilanma_saat": 72, "guven": "orta",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'For the weekend warriors - Weekly wipe cycle - Friday wipe'",
+      "not": "900 slot, kuyruk olusuyor. Yarilanma 3 gun." },
+
+    { "id": "rustafied-eu-small-friday", "ad": "Rustafied.com - EU Small - Friday", "topluluk": "Rustafied", "bm_id": 446986, "bolge": "EU", "gather": "1x", "grup_limiti": 8, "harita_boyutu": 3000,
+      "wipeler": [{ "gun": "cuma", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 200, "yarilanma_saat": null, "guven": "orta",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'Friday wipes, small map (formerly Mini) - Weekly wipe cycle'", "not": "" },
+
+    { "id": "rustafied-eu-trio", "ad": "Rustafied.com - EU Trio", "topluluk": "Rustafied", "adres": "eutrio.rustafied.com:28015", "bm_id": 2522768, "bolge": "EU", "gather": "1x", "grup_limiti": 3, "harita_boyutu": 4000,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "iki_haftada" }],
+      "kit": false, "wipe_zirvesi": 600, "yarilanma_saat": 115, "guven": "orta",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'Groups of 3 or less - Biweekly wipe cycle'",
+      "not": "Custom map. Yarilanma 4.8 gun." },
+
+    { "id": "rustafied-eu-trio-monday", "ad": "Rustafied.com - EU Trio - Monday", "topluluk": "Rustafied", "bm_id": 3896634, "bolge": "EU", "gather": "1x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [{ "gun": "pazartesi", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "orta",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'Another Trio server for Monday wipes - Weekly wipe cycle - Premium'",
+      "not": "Premium server: erisim icin uygunluk sarti var." },
+
+    { "id": "rustafied-eu-small", "ad": "Rustafied.com - EU Small", "topluluk": "Rustafied", "bm_id": 840842, "bolge": "EU", "gather": "1x", "grup_limiti": 8, "harita_boyutu": 3750,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "orta",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'3.75k map for PvP madness - Weekly wipe cycle'", "not": "" },
+
+    { "id": "rustafied-eu-monday", "ad": "Rustafied.com - EU Monday", "topluluk": "Rustafied", "bm_id": 660901, "bolge": "EU", "gather": "1x", "grup_limiti": 16, "harita_boyutu": 4000,
+      "wipeler": [{ "gun": "pazartesi", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 1025, "yarilanma_saat": null, "guven": "orta",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'Monday wipes (formerly Odd) - Weekly wipe cycle'", "not": "" },
+
+    { "id": "rustafied-eu-small-monday", "ad": "Rustafied.com - EU Small - Monday", "topluluk": "Rustafied", "bm_id": 1395129, "bolge": "EU", "gather": "1x", "grup_limiti": 8, "harita_boyutu": 3000,
+      "wipeler": [{ "gun": "pazartesi", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": 77, "guven": "orta",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'Monday wipes, small map (formerly Odd Jr.) - Weekly wipe cycle'",
+      "not": "Yarilanma 3.2 gun." },
+
+    { "id": "rustafied-eu-solo", "ad": "Rustafied.com - EU Solo", "topluluk": "Rustafied", "bm_id": 1451019, "bolge": "EU", "gather": "1x", "grup_limiti": 1, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 342, "yarilanma_saat": null, "guven": "orta",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'Single players only - Weekly wipe cycle'", "not": "" },
+
+    { "id": "rustafied-eu-medium-small", "ad": "Rustafied.com - EU Medium - Small", "topluluk": "Rustafied", "bm_id": 433255, "bolge": "EU", "gather": "1x", "grup_limiti": 16, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "iki_haftada" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "orta",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'Sweet spot between main and low pop - Biweekly wipe cycle - Small map size'", "not": "" },
+
+    { "id": "rustafied-eu-medium-large", "ad": "Rustafied.com - EU Medium - Large", "topluluk": "Rustafied", "bm_id": 2788421, "bolge": "EU", "gather": "1x", "grup_limiti": 16, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "iki_haftada" }],
+      "kit": false, "wipe_zirvesi": 900, "yarilanma_saat": 144, "guven": "orta",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'Sweet spot between main and low pop - Biweekly wipe cycle - Large map size'",
+      "not": "Yarilanma 6 gun." },
+
+    { "id": "rustafied-eus", "ad": "Rustafied.com - EUS", "topluluk": "Rustafied", "bm_id": 1106399, "bolge": "EU", "gather": "1x", "grup_limiti": 16, "harita_boyutu": 3750,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "dusuk",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'250 slots, 3.75k map - Weekly wipe cycle' - GUN belirtilmemis, varsayilan Persembe", "not": "" },
+
+    { "id": "rustafied-eu-lowpop", "ad": "Rustafied.com - EU Low Pop", "topluluk": "Rustafied", "bm_id": 433154, "bolge": "EU", "gather": "1x", "grup_limiti": 16, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "19:00", "tz": "Europe/London", "tip": "full", "dongu": "aylik_force" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'Less people, fewer wipes - Monthly wipe cycle'", "not": "" },
+
+    { "id": "rustafied-eu-long-small", "ad": "Rustafied.com - EU Long - Small", "topluluk": "Rustafied", "bm_id": 1623880, "bolge": "EU", "gather": "1x", "grup_limiti": 16, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "19:00", "tz": "Europe/London", "tip": "full", "dongu": "aylik_force" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'200 pop, wipes only when forced - Monthly wipe cycle - Small map size'", "not": "" },
+
+    { "id": "rustafied-eu-long-small-2", "ad": "Rustafied.com - EU Long - Small II", "topluluk": "Rustafied", "bm_id": 2139896, "bolge": "EU", "gather": "1x", "grup_limiti": 16, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "19:00", "tz": "Europe/London", "tip": "full", "dongu": "aylik_force" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'200 pop, wipes only when forced - Premium'", "not": "Premium server." },
+
+    { "id": "rustafied-eu-long-large", "ad": "Rustafied.com - EU Long - Large", "topluluk": "Rustafied", "bm_id": 10274718, "bolge": "EU", "gather": "1x", "grup_limiti": 16, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "19:00", "tz": "Europe/London", "tip": "full", "dongu": "aylik_force" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'Even more longer wipes - Monthly wipe cycle - Large map size - Premium'", "not": "Premium server." },
+
+    { "id": "survivors-5", "ad": "Survivors.gg #5 [2x Solo/Duo/Trio]", "topluluk": "Survivors.gg", "bm_id": 13728671, "bolge": "EU/DE", "gather": "2x", "grup_limiti": 3, "harita_boyutu": 3800,
+      "wipeler": [{ "gun": "cuma", "saat": "14:00", "tz": "Europe/Berlin", "tip": "full", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 706, "yarilanma_saat": 24, "guven": "yuksek",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "Survivors metni: 'Fullwipes every Friday at 14:00 CEST - Max Team: 3'",
+      "not": "Organizasyon geneli: no kits, no TP, no P2W; adminler oynamiyor. Elektrik BP'leri acik, yarim eritme/craft, 5dk gece." },
+
+    { "id": "survivors-3", "ad": "Survivors.gg #3 [2x Solo/Duo/Trio]", "topluluk": "Survivors.gg", "bolge": "EU/DE", "gather": "2x", "grup_limiti": 3, "harita_boyutu": 3900,
+      "wipeler": [
+        { "gun": "pazar", "saat": "15:00", "tz": "Europe/Berlin", "tip": "full", "dongu": "haftalik" },
+        { "gun": "çarşamba", "saat": "14:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 660, "yarilanma_saat": 24, "guven": "orta",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "Server adi 'FULLWIPED 16.08' (Pazar) + gozlemlenen Paz/Car dongusu", "not": "" },
+
+    { "id": "survivors-6", "ad": "Survivors.gg #6 [2x Solo/Duo/Trio/Quad]", "topluluk": "Survivors.gg", "bolge": "EU/DE", "gather": "2x", "grup_limiti": 4, "harita_boyutu": 3850,
+      "wipeler": [
+        { "gun": "cumartesi", "saat": "14:59", "tz": "Europe/Berlin", "tip": "full", "dongu": "haftalik" },
+        { "gun": "salı", "saat": "14:59", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 532, "yarilanma_saat": 24, "guven": "orta",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "Server adi 'FULLWIPED 15.08' (Cumartesi) + gozlemlenen Sal/Cmt dongusu", "not": "" },
+
+    { "id": "survivors-2", "ad": "Survivors.gg #2 [2x Vanilla]", "topluluk": "Survivors.gg", "bolge": "EU/DE", "gather": "2x", "grup_limiti": 8, "harita_boyutu": 3850,
+      "wipeler": [
+        { "gun": "cumartesi", "saat": "11:59", "tz": "Europe/Berlin", "tip": "full", "dongu": "haftalik" },
+        { "gun": "salı", "saat": "15:59", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 612, "yarilanma_saat": 29, "guven": "orta",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "gozlemlenen Sal/Cmt dongusu", "not": "" },
+
+    { "id": "survivors-1", "ad": "Survivors.gg #1 [2x Solo/Duo/Trio/Quad]", "topluluk": "Survivors.gg", "bm_id": 11900765, "bolge": "EU/DE", "gather": "2x", "grup_limiti": 4, "harita_boyutu": 3900,
+      "wipeler": [
+        { "gun": "perşembe", "saat": "14:00", "tz": "Europe/Berlin", "tip": "full", "dongu": "haftalik" },
+        { "gun": "pazartesi", "saat": "14:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 725, "yarilanma_saat": 24, "guven": "yuksek",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "Survivors metni: 'Fullwipes every Thursday 14:00 CEST, Map Wipes every Monday 14:00 CEST'", "not": "" },
+
+    { "id": "survivors-4", "ad": "Survivors.gg #4 [2x Solo/Duo/Trio/Quad/Max5]", "topluluk": "Survivors.gg", "bolge": "EU/DE", "gather": "2x", "grup_limiti": 5, "harita_boyutu": 3850,
+      "wipeler": [
+        { "gun": "perşembe", "saat": "15:59", "tz": "Europe/Berlin", "tip": "full", "dongu": "haftalik" },
+        { "gun": "pazar", "saat": "16:59", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 503, "yarilanma_saat": 24, "guven": "dusuk",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "CELISKI: Survivors metni 'Fullwipes Thursday 16:00 CEST, Map Wipes Sundays 18:00 CEST' diyor, gozlemlenen saatler tutmuyor",
+      "not": "Ilan edilen saat ile gerceklesen saat uyusmuyor." },
+
+    { "id": "survivors-monthly-quad", "ad": "Survivors.gg - Monthly [2x Solo/Duo/Trio/Quad, No BP Wipes]", "topluluk": "Survivors.gg", "bolge": "EU/DE", "gather": "2x", "grup_limiti": 4, "harita_boyutu": 4500,
+      "wipeler": [{ "gun": "perşembe", "saat": "19:00", "tz": "Europe/London", "tip": "map", "dongu": "aylik_force" }],
+      "kit": false, "wipe_zirvesi": 670, "yarilanma_saat": 38, "guven": "orta",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "Server adi 'No BP Wipes' + aylik force dongusu",
+      "not": "BP hic silinmiyor. Survivors'in su an en kalabalik serveri." },
+
+    { "id": "survivors-monthly-vanilla", "ad": "Survivors.gg - Monthly [2x Vanilla, No BP Wipes]", "topluluk": "Survivors.gg", "bolge": "EU/GB", "gather": "2x", "grup_limiti": 30, "harita_boyutu": 4750,
+      "wipeler": [{ "gun": "perşembe", "saat": "19:00", "tz": "Europe/London", "tip": "map", "dongu": "aylik_force" }],
+      "kit": false, "wipe_zirvesi": 863, "yarilanma_saat": 96, "guven": "orta",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "Server adi + aylik force dongusu", "not": "Yarilanma 4 gun." },
+
+    { "id": "survivors-mondays", "ad": "Survivors.gg - Mondays [2x Vanilla]", "topluluk": "Survivors.gg", "bolge": "EU/DE", "gather": "2x", "grup_limiti": 10, "harita_boyutu": 3850,
+      "wipeler": [{ "gun": "pazartesi", "saat": "16:00", "tz": "Europe/Berlin", "tip": "full", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 602, "yarilanma_saat": 29, "guven": "orta",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "gozlemlenen haftalik Pazartesi dongusu", "not": "" },
+
+    { "id": "survivors-main", "ad": "Survivors.gg Main [2x Vanilla]", "topluluk": "Survivors.gg", "bm_id": 12240141, "bolge": "EU/GB", "gather": "2x", "grup_limiti": 40, "harita_boyutu": 4250,
+      "wipeler": [{ "gun": "cuma", "saat": "18:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 809, "yarilanma_saat": 36, "guven": "yuksek",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "Survivors metni: 'Map wipes every Friday at 18:00 CEST - Fullwipes every 2 weeks - Max Team: No Limit'", "not": "" },
+
+    { "id": "survivors-7", "ad": "Survivors.gg #7 [2x Vanilla]", "topluluk": "Survivors.gg", "bolge": "EU/DE", "gather": "2x", "grup_limiti": 30, "harita_boyutu": 3900,
+      "wipeler": [
+        { "gun": "pazar", "saat": "11:59", "tz": "Europe/Berlin", "tip": "full", "dongu": "haftalik" },
+        { "gun": "çarşamba", "saat": "15:59", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 791, "yarilanma_saat": 29, "guven": "dusuk",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "gozlemlenen Paz/Car dongusu", "not": "" },
+
+    { "id": "survivors-duo", "ad": "Survivors.gg [2x Solo/Duo]", "topluluk": "Survivors.gg", "bm_id": 14702632, "bolge": "EU/DE", "gather": "2x", "grup_limiti": 2, "harita_boyutu": 3850,
+      "wipeler": [
+        { "gun": "cumartesi", "saat": "18:00", "tz": "Europe/Berlin", "tip": "full", "dongu": "haftalik" },
+        { "gun": "salı", "saat": "14:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 662, "yarilanma_saat": 31, "guven": "yuksek",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "Survivors metni: 'Fullwipes every Saturday at 18:00 CEST, Map wipes every Tuesday at 14:00 CEST - Max Team: 2'", "not": "" },
+
+    { "id": "survivors-weekly-duo", "ad": "Survivors.gg Weekly [2x Solo/Duo]", "topluluk": "Survivors.gg", "bolge": "EU/DE", "gather": "2x", "grup_limiti": 2, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "17:59", "tz": "Europe/Berlin", "tip": "full", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 27, "yarilanma_saat": 24, "guven": "dusuk",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "gozlem", "not": "Wipe zirvesi 27 - pop cok dusuk." },
+
+    { "id": "repulsion-trio", "ad": "Repulsion - Solo/Duo/Trio", "topluluk": "Repulsion", "adres": "64.40.9.43:28015", "bm_id": 5865211, "bolge": "EU/GB (Londra)", "gather": "1x", "grup_limiti": 3, "harita_boyutu": 3500,
+      "wipeler": [
+        { "gun": "salı", "saat": "10:58", "tz": "UTC", "tip": "full", "dongu": "haftalik" },
+        { "gun": "cumartesi", "saat": "10:58", "tz": "UTC", "tip": "full", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 330, "yarilanma_saat": null, "guven": "dusuk",
+      "site": "https://www.repulsion.co.uk/", "site_kaynak": "Repulsion metni: 'Map & BP Wipe Biweekly - Tuesdays & Saturdays - Group Size: 3 - True Vanilla (No Pay-to-Win)' - GUN var, SAAT yok",
+      "not": "Her wipe full wipe, dongu 3 gun. Custom map, wipe oncesi topluluk map oylamasi. Saat gozlemden geldi, kis saatinde kayabilir." },
+
+    { "id": "repulsion-quad", "ad": "Repulsion - Solo/Duo/Trio/Quad", "topluluk": "Repulsion", "bm_id": 17161246, "bolge": "EU/GB (Londra)", "gather": "1x", "grup_limiti": 4, "harita_boyutu": 3500,
+      "wipeler": [
+        { "gun": "pazartesi", "saat": "10:58", "tz": "UTC", "tip": "full", "dongu": "haftalik" },
+        { "gun": "cuma", "saat": "10:58", "tz": "UTC", "tip": "full", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 464, "yarilanma_saat": null, "guven": "dusuk",
+      "site": "https://www.repulsion.co.uk/", "site_kaynak": "Repulsion metni: 'Map & BP Wipe Biweekly - Mondays & Fridays - Group Size: 4'", "not": "" },
+
+    { "id": "repulsion-2x-quad", "ad": "Repulsion - 2x Solo/Duo/Trio/Quad", "topluluk": "Repulsion", "bolge": "EU/GB (Londra)", "gather": "2x", "grup_limiti": 4, "harita_boyutu": null,
+      "wipeler": [
+        { "gun": "perşembe", "saat": "11:57", "tz": "UTC", "tip": "full", "dongu": "haftalik" },
+        { "gun": "pazar", "saat": "11:57", "tz": "UTC", "tip": "full", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "dusuk",
+      "site": "https://www.repulsion.co.uk/", "site_kaynak": "Repulsion metni: 'Map & BP Wipe Biweekly - Thursdays/Sundays - Group Size: 4'", "not": "" },
+
+    { "id": "rusticated-eu-trio-mon", "ad": "Rusticated.com - EU Trio | Monday Wipes", "topluluk": "Rusticated", "adres": "eu-trio-mon.rusticated.com:28010", "bm_id": 9565288, "bolge": "EU/GB", "gather": "1x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [{ "gun": "pazartesi", "saat": "14:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 500, "yarilanma_saat": 43, "guven": "yuksek",
+      "site": "https://rusticated.com/rules", "site_kaynak": "Rusticated metni: 'Monday Weekly wipes, Blueprints wipe @ force'",
+      "not": "Kurallar: TC/kodlarda max 3, base'de 3, roam/raid'de 3; muttefik-kole yasak, baska takimla anlasma yasak, game-banli hesapla oynamak ban sebebi. Chat Ingilizce." },
+
+    { "id": "rusticated-eu-premium-trio-thu", "ad": "Rusticated.com - EU Premium Trio | Thursday Wipes", "topluluk": "Rusticated", "bm_id": 9565289, "bolge": "EU/GB", "gather": "1x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "14:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 500, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://rusticated.com/rules", "site_kaynak": "Rusticated metni: 'Thursday Weekly wipes, Blueprints wipe @ force'",
+      "not": "Ayni sert trio kural seti." },
+
+    { "id": "rusticated-eu-hardcore-trio-thu", "ad": "Rusticated.com - EU Hardcore Trio | Thursday Wipes", "topluluk": "Rusticated", "bm_id": 35137192, "bolge": "EU/GB", "gather": "1x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "14:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "orta",
+      "site": "https://rusticated.com/rules", "site_kaynak": "Rusticated metni: 'Thursday Weekly wipes, Blueprints wipe @ force'",
+      "not": "Hardcore mod: harita/isaretler ve bazi mekanikler kisitli." },
+
+    { "id": "rusticated-eu-2x-monday", "ad": "Rusticated.com - EU | 2x Vanilla | Monday | Shared BPs", "topluluk": "Rusticated", "bolge": "EU/GB", "gather": "2x", "grup_limiti": 0, "harita_boyutu": null,
+      "wipeler": [{ "gun": "pazartesi", "saat": "14:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "orta",
+      "site": "https://rusticated.com/rules", "site_kaynak": "Server adi: 'Monday | Shared Bps'",
+      "not": "Takim BP paylasimi acik. Rusticated'in 3. en kalabalik serveri (294 anlik)." },
+
+    { "id": "rustoria-eu-main", "ad": "Rustoria.co - EU Main", "topluluk": "Rustoria", "adres": "main.rustoria.uk:28010", "bm_id": 9255283, "bolge": "EU/GB", "gather": "1x", "grup_limiti": 16, "harita_boyutu": 4250,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 933, "yarilanma_saat": 72, "guven": "yuksek",
+      "site": "https://rustoria.co/vanilla/rules", "site_kaynak": "Rustoria metni: 'Map - Thursdays @ 3PM UK / 4PM CEST. BPs - Monthly @ Force'",
+      "not": "Organizasyon geneli: oynamayan aktif adminler, ozenle secilmis seedler. Yasak: hack/script, bug abuse, EAC-banli alt hesap, ban kacirma." },
+
+    { "id": "rustoria-eu-small", "ad": "Rustoria.co - EU Small", "topluluk": "Rustoria", "adres": "small.rustoria.uk:28010", "bm_id": 12369419, "bolge": "EU/GB", "gather": "1x", "grup_limiti": 8, "harita_boyutu": 3100,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 300, "yarilanma_saat": 64, "guven": "yuksek",
+      "site": "https://rustoria.co/vanilla/rules", "site_kaynak": "Rustoria metni: 'Map - Weekly on Thursdays @ 3PM UK / 4PM CEST'", "not": "" },
+
+    { "id": "rustoria-eu-mondays", "ad": "Rustoria.co - EU Mondays", "topluluk": "Rustoria", "adres": "mon.rustoria.uk:28012", "bm_id": 20151421, "bolge": "EU/GB", "gather": "1x", "grup_limiti": 12, "harita_boyutu": 4000,
+      "wipeler": [{ "gun": "pazartesi", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 908, "yarilanma_saat": 60, "guven": "yuksek",
+      "site": "https://rustoria.co/vanilla/rules", "site_kaynak": "Rustoria metni: 'Map - Mondays @ 3PM UK / 4PM CET. BPs - Force Wipe'", "not": "" },
+
+    { "id": "rustoria-eu-medium", "ad": "Rustoria.co - EU Medium", "topluluk": "Rustoria", "adres": "medium.rustoria.uk:28010", "bm_id": null, "bolge": "EU/GB", "gather": "1x", "grup_limiti": 12, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "iki_haftada" }],
+      "kit": false, "wipe_zirvesi": 617, "yarilanma_saat": 134, "guven": "yuksek",
+      "site": "https://rustoria.co/vanilla/rules", "site_kaynak": "Rustoria metni: 'Map - Bi-Weekly on Thursdays @ 3PM UK / 4PM CEST'",
+      "not": "Yarilanma 5.6 gun." },
+
+    { "id": "rustoria-eu-long", "ad": "Rustoria.co - EU Long", "topluluk": "Rustoria", "bm_id": null, "bolge": "EU/GB", "gather": "1x", "grup_limiti": 16, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "19:00", "tz": "Europe/London", "tip": "map", "dongu": "aylik_force" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "dusuk",
+      "site": "https://rustoria.co/vanilla/rules", "site_kaynak": "YOK - takvim metni bulunamadi, 'Long' = aylik varsayildi",
+      "not": "Rustoria'nin 3. en kalabalik serveri (388 anlik)." },
+
+    { "id": "rusty-moose-eu-mondays", "ad": "Rusty Moose | EU Mondays", "topluluk": "Rusty Moose", "adres": "monday.eu.moose.gg:28010", "bm_id": 9611134, "bolge": "EU", "gather": "1x", "grup_limiti": 12, "harita_boyutu": 4500,
+      "wipeler": [{ "gun": "pazartesi", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 1300, "yarilanma_saat": 67, "guven": "yuksek",
+      "site": "https://moose.gg", "site_kaynak": "Moose metni: 'Map: Mondays @ 15:00 London Time (unless force wipe). Blueprints: Monthly @ Force Wipe'",
+      "not": "Kendi custom haritalari (Moose Maps)." },
+
+    { "id": "rusty-moose-eu-main", "ad": "Rusty Moose | EU Main", "topluluk": "Rusty Moose", "bm_id": null, "bolge": "EU", "gather": "1x", "grup_limiti": 12, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 1165, "yarilanma_saat": null, "guven": "orta",
+      "site": "https://moose.gg", "site_kaynak": "Moose'un haftalik Persembe dongusu (Mondays serverinin metniyle ayni saat mantigi)", "not": "" },
+
+    { "id": "rusty-moose-eu-monthly", "ad": "Rusty Moose | EU Monthly", "topluluk": "Rusty Moose", "bolge": "EU", "gather": "1x", "grup_limiti": 12, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "19:00", "tz": "Europe/London", "tip": "full", "dongu": "aylik_force" }],
+      "kit": false, "wipe_zirvesi": 1100, "yarilanma_saat": 412, "guven": "yuksek",
+      "site": "https://moose.gg", "site_kaynak": "Moose metni: 'Force wipes are always on the first Thursday of the month at 19:00 London Time'",
+      "not": "Yarilanma 17 gun - listedeki en dayanikli server." },
+
+    { "id": "rusty-moose-eu-small", "ad": "Rusty Moose | EU Small", "topluluk": "Rusty Moose", "bm_id": 3070420, "bolge": "EU", "gather": "1x", "grup_limiti": 8, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "19:00", "tz": "Europe/London", "tip": "full", "dongu": "aylik_force" }],
+      "kit": false, "wipe_zirvesi": 368, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://moose.gg", "site_kaynak": "Moose metni: 'Map: Monthly @ Force Wipe. Blueprints: Monthly @ Force Wipe'", "not": "" },
+
+    { "id": "rustopia-eu-main", "ad": "Rustopia.gg - EU Main", "topluluk": "Rustopia", "adres": "EUMain.Rustopia.gg:28015", "bm_id": 15096801, "bolge": "EU/GB", "gather": "1x", "grup_limiti": 16, "harita_boyutu": 4250,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 765, "yarilanma_saat": 48, "guven": "orta",
+      "site": "https://rustopia.gg", "site_kaynak": "Rustopia metni: 'Map Wipe - Weekly, BPs Wipe - Monthly'",
+      "not": "Kendi custom haritalari (Rustopia Mapping)." },
+
+    { "id": "rustopia-eu-mondays", "ad": "Rustopia.gg - EU Mondays | Premium", "topluluk": "Rustopia", "bm_id": 32290174, "bolge": "EU/LT", "gather": "1x", "grup_limiti": 16, "harita_boyutu": 4250,
+      "wipeler": [{ "gun": "pazartesi", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "orta",
+      "site": "https://rustopia.gg", "site_kaynak": "Rustopia metni: 'Map Wipe - Weekly, BPs Wipe - Monthly'", "not": "Premium server." },
+
+    { "id": "rustopia-eu-medium", "ad": "Rustopia.gg - EU Medium", "topluluk": "Rustopia", "adres": "EUMedium.Rustopia.gg:28015", "bm_id": 15079351, "bolge": "EU", "gather": "1x", "grup_limiti": 12, "harita_boyutu": 4400,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "iki_haftada" }],
+      "kit": false, "wipe_zirvesi": 700, "yarilanma_saat": 120, "guven": "orta",
+      "site": "https://rustopia.gg", "site_kaynak": "Rustopia metni: 'Map Wipe - Every 2 Weeks, BPs Wipe - Monthly'", "not": "Yarilanma 5 gun." },
+
+    { "id": "rustopia-eu-large", "ad": "Rustopia.gg - EU Large", "topluluk": "Rustopia", "bm_id": 15079350, "bolge": "EU", "gather": "1x", "grup_limiti": 16, "harita_boyutu": 4750,
+      "wipeler": [{ "gun": "perşembe", "saat": "19:00", "tz": "Europe/London", "tip": "full", "dongu": "aylik_force" }],
+      "kit": false, "wipe_zirvesi": 700, "yarilanma_saat": 317, "guven": "yuksek",
+      "site": "https://rustopia.gg", "site_kaynak": "Rustopia metni: 'Map Wipe - Monthly, BPs Wipe - Monthly'",
+      "not": "Yarilanma 13.2 gun." },
+
+    { "id": "stevious-eu-mondays", "ad": "[EU] Stevious 2x Mondays | Vanilla", "topluluk": "Stevious", "bm_id": 3261388, "bolge": "EU", "gather": "2x", "grup_limiti": 0, "harita_boyutu": null,
+      "wipeler": [{ "gun": "pazartesi", "saat": null, "tz": null, "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 417, "yarilanma_saat": null, "guven": "dusuk",
+      "site": "https://stevious.io", "site_kaynak": "Stevious metni: 'Weekly wipes' + server adi 'Mondays' - SAAT YAYINLANMIYOR",
+      "not": "2x gather (sulfur/odun 2.5x), yarim eritme/craft, Level 1 WB ve yapi BP'leri acik, junk loot cikarilmis. Stevious'un en kalabalik EU serveri." },
+
+    { "id": "stevious-eu-main", "ad": "[EU] Stevious 2x Main | Vanilla", "topluluk": "Stevious", "bm_id": 2569573, "bolge": "EU", "gather": "2x", "grup_limiti": 0, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": null, "tz": null, "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "dusuk",
+      "site": "https://stevious.io", "site_kaynak": "Stevious metni: 'Weekly wipes' - GUN ve SAAT yayinlanmiyor, Persembe varsayildi", "not": "" },
+
+    { "id": "stevious-eu-trio", "ad": "[EU] Stevious 2x | Solo/Duo/Trio", "topluluk": "Stevious", "bm_id": 4138147, "bolge": "EU", "gather": "2x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [{ "gun": null, "saat": null, "tz": null, "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 15, "yarilanma_saat": null, "guven": "yok",
+      "site": "https://stevious.io", "site_kaynak": "Stevious metni: 'Weekly wipes' - gun/saat yok",
+      "not": "Anlik pop 15." },
+
+    { "id": "stevious-eu-large-mondays", "ad": "[EU] Stevious 2x Large Mondays | Vanilla", "topluluk": "Stevious", "bm_id": 6145179, "bolge": "EU", "gather": "2x", "grup_limiti": 0, "harita_boyutu": null,
+      "wipeler": [{ "gun": "pazartesi", "saat": null, "tz": null, "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "dusuk",
+      "site": "https://stevious.io", "site_kaynak": "Stevious metni: 'Wiped weekly on Monday (with update on force)' - saat yok", "not": "" },
+
+    { "id": "warbandits-eu-2x-trio", "ad": "WARBANDITS.GG EU 2X | Solo/Duo/Trio", "topluluk": "WarBandits", "bm_id": 9429855, "bolge": "EU", "gather": "2x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [], "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yok",
+      "site": "https://warbandits.gg/", "site_kaynak": "YOK - WarBandits takvimini sitede/BM'de yayinlamiyor, sadece Discord'da duyuruyor",
+      "not": "2x gather, 2x craft, 2x komponent/scrap, ek monument recycler, uzun gunduz kisa gece, custom anti-cheat, aktif staff. Takvim: discord.gg/warbandits" },
+
+    { "id": "warbandits-eu-2x-trio-weekly-sharedbp", "ad": "WARBANDITS.GG EU 2X Weekly | Solo/Duo/Trio | Shared BPs", "topluluk": "WarBandits", "bm_id": 37095625, "bolge": "EU", "gather": "2x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [], "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yok",
+      "site": "https://warbandits.gg/", "site_kaynak": "YOK - sadece server adinda 'Weekly'",
+      "not": "Takim BP paylasimi acik." },
+
+    { "id": "warbandits-eu-2x-trio-monthly-nobp", "ad": "WARBANDITS.GG EU 2X Monthly | Solo/Duo/Trio | No BP Wipes", "topluluk": "WarBandits", "bm_id": 36901537, "bolge": "EU", "gather": "2x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "19:00", "tz": "Europe/London", "tip": "map", "dongu": "aylik_force" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "dusuk",
+      "site": "https://warbandits.gg/", "site_kaynak": "Sadece server adindan 'Monthly / No BP Wipes'", "not": "" },
+
+    { "id": "warbandits-eu-2x-quad", "ad": "WARBANDITS.GG EU 2X | Solo/Duo/Trio/Quad", "topluluk": "WarBandits", "bm_id": 12156919, "bolge": "EU", "gather": "2x", "grup_limiti": 4, "harita_boyutu": null,
+      "wipeler": [], "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yok",
+      "site": "https://warbandits.gg/", "site_kaynak": "YOK", "not": "" },
+
+    { "id": "warbandits-eu-2x-max5", "ad": "WARBANDITS.GG EU 2X | Solo/Duo/Trio/Quad/Max5", "topluluk": "WarBandits", "bm_id": 15532055, "bolge": "EU", "gather": "2x", "grup_limiti": 5, "harita_boyutu": null,
+      "wipeler": [], "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yok",
+      "site": "https://warbandits.gg/", "site_kaynak": "YOK", "not": "" },
+
+    { "id": "warbandits-eu-2x-duo", "ad": "WARBANDITS.GG EU 2X | Solo/Duo", "topluluk": "WarBandits", "bm_id": 13197398, "bolge": "EU", "gather": "2x", "grup_limiti": 2, "harita_boyutu": null,
+      "wipeler": [], "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yok",
+      "site": "https://warbandits.gg/", "site_kaynak": "YOK", "not": "" },
+
+    { "id": "warbandits-eu-vanilla-trio", "ad": "WARBANDITS.GG | Solo/Duo/Trio | Weekly (Vanilla)", "topluluk": "WarBandits", "bm_id": 13517416, "bolge": "EU", "gather": "1x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [], "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yok",
+      "site": "https://warbandits.gg/", "site_kaynak": "YOK",
+      "not": "WarBandits'in 1x vanilla trio kolu." },
+
+    { "id": "warbandits-eu-5x-trio", "ad": "WARBANDITS.GG EU 5X | Solo/Duo/Trio | Loot+ | TP | Kits", "topluluk": "WarBandits", "bm_id": 9723954, "bolge": "EU", "gather": "5x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [], "kit": true, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yok",
+      "site": "https://warbandits.gg/", "site_kaynak": "YOK",
+      "not": "KIT + TP + tum Tier 1 BP'ler acik + instant craft. kit:true olan tek satir - filtreyi test etmek icin." },
+
+    { "id": "rustplatz-s1", "ad": "[EU] Rustplatz S1 | Solo/Duo/Trio", "topluluk": "Rustplatz", "adres": "149.202.65.22:28010", "bolge": "EU", "gather": "1x", "grup_limiti": 3, "harita_boyutu": 3000,
+      "wipeler": [
+        { "gun": "pazartesi", "saat": "09:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" },
+        { "gun": "perşembe", "saat": "09:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://steamcommunity.com/groups/Rustplatz", "site_kaynak": "Rustplatz Steam grubu: 'WIPETIME: Monday @09:00 CEST & Thursday @09:00 CEST'",
+      "not": "Pop dogrulanmadi." },
+
+    { "id": "rustplatz-s2", "ad": "[EU] Rustplatz S2 | Solo/Duo/Trio", "topluluk": "Rustplatz", "adres": "149.202.65.22:28020", "bolge": "EU", "gather": "1x", "grup_limiti": 3, "harita_boyutu": 3000,
+      "wipeler": [
+        { "gun": "salı", "saat": "09:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" },
+        { "gun": "cuma", "saat": "09:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://steamcommunity.com/groups/Rustplatz", "site_kaynak": "Rustplatz Steam grubu: 'WIPETIME: Tuesday @09:00 CEST & Friday @09:00 CEST'", "not": "Pop dogrulanmadi." },
+
+    { "id": "rustplatz-s3", "ad": "[EU] Rustplatz S3 | Solo/Duo/Trio", "topluluk": "Rustplatz", "adres": "149.202.65.22:28030", "bolge": "EU", "gather": "1x", "grup_limiti": 3, "harita_boyutu": 3000,
+      "wipeler": [
+        { "gun": "çarşamba", "saat": "09:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" },
+        { "gun": "cumartesi", "saat": "09:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://steamcommunity.com/groups/Rustplatz", "site_kaynak": "Rustplatz Steam grubu: 'WIPETIME: Wednesday @09:00 CEST & Saturday @09:00 CEST'", "not": "Pop dogrulanmadi." },
+
+    { "id": "rustplatz-s4", "ad": "[EU] Rustplatz S4 | Solo/Duo/Trio", "topluluk": "Rustplatz", "adres": "149.202.65.22:28040", "bolge": "EU", "gather": "1x", "grup_limiti": 3, "harita_boyutu": 3000,
+      "wipeler": [
+        { "gun": "perşembe", "saat": "16:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" },
+        { "gun": "pazar", "saat": "09:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://steamcommunity.com/groups/Rustplatz", "site_kaynak": "Rustplatz Steam grubu: 'WIPETIME: Thursday @16:00 CEST & Sunday @09:00 CEST'", "not": "Pop dogrulanmadi." },
+
+    { "id": "rustplatz-s5", "ad": "[EU] Rustplatz S5 | Solo/Duo/Trio", "topluluk": "Rustplatz", "adres": "149.202.65.22:28050", "bolge": "EU", "gather": "1x", "grup_limiti": 3, "harita_boyutu": 3500,
+      "wipeler": [
+        { "gun": "pazartesi", "saat": "16:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" },
+        { "gun": "cuma", "saat": "16:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://steamcommunity.com/groups/Rustplatz", "site_kaynak": "Rustplatz Steam grubu: 'WIPETIME: Monday @16:00 CEST & Friday @16:00 CEST'", "not": "Pop dogrulanmadi." },
+
+    { "id": "rustplatz-s6", "ad": "[EU] Rustplatz S6 | Solo/Duo/Trio", "topluluk": "Rustplatz", "adres": "149.202.65.88:28060", "bolge": "EU", "gather": "1x", "grup_limiti": 3, "harita_boyutu": 2500,
+      "wipeler": [
+        { "gun": "salı", "saat": "16:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" },
+        { "gun": "cumartesi", "saat": "16:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://steamcommunity.com/groups/Rustplatz", "site_kaynak": "Rustplatz Steam grubu: 'WIPETIME: Tuesday @16:00 CEST & Saturday @16:00 CEST'", "not": "Pop dogrulanmadi." },
+
+    { "id": "swant-duo-vanilla", "ad": "SWANT-RUST Duo Vanilla", "topluluk": "SWANT", "bolge": "EU/GB", "gather": "1x", "grup_limiti": 2, "harita_boyutu": null,
+      "wipeler": [{ "gun": "cumartesi", "saat": "14:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://www.swant-rust.org", "site_kaynak": "SWANT Steam grubu: 'SWANT-RUST Duo VANILLA - WIPES EVERY SATURDAY @ 14:00 CEST'",
+      "not": "1999'dan beri suren UK klani. Force wipe haftasi normal wipe'i atlayip Persembe guncelliyorlar." },
+
+    { "id": "swant-duo-2x", "ad": "SWANTRust [Duo] x2", "topluluk": "SWANT", "bolge": "EU/GB", "gather": "2x", "grup_limiti": 2, "harita_boyutu": null,
+      "wipeler": [{ "gun": "pazartesi", "saat": "19:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://www.swant-rust.org", "site_kaynak": "SWANT Steam grubu: 'SWANTRust [Duo] x2 - WIPES EVERY MONDAY @ 19:00 CEST'", "not": "" },
+
+    { "id": "swant-solo", "ad": "SWANT-RUST Solo Only", "topluluk": "SWANT", "bolge": "EU/GB", "gather": "1x", "grup_limiti": 1, "harita_boyutu": null,
+      "wipeler": [{ "gun": "salı", "saat": "20:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://www.swant-rust.org", "site_kaynak": "SWANT Steam grubu: 'SWANT-RUST SOLO ONLY - WIPES EVERY TUESDAY @ 20:00 CEST'", "not": "" },
+
+    { "id": "novaprospect-2x", "ad": "[EU] NovaProspect 2x | Friday Wipe | Solo/Duo/Trio", "topluluk": "NovaProspect", "bolge": "EU", "gather": "2x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [{ "gun": "cuma", "saat": "13:00", "tz": "Europe/London", "tip": "map", "dongu": "iki_haftada" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://rust-servers.net/server/177673/", "site_kaynak": "NovaProspect metni: 'Map: Every 2nd Friday - 13:00 London / 16:00 Moscow. BP: Monthly (force wipe)'",
+      "not": "2x gather, 1.5x eritme, vanilla loot/stack, 'No Kits, No Shop, No P2W' iddiasi. Pop dogrulanmadi." },
+
+    { "id": "rustfornoobs-mondays", "ad": "RustForNoobs.com | Mondays | Solo Duo Trio | EU", "topluluk": "RustForNoobs", "bolge": "EU", "gather": "1x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [{ "gun": "pazartesi", "saat": null, "tz": null, "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 150, "yarilanma_saat": null, "guven": "dusuk",
+      "site": "https://just-wiped.net/rust_servers/1778568", "site_kaynak": "Server adi 'Mondays' + 7 gunluk dongu gozlemi; SAAT yayinlanmiyor",
+      "not": "Vanilla, custom map, just-wiped puani %88. 150 slot." },
+
+    { "id": "rustmore-trio", "ad": "[EU] RUSTMORE | Solo/Duo/Trio", "topluluk": "Rustmore", "bolge": "EU", "gather": "1x", "grup_limiti": 3, "harita_boyutu": 2500,
+      "wipeler": [], "kit": false, "wipe_zirvesi": 200, "yarilanma_saat": null, "guven": "yok",
+      "site": "https://just-wiped.net/rust_servers/3171913", "site_kaynak": "YOK - sadece 'FULLWIPED' etiketi ve ~1.7 gunluk dongu gozlemi",
+      "not": "Vanilla, 2500 harita, her wipe full wipe." },
+
+    { "id": "doperust-eu-trio", "ad": "DOPERUST.COM - 2X EU | Solo/Duo/Trio | Monthly", "topluluk": "DopeRust", "adres": "168.100.161.12:28015", "bolge": "EU/GB", "gather": "2x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "19:00", "tz": "Europe/London", "tip": "full", "dongu": "aylik_force" }],
+      "kit": false, "wipe_zirvesi": 100, "yarilanma_saat": null, "guven": "dusuk",
+      "site": "https://varq.net/en/servers/rust/option:anticheat", "site_kaynak": "Server adindan 'Monthly'; saat yayinlanmiyor",
+      "not": "Custom map, %50 upkeep. 100 slot." },
+
+    { "id": "mamkalo-trio", "ad": "Mamkalo RUST Solo/Duo/Trio 2x Vanilla", "topluluk": "Mamkalo", "bolge": "EU", "gather": "2x", "grup_limiti": 3, "harita_boyutu": 3700,
+      "wipeler": [], "kit": false, "wipe_zirvesi": 250, "yarilanma_saat": null, "guven": "yok",
+      "site": "https://just-wiped.net/rust_servers/3109861", "site_kaynak": "YOK - sadece ~7 gunluk dongu gozlemi",
+      "not": "250 slot." },
+
+    { "id": "sperrzone-trio", "ad": "SPERRZONE [GER/EN] 2X Solo/Duo/Trio", "topluluk": "Sperrzone", "bolge": "EU/DE", "gather": "2x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [], "kit": false, "wipe_zirvesi": 100, "yarilanma_saat": null, "guven": "yok",
+      "site": "https://just-wiped.net/rust_servers/3143999", "site_kaynak": "YOK - ~6.8 gunluk dongu gozlemi",
+      "not": "Almanca/Ingilizce, custom map, 100 slot." }
+
+  ]
+};
+let veriKaynagi = "gömülü yedek";
+
+/* ---------- depolama: window.storage > localStorage > bellek ---------- */
+const Depo = (()=>{
+  const bellek = {};
+  const has = k => k in bellek;
+  async function oku(k){
+    try{ if(window.storage){ const r = await window.storage.get(k); return r? JSON.parse(r.value): null; } }catch(e){}
+    try{ const v = localStorage.getItem(k); return v? JSON.parse(v): (has(k)?bellek[k]:null); }catch(e){}
+    return has(k)?bellek[k]:null;
+  }
+  async function yaz(k,v){
+    bellek[k]=v;
+    try{ if(window.storage){ await window.storage.set(k, JSON.stringify(v)); return; } }catch(e){}
+    try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){}
+  }
+  return {oku,yaz};
+})();
+
+/* ---------- zaman ---------- */
+const GUNLER = ["pazar","pazartesi","salı","çarşamba","perşembe","cuma","cumartesi"];
+const GUN_KISA = ["Paz","Pzt","Sal","Çar","Per","Cum","Cmt"];
+
+function tzOfset(tz, ts){
+  const dtf = new Intl.DateTimeFormat("en-US",{timeZone:tz,hour12:false,
+    year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"});
+  const p = {}; for(const x of dtf.formatToParts(new Date(ts))) p[x.type]=x.value;
+  const asUTC = Date.UTC(+p.year, +p.month-1, +p.day, +p.hour%24, +p.minute, +p.second);
+  return asUTC - ts;
+}
+// tz'deki yerel Y-M-D HH:MM -> mutlak ms
+function yereldenUTC(y,m,d,hh,mm,tz){
+  const tahmin = Date.UTC(y,m-1,d,hh,mm);
+  let ts = tahmin - tzOfset(tz,tahmin);
+  ts = tahmin - tzOfset(tz,ts);
+  return ts;
+}
+// ts anının tz'deki yerel parcalari
+function yerel(ts,tz){
+  const dtf = new Intl.DateTimeFormat("en-US",{timeZone:tz,hour12:false,weekday:"short",
+    year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"});
+  const p={}; for(const x of dtf.formatToParts(new Date(ts))) p[x.type]=x.value;
+  return {y:+p.year,m:+p.month,d:+p.day,hh:+p.hour%24,mm:+p.minute};
+}
+const TR = "Europe/Istanbul";
+function trSaat(ts){ const v=yerel(ts,TR); return String(v.hh).padStart(2,"0")+":"+String(v.mm).padStart(2,"0"); }
+function trGunIdx(ts){ return new Date(ts + tzOfset(TR,ts)).getUTCDay(); }
+function trGunAnahtar(ts){ const v=yerel(ts,TR); return `${v.y}-${String(v.m).padStart(2,"0")}-${String(v.d).padStart(2,"0")}`; }
+
+function sureMetin(ms){
+  const a = Math.abs(ms), dk = Math.round(a/60000);
+  if(dk < 60) return dk+" dk";
+  const s = Math.floor(dk/60), k = dk%60;
+  if(s < 24) return k? s+"s "+k+"dk" : s+" saat";
+  const g = Math.floor(s/24), ks = s%24;
+  return ks? g+"g "+ks+"s" : g+" gün";
+}
+
+/* ayin ilk persembesi 19:00 Europe/London */
+function forceWipe(yil, ay){
+  for(let d=1; d<=7; d++){
+    const ts = yereldenUTC(yil,ay,d,19,0,"Europe/London");
+    const v = new Date(ts + tzOfset("Europe/London",ts));
+    if(v.getUTCDay()===4) return ts;
+  }
+  return null;
+}
+function sonrakiForce(simdi){
+  const v = yerel(simdi,"Europe/London");
+  let f = forceWipe(v.y, v.m);
+  if(f < simdi){ const ay = v.m===12?1:v.m+1, yil = v.m===12?v.y+1:v.y; f = forceWipe(yil,ay); }
+  return f;
+}
+
+/* ---------- wipe anlarini uret ---------- */
+function anlar(sv, wipe, bas, bit, ogrenilen){
+  const o = ogrenilen && ogrenilen[sv.id+"|"+(wipe.gun||"?")];
+  const gun = o? o.gun : wipe.gun;
+  const saat = o? o.saat : wipe.saat;
+  const tz = o? o.tz : wipe.tz;
+  const cikti = [];
+
+  if(wipe.dongu === "aylik_force"){
+    const v0 = yerel(bas,"Europe/London");
+    for(let k=-1;k<=2;k++){
+      let ay=v0.m+k, yil=v0.y;
+      while(ay>12){ay-=12;yil++} while(ay<1){ay+=12;yil--}
+      const ts = forceWipe(yil,ay);
+      if(ts>=bas && ts<=bit) cikti.push({ts, tip:wipe.tip, force:true, belirsiz:false});
+    }
+    return cikti;
+  }
+  if(!gun || !saat || !tz) return cikti;
+
+  const hedefGun = GUNLER.indexOf(gun);
+  if(hedefGun < 0) return cikti;
+  const [hh,mm] = saat.split(":").map(Number);
+
+  for(let off=-9; off<=16; off++){
+    const kaba = bas + off*86400000;
+    const v = yerel(kaba,tz);
+    const ts = yereldenUTC(v.y,v.m,v.d,hh,mm,tz);
+    const gIdx = new Date(ts + tzOfset(tz,ts)).getUTCDay();
+    if(gIdx !== hedefGun) continue;
+    if(ts < bas || ts > bit) continue;
+    if(cikti.some(c=>Math.abs(c.ts-ts)<3600000)) continue;
+
+    let belirsiz = false;
+    if(wipe.dongu === "iki_haftada"){
+      if(sv._sonWipe){
+        const fark = Math.round((ts - sv._sonWipe)/86400000);
+        if(((fark%14)+14)%14 > 2 && ((fark%14)+14)%14 < 12) continue;
+      } else belirsiz = true;
+    }
+    cikti.push({ts, tip:wipe.tip, force:false, belirsiz});
+  }
+  return cikti;
+}
+
+/* ---------- durum ---------- */
+let ogrenilen = {};      // "id|gun" -> {gun,saat,tz,kanit}
+let gozlemler = {};      // id -> [ts,...]
+let canli = {};          // id -> {players,maxPlayers,rank,worldSize,lastWipe,name}
+let aktifSekme = "simdi";
+let sonRapor = [];
+const filtre = { grup:new Set(["3"]), gather:new Set(["1x","2x"]), tip:new Set(["full","map"]), kitGizle:true, minPop:300, org:"" };
+
+/* ---------- BattleMetrics: strateji merdiveni ----------
+   Tek bir yol denemek yerine sirayla birkac yol denenir. Ilk calisan
+   secilir ve hepsi icin kullanilir. Hicbiri calismazsa NEDEN calismadigi
+   yazilir - "CORS engeli" ile "yanlis istek bicimi" ayri seylerdir.       */
+const STRATEJILER = [
+  { ad:"doğrudan (tekil)",  toplu:false,
+    url: id => `https://api.battlemetrics.com/servers/${id}` },
+  { ad:"doğrudan (toplu)",  toplu:true,
+    url: ids => `https://api.battlemetrics.com/servers?filter[ids][whitelist]=${ids.join(",")}&page[size]=${ids.length}` },
+  { ad:"allorigins aynası", toplu:false,
+    url: id => `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://api.battlemetrics.com/servers/${id}`)}` },
+  { ad:"corsproxy aynası",  toplu:false,
+    url: id => `https://corsproxy.io/?url=${encodeURIComponent(`https://api.battlemetrics.com/servers/${id}`)}` },
+];
+let secilenStrateji = null;
+
+function sunucuYaz(d){
+  if(!d) return false;
+  const a = d.attributes||{}, dt = a.details||{};
+  canli[+d.id] = {
+    name:a.name, players:a.players, maxPlayers:a.maxPlayers, rank:a.rank,
+    worldSize: dt.rust_world_size ?? dt.rust_world_size_x ?? null,
+    lastWipe: dt.rust_last_wipe ? Date.parse(dt.rust_last_wipe) : null
+  };
+  return true;
+}
+
+async function dene(url){
+  let r;
+  try{ r = await fetch(url); }
+  catch(e){ return {ok:false, tur:"ag", mesaj:"tarayıcı isteği engelledi (CORS) veya ağa çıkılamadı"}; }
+  if(!r.ok) return {ok:false, tur:"http", mesaj:`sunucu ${r.status} döndü (istek biçimi kabul edilmedi)`};
+  try{ return {ok:true, veri: await r.json()}; }
+  catch(e){ return {ok:false, tur:"bicim", mesaj:"gelen yanıt JSON değil"}; }
+}
+
+async function stratejiSec(probeId){
+  const rapor = [];
+  for(const s of STRATEJILER){
+    const sonuc = await dene(s.toplu ? s.url([probeId]) : s.url(probeId));
+    if(sonuc.ok){
+      const d = sonuc.veri.data;
+      if(d && (Array.isArray(d) ? d.length : d.id)){
+        rapor.push({ad:s.ad, ok:true});
+        return {strateji:s, rapor};
+      }
+      rapor.push({ad:s.ad, ok:false, mesaj:"boş yanıt"});
+    } else rapor.push({ad:s.ad, ok:false, mesaj:sonuc.mesaj, tur:sonuc.tur});
+  }
+  return {strateji:null, rapor};
+}
+
+async function bmCek(){
+  const svler = VERI.serverlar.filter(s=>s.bm_id);
+  const idler = svler.map(s=>s.bm_id);
+  const kutu = document.getElementById("bmDurum");
+  kutu.innerHTML = '<span class="nokta" style="background:var(--sodyum)"></span>BattleMetrics: yol aranıyor…';
+
+  if(!secilenStrateji){
+    const {strateji, rapor} = await stratejiSec(idler[0]);
+    sonRapor = rapor;
+    if(!strateji){
+      const agHatasi = rapor.every(r=>r.tur==="ag");
+      kutu.innerHTML = `<span class="nokta" style="background:var(--pas)"></span>BattleMetrics: bağlanamadı — takvim yine de çalışıyor`;
+      document.getElementById("teshisBtn").hidden = false;
+      document.getElementById("ogrDurum").innerHTML = agHatasi
+        ? `<span class="nokta" style="background:var(--pas)"></span>4 yolun 4'ü de engellendi — Teşhis'e bak`
+        : `<span class="nokta" style="background:var(--pas)"></span>bağlantı var ama yanıt alınamadı — Teşhis'e bak`;
+      return;
+    }
+    secilenStrateji = strateji;
+  }
+
+  kutu.innerHTML = `<span class="nokta" style="background:var(--sodyum)"></span>BattleMetrics: ${secilenStrateji.ad} ile çekiliyor…`;
+  let basarili=0, hata=0;
+
+  if(secilenStrateji.toplu){
+    for(let i=0;i<idler.length;i+=10){
+      const s = await dene(secilenStrateji.url(idler.slice(i,i+10)));
+      if(s.ok){ for(const d of (s.veri.data||[])) if(sunucuYaz(d)) basarili++; } else hata++;
+    }
+  }else{
+    for(let i=0;i<idler.length;i+=6){
+      const grup = idler.slice(i,i+6);
+      const sonuclar = await Promise.all(grup.map(id=>dene(secilenStrateji.url(id))));
+      for(const s of sonuclar){
+        if(s.ok && sunucuYaz(s.veri.data)) basarili++; else hata++;
+      }
+    }
+  }
+
+  kutu.innerHTML = basarili
+    ? `<span class="nokta" style="background:var(--sinyal)"></span>BattleMetrics: ${basarili} server güncel · ${secilenStrateji.ad}${hata?` · ${hata} başarısız`:""}`
+    : `<span class="nokta" style="background:var(--pas)"></span>BattleMetrics: veri gelmedi — takvim yine de çalışıyor`;
+
+  if(basarili) await Depo.yaz("bm_onbellek", {ts:Date.now(), canli});
+  await gozlemKaydet();
+}
+
+/* ---------- ogrenme ---------- */
+async function gozlemKaydet(){
+  let yeni = 0;
+  for(const s of VERI.serverlar){
+    const c = s.bm_id && canli[s.bm_id];
+    if(!c || !c.lastWipe) continue;
+    const dizi = gozlemler[s.id] || (gozlemler[s.id]=[]);
+    if(!dizi.some(t=>Math.abs(t-c.lastWipe)<120000)){ dizi.push(c.lastWipe); yeni++; }
+    dizi.sort((a,b)=>b-a); if(dizi.length>12) dizi.length=12;
+  }
+  if(yeni) await Depo.yaz("wipe_gozlemleri", gozlemler);
+  ogren();
+  await Depo.yaz("wipe_ogrenilen", ogrenilen);
+  const o = Object.keys(ogrenilen).length;
+  document.getElementById("ogrDurum").innerHTML = o
+    ? `<span class="nokta" style="background:var(--mor)"></span>${o} satır gözlemden düzeltildi`
+    : `<span class="nokta" style="background:var(--sonuk2)"></span>henüz düzeltme yok`;
+}
+
+function ogren(){
+  ogrenilen = {};
+  for(const s of VERI.serverlar){
+    const dizi = gozlemler[s.id]; if(!dizi || !dizi.length) continue;
+    s._sonWipe = dizi[0];
+    // gozlemleri (gun,saat) kovalarina ayir
+    const kova = {};
+    for(const ts of dizi){
+      const g = GUNLER[trGunIdx(ts)];
+      const v = yerel(ts,"UTC");
+      const anahtar = g;
+      (kova[anahtar] ||= []).push({ts, hh:v.hh, mm:v.mm});
+    }
+    for(const [g,liste] of Object.entries(kova)){
+      // ayni gunun UTC saatleri tutarli mi
+      const dk = liste.map(x=>x.hh*60+x.mm).sort((a,b)=>a-b);
+      const orta = dk[Math.floor(dk.length/2)];
+      const tutarli = dk.every(x=>Math.abs(x-orta)<=20);
+      if(!tutarli) continue;
+      const ilan = (s.wipeler||[]).find(w=>w.gun===g);
+      const saat = String(Math.floor(orta/60)).padStart(2,"0")+":"+String(orta%60).padStart(2,"0");
+      const kanit = liste.length;
+      if(!ilan){
+        if(kanit>=2) ogrenilen[s.id+"|"+g] = {gun:g, saat, tz:"UTC", kanit, yeniGun:true};
+      }else{
+        // ilan edilen saati mutlak ana cevirip karsilastir
+        const ornek = liste[0].ts;
+        const v = yerel(ornek, ilan.tz||"UTC");
+        const [ih,im] = (ilan.saat||"00:00").split(":").map(Number);
+        const ilanTs = yereldenUTC(v.y,v.m,v.d,ih,im,ilan.tz||"UTC");
+        const sapmaDk = Math.abs(ilanTs-ornek)/60000;
+        if(sapmaDk>20 && kanit>=2) ogrenilen[s.id+"|"+g] = {gun:g, saat, tz:"UTC", kanit, sapmaDk:Math.round(sapmaDk)};
+      }
+    }
+  }
+}
+
+/* ---------- filtre ---------- */
+function gecer(s){
+  const g = String(s.grup_limiti);
+  const gg = s.grup_limiti>=5 ? "5+" : g;
+  if(filtre.grup.size && !filtre.grup.has(gg)) return false;
+  if(filtre.gather.size && !filtre.gather.has(s.gather)) return false;
+  if(filtre.kitGizle && s.kit) return false;
+  if(filtre.org && s.topluluk!==filtre.org) return false;
+  const zirve = (s.bm_id && canli[s.bm_id]?.players) ? Math.max(s.wipe_zirvesi||0, canli[s.bm_id].maxPlayers||0) : (s.wipe_zirvesi||0);
+  if(filtre.minPop>0 && zirve>0 && zirve<filtre.minPop) return false;
+  return true;
+}
+
+/* ---------- olaylari topla ---------- */
+function olaylar(bas,bit){
+  const cikti=[];
+  for(const s of VERI.serverlar){
+    if(!gecer(s)) continue;
+    for(const w of (s.wipeler||[])){
+      for(const a of anlar(s,w,bas,bit,ogrenilen)){
+        if(filtre.tip.size && a.tip && !filtre.tip.has(a.tip)) continue;
+        cikti.push({sv:s, ...a});
+      }
+    }
+  }
+  cikti.sort((a,b)=>a.ts-b.ts);
+  return cikti;
+}
+
+/* ---------- cizim ---------- */
+function rozetler(sv,a){
+  const r=[];
+  if(a.force) r.push('<span class="rozet r-full">force wipe</span>');
+  else r.push(a.tip==="full" ? '<span class="rozet r-full">full wipe</span>' : '<span class="rozet r-map">map wipe</span>');
+  if(sv.kit) r.push('<span class="rozet r-kit">kit</span>');
+  const o = ogrenilen[sv.id+"|"+(a.gun||"")];
+  if(Object.keys(ogrenilen).some(k=>k.startsWith(sv.id+"|"))) r.push('<span class="rozet r-ogren">saat düzeltildi</span>');
+  if(a.belirsiz) r.push('<span class="rozet r-sapma">hafta belirsiz</span>');
+  if(sv.guven==="yok") r.push('<span class="rozet r-sapma">takvim bilinmiyor</span>');
+  return r.join(" ");
+}
+
+function popHucre(sv){
+  const c = sv.bm_id && canli[sv.bm_id];
+  if(c && c.players!=null){
+    const oran = c.maxPlayers? Math.min(100, Math.round(c.players/c.maxPlayers*100)) : 0;
+    const sinif = oran<25?"az":(oran<60?"orta":"");
+    return `<div class="pop">${c.players}<small>/${c.maxPlayers||"?"} şu an</small>
+      <div class="olcer"><i class="${sinif}" style="width:${oran}%"></i></div></div>`;
+  }
+  return `<div class="pop">${sv.wipe_zirvesi??"—"}<small>${sv.wipe_zirvesi?"wipe zirvesi":"veri yok"}</small></div>`;
+}
+
+function haritaBoyut(sv){
+  const c = sv.bm_id && canli[sv.bm_id];
+  return (c && c.worldSize) || sv.harita_boyutu || null;
+}
+
+function cizSimdi(){
+  const simdi = Date.now();
+  const olay = olaylar(simdi - 30*3600000, simdi + 5*86400000);
+  const gecmis = olay.filter(o=>o.ts<=simdi).slice(-14);
+  const gelecek = olay.filter(o=>o.ts>simdi).slice(0,22);
+
+  const satir = (o,gec)=>{
+    const s=o.sv, fark=o.ts-simdi;
+    const sinif = gec ? (Math.abs(fark)<6*3600000?"taze":"eski") : (fark<3*3600000?"yakin":"");
+    const hb = haritaBoyut(s);
+    return `<div class="satir ${gec?"gecmis":""}">
+      <div class="zaman ${sinif}">${gec?"":"−"}${sureMetin(fark)}<small>${gec?"önce wipelandı":"kaldı"}</small></div>
+      <div>
+        <div class="ad">${s.ad}</div>
+        <div class="altbilgi">
+          <span>${GUN_KISA[trGunIdx(o.ts)]} ${trSaat(o.ts)}</span>
+          <span>${s.gather}</span>
+          <span>${s.grup_limiti===0?"limitsiz":"max "+s.grup_limiti}</span>
+          ${hb?`<span>${hb} harita</span>`:""}
+          ${s.yarilanma_saat?`<span>yarılanma ${Math.round(s.yarilanma_saat/24*10)/10}g</span>`:""}
+        </div>
+        <div class="altbilgi">${rozetler(s,o)}</div>
+      </div>
+      ${popHucre(s)}
+      <div class="altbilgi" style="margin:0">${s.topluluk}</div>
+      <div class="sag">${s.adres?`<code style="font-family:var(--mono);font-size:10px;color:var(--sonuk2)">${s.adres}</code>`:
+        (s.bm_id?`<a class="gir" href="https://www.battlemetrics.com/servers/rust/${s.bm_id}" target="_blank" rel="noopener">BM ↗</a>`:"")}</div>
+    </div>`;
+  };
+
+  document.getElementById("panelSimdi").innerHTML = `
+    <div class="liste">
+      ${gecmis.length? gecmis.map(o=>satir(o,true)).join("") : `<div class="bos">Son 30 saatte filtreye uyan wipe yok.</div>`}
+      <div class="suan"><b>Şu an</b><span>${GUN_KISA[trGunIdx(simdi)]} ${trSaat(simdi)} · yukarısı taze başlamış, aşağısı yolda</span></div>
+      ${gelecek.length? gelecek.map(o=>satir(o,false)).join("") : `<div class="bos">Önümüzdeki 5 günde filtreye uyan wipe yok. Filtreleri gevşet.</div>`}
+    </div>`;
+}
+
+function cizHafta(){
+  const simdi = Date.now();
+  const bas = simdi - 12*3600000, bit = simdi + 8*86400000;
+  const olay = olaylar(bas,bit);
+  const gunler = [];
+  for(let i=0;i<7;i++){
+    const t = simdi + i*86400000;
+    gunler.push({anahtar:trGunAnahtar(t), idx:trGunIdx(t), ts:t, olaylar:[]});
+  }
+  for(const o of olay){
+    const g = gunler.find(x=>x.anahtar===trGunAnahtar(o.ts));
+    if(g) g.olaylar.push(o);
+  }
+  document.getElementById("panelHafta").innerHTML = `<div class="hafta">${gunler.map((g,i)=>`
+    <div class="gun ${i===0?"bugun":""}">
+      <div class="gunbas"><span>${i===0?"Bugün":GUN_KISA[g.idx]}</span><em>${g.anahtar.slice(8)}.${g.anahtar.slice(5,7)}</em></div>
+      ${g.olaylar.length? g.olaylar.map(o=>`
+        <div class="kart">
+          <div class="s">${trSaat(o.ts)}${o.ts<simdi?" ✓":""}</div>
+          <div class="n">${o.sv.ad}</div>
+          <div class="m">${o.force?"force":o.tip} · ${o.sv.gather} · ${o.sv.grup_limiti===0?"limitsiz":"max "+o.sv.grup_limiti}${o.sv.wipe_zirvesi?" · ~"+o.sv.wipe_zirvesi+" zirve":""}</div>
+        </div>`).join("") : `<div class="bos">—</div>`}
+    </div>`).join("")}</div>`;
+}
+
+function cizTum(){
+  const liste = VERI.serverlar.filter(gecer);
+  const sat = liste.map(s=>{
+    const c = s.bm_id && canli[s.bm_id];
+    const tk = (s.wipeler||[]).length
+      ? s.wipeler.map(w=>w.dongu==="aylik_force" ? "ayın ilk perşembesi"
+          : `${w.gun??"?"} ${w.saat??"??:??"} ${(w.tz||"").replace("Europe/","")}${w.dongu==="iki_haftada"?" (2 haftada)":""}`).join("<br>")
+      : `<span style="color:var(--sonuk2)">bilinmiyor</span>`;
+    return `<tr>
+      <td class="isim">${s.ad}<div class="altbilgi" style="margin-top:2px">${s.topluluk}</div></td>
+      <td>${tk}</td>
+      <td>${s.gather} · ${s.grup_limiti===0?"limitsiz":"max "+s.grup_limiti}</td>
+      <td>${haritaBoyut(s)??"—"}</td>
+      <td>${c?`${c.players}/${c.maxPlayers}`:"—"}</td>
+      <td>${s.wipe_zirvesi??"—"}</td>
+      <td>${s._sonWipe? sureMetin(Date.now()-s._sonWipe)+" önce" : "—"}</td>
+      <td>${s.guven}</td>
+      <td style="max-width:280px;white-space:normal;color:var(--sonuk)">${s.site_kaynak||""}</td>
+    </tr>`;
+  }).join("");
+  document.getElementById("panelTum").innerHTML = `<table>
+    <thead><tr><th>Server</th><th>İlan edilen takvim</th><th>Kural</th><th>Harita</th><th>Şu an</th><th>Zirve</th><th>Son wipe</th><th>Güven</th><th>Takvim kaynağı</th></tr></thead>
+    <tbody>${sat || `<tr><td colspan="9" style="color:var(--sonuk2)">Filtreye uyan server yok.</td></tr>`}</tbody></table>`;
+}
+
+function ciz(){
+  document.getElementById("panelSimdi").hidden = aktifSekme!=="simdi";
+  document.getElementById("panelHafta").hidden = aktifSekme!=="hafta";
+  document.getElementById("panelTum").hidden   = aktifSekme!=="tum";
+  if(aktifSekme==="simdi") cizSimdi();
+  if(aktifSekme==="hafta") cizHafta();
+  if(aktifSekme==="tum") cizTum();
+
+  const simdi = Date.now();
+  const f = sonrakiForce(simdi), fark = f-simdi;
+  const bant = document.getElementById("forceBant");
+  if(fark < 9*86400000){
+    bant.hidden = false;
+    bant.innerHTML = `<b>Force wipe</b><span>${GUN_KISA[trGunIdx(f)]} ${trGunAnahtar(f).slice(8)}.${trGunAnahtar(f).slice(5,7)} ${trSaat(f)} · ${sureMetin(fark)} kaldı. O gün <strong>bütün</strong> serverlar wipe yer, çoğu o haftaki normal wipe'ını atlar — aşağıdaki takvim o gün için güvenilmez.</span>`;
+  } else bant.hidden = true;
+
+  document.getElementById("saatKutu").textContent = trSaat(simdi);
+  document.getElementById("tarihKutu").textContent = GUN_KISA[trGunIdx(simdi)]+" · "+trGunAnahtar(simdi)+" · TR saati";
+}
+
+/* ---------- olay baglama ---------- */
+document.querySelectorAll(".sekme").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".sekme").forEach(x=>x.setAttribute("aria-selected", x===b));
+  aktifSekme = b.dataset.sekme; ciz();
+}));
+document.querySelectorAll(".cip").forEach(b=>b.addEventListener("click",()=>{
+  const basili = b.getAttribute("aria-pressed")==="true";
+  b.setAttribute("aria-pressed", !basili);
+  const f=b.dataset.f, v=b.dataset.v;
+  if(f==="kit"){ filtre.kitGizle = !basili; }
+  else { const set=filtre[f]; basili? set.delete(v) : set.add(v); }
+  ciz();
+}));
+document.getElementById("minPop").addEventListener("change",e=>{ filtre.minPop=+e.target.value; ciz(); });
+document.getElementById("orgSec").addEventListener("change",e=>{ filtre.org=e.target.value; ciz(); });
+document.getElementById("yenile").addEventListener("click", async()=>{ await bmCek(); ciz(); });
+document.getElementById("disaAktar").addEventListener("click",()=>{
+  const cikti = Object.entries(ogrenilen).map(([k,v])=>{
+    const [id,gun]=k.split("|");
+    return {id, ilan_gun:gun, olculen:{gun:v.gun, saat:v.saat+" UTC"}, kanit_sayisi:v.kanit, sapma_dk:v.sapmaDk??null};
+  });
+  document.getElementById("ihracatMetin").value = JSON.stringify(cikti,null,2) || "[]";
+  document.getElementById("ihracat").showModal();
+});
+document.getElementById("teshisBtn").addEventListener("click",()=>{
+  document.getElementById("teshisIcerik").innerHTML = sonRapor.map(r=>
+    `<div>${r.ok?'<span style="color:var(--sinyal)">CALISTI</span>':'<span style="color:var(--pas)">OLMADI </span>'} &nbsp;${r.ad}${r.mesaj?` — ${r.mesaj}`:""}</div>`
+  ).join("") || "<div>Henüz deneme yapılmadı.</div>";
+  const hepsiAg = sonRapor.length && sonRapor.every(r=>r.tur==="ag");
+  const dosyaProtokolu = location.protocol === "file:";
+  document.getElementById("teshisOneri").innerHTML = hepsiAg
+    ? (dosyaProtokolu
+        ? "Sayfayı diske çift tıklayarak açtın (<code>file://</code>). Tarayıcılar bu modda dış isteklerin çoğunu keser. Çözüm: dosyayı bir klasöre koyup o klasörde <code>python3 -m http.server</code> çalıştır, sonra <code>http://localhost:8000/wipe-radari.html</code> adresinden aç. Ya da dosyayı GitHub Pages'e koy — üçünüz aynı adresten girersiniz."
+        : "Dört yol da ağ seviyesinde engellendi. Aynalar da çalışmadıysa muhtemelen sen veya aynalar erişim engelliyor. VPN'siz/VPN'li tekrar dene.")
+    : "En az bir yol sunucuya ulaştı ama beklenen yanıt gelmedi. İstek biçimi değişmiş olabilir; bana bu ekrandaki satırları söyle, uçları güncelleyeyim.";
+  document.getElementById("teshis").showModal();
+});
+document.getElementById("teshisKapat").addEventListener("click",()=>document.getElementById("teshis").close());
+document.getElementById("kapat").addEventListener("click",()=>document.getElementById("ihracat").close());
+document.getElementById("kopyala").addEventListener("click",()=>{
+  const t=document.getElementById("ihracatMetin"); t.select();
+  navigator.clipboard?.writeText(t.value);
+});
+
+/* ---------- baslat ---------- */
+(async function(){
+  try{
+    const r = await fetch("servers.json?v="+Date.now());
+    if(r.ok){
+      const j = await r.json();
+      if(j && Array.isArray(j.serverlar) && j.serverlar.length){
+        VERI = j; veriKaynagi = "servers.json";
+      }
+    }
+  }catch(e){ /* file:// modunda veya dosya yoksa gomulu yedek kullanilir */ }
+
+  const orgSec = document.getElementById("orgSec");
+  [...new Set(VERI.serverlar.map(s=>s.topluluk))].sort().forEach(o=>{
+    const el=document.createElement("option"); el.value=o; el.textContent=o; orgSec.appendChild(el);
+  });
+  document.getElementById("altNot").innerHTML =
+    `Saatler <strong>TR saatine göre</strong> gösteriliyor; listede her server kendi ilan ettiği saat diliminde tutuluyor, çeviriyi tarayıcı yapıyor — yaz saati geçişinde elle düzeltme gerekmez.
+     Bu sayfa yalnızca açıkken çalışır: her açılışta BattleMetrics'ten son wipe zamanlarını çeker, ilan edilen saatle karşılaştırır ve tutarsızlıkları öğrenir.
+     Öğrendikleri bu tarayıcıda kalır — <strong>Düzeltmeleri dışa aktar</strong> ile <code>servers.json</code>'a işleyip Eray ve Batu ile paylaşabilirsin.
+     Veri: ${VERI.serverlar.length} server, ${new Set(VERI.serverlar.map(s=>s.topluluk)).size} topluluk. Son güncelleme ${VERI.guncelleme_tarihi}. Liste kaynağı: <code>${veriKaynagi}</code>.`;
+
+  const onb = await Depo.oku("bm_onbellek");
+  if(onb && onb.canli && (Date.now()-onb.ts) < 6*3600000){ canli = onb.canli; }
+  gozlemler = (await Depo.oku("wipe_gozlemleri")) || {};
+  ogrenilen = (await Depo.oku("wipe_ogrenilen")) || {};
+  ogren();
+  ciz();
+  setInterval(ciz, 30000);
+  bmCek().then(ciz);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,472 @@
+{
+  "schema_version": 2,
+  "guncelleme_tarihi": "2026-08-19",
+  "aciklama": "Rust wipe bulucu aracinin veri kaynagi. Saatler ASLA TR'ye cevrilmis halde saklanmaz - server ne yaziyorsa o saat dilimiyle durur, cevirmeyi tarayici yapar.",
+
+  "force_wipe": {
+    "kural": "her_ayin_ilk_persembesi",
+    "saat": "19:00",
+    "tz": "Europe/London",
+    "not": "Facepunch aylik guncellemeyi burada atar. TUM serverlar bu gun wipe yer. Cogu server o haftaki normal wipe'ini atlar veya kaydirir. Takvimde ayri isaretlenmeli."
+  },
+
+  "alan_sozlugu": {
+    "wipeler[].tip": "full = harita + blueprint | map = sadece harita, blueprintler durur",
+    "wipeler[].dongu": "haftalik | iki_haftada | aylik_force",
+    "site_kaynak": "Server ORGANIZASYONUNUN kendi yazdigi takvim metni. Bos/YOK = organizasyon takvimini hicbir yerde yayinlamiyor.",
+    "bm_id": "battlemetrics.com/servers/rust/<id> - canli pop, harita boyutu, son wipe buradan cekilir",
+    "guven": "yuksek = gun+saat organizasyonun kendi metninde net | orta = metinde var ama pratikte kayiyor | dusuk = kismen gozlemden cikarildi | yok = takvim bulunamadi, arac gozlemleyerek ogrenecek",
+    "grup_limiti": "0 = limit yok",
+    "kit": "true = wipe basinda hazir esya veriliyor veya satiliyor",
+    "wipe_zirvesi": "gozlemlenen tepe oyuncu sayisi",
+    "yarilanma_saat": "zirvenin yarisina dusme suresi (saat)"
+  },
+
+  "arastirma_notu": {
+    "kapsam": "60 EU server / 13 organizasyon.",
+    "kaynak_yontemi": "Rustafied kendi sitesinden (rustafied.com/server) tek tek alindi. Rustoria, Rustopia, Rusticated, Rusty Moose, Survivors, Repulsion, Stevious icin organizasyonun KENDI yazdigi takvim metni kullanildi. Rustplatz, SWANT, NovaProspect Steam grubu / server listesi ilanlarindan.",
+    "site_takvimi_bulunamayanlar": "Survivors.gg'nin /servers sayfasi takvimi JavaScript ile yukluyor, ham metinde yok - metni yine Survivors'in yazdigi server aciklamalari kullanildi. WarBandits hicbir yerde gun/saat yayinlamiyor (sadece Discord) - o satirlar guven:yok ile bos. Stevious 'weekly' diyor ama saat vermiyor.",
+    "eksikler": "WarBandits 8 server (gun+saat), Stevious saatleri, Rustoria EU Long takvimi, Rustmore. Bunlar aracin wipe defteriyle 2-3 hafta icinde kendiliginden dolacak."
+  },
+
+  "serverlar": [
+
+    { "id": "rustafied-eu-main", "ad": "Rustafied.com - EU Main", "topluluk": "Rustafied", "bm_id": 3332713, "bolge": "EU", "gather": "1x", "grup_limiti": 16, "harita_boyutu": 4250,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 967, "yarilanma_saat": null, "guven": "orta",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'High pop EU action - Weekly wipe cycle' + 'EU servers wipe at 3pm GMT on wipe days'",
+      "not": "BP'ler sadece force wipe'ta siliniyor." },
+
+    { "id": "rustafied-eu-friday", "ad": "Rustafied.com - EU Friday", "topluluk": "Rustafied", "bm_id": 1002256, "bolge": "EU", "gather": "1x", "grup_limiti": 16, "harita_boyutu": 4500,
+      "wipeler": [{ "gun": "cuma", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 774, "yarilanma_saat": 72, "guven": "orta",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'For the weekend warriors - Weekly wipe cycle - Friday wipe'",
+      "not": "900 slot, kuyruk olusuyor. Yarilanma 3 gun." },
+
+    { "id": "rustafied-eu-small-friday", "ad": "Rustafied.com - EU Small - Friday", "topluluk": "Rustafied", "bm_id": 446986, "bolge": "EU", "gather": "1x", "grup_limiti": 8, "harita_boyutu": 3000,
+      "wipeler": [{ "gun": "cuma", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 200, "yarilanma_saat": null, "guven": "orta",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'Friday wipes, small map (formerly Mini) - Weekly wipe cycle'", "not": "" },
+
+    { "id": "rustafied-eu-trio", "ad": "Rustafied.com - EU Trio", "topluluk": "Rustafied", "adres": "eutrio.rustafied.com:28015", "bm_id": 2522768, "bolge": "EU", "gather": "1x", "grup_limiti": 3, "harita_boyutu": 4000,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "iki_haftada" }],
+      "kit": false, "wipe_zirvesi": 600, "yarilanma_saat": 115, "guven": "orta",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'Groups of 3 or less - Biweekly wipe cycle'",
+      "not": "Custom map. Yarilanma 4.8 gun." },
+
+    { "id": "rustafied-eu-trio-monday", "ad": "Rustafied.com - EU Trio - Monday", "topluluk": "Rustafied", "bm_id": 3896634, "bolge": "EU", "gather": "1x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [{ "gun": "pazartesi", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "orta",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'Another Trio server for Monday wipes - Weekly wipe cycle - Premium'",
+      "not": "Premium server: erisim icin uygunluk sarti var." },
+
+    { "id": "rustafied-eu-small", "ad": "Rustafied.com - EU Small", "topluluk": "Rustafied", "bm_id": 840842, "bolge": "EU", "gather": "1x", "grup_limiti": 8, "harita_boyutu": 3750,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "orta",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'3.75k map for PvP madness - Weekly wipe cycle'", "not": "" },
+
+    { "id": "rustafied-eu-monday", "ad": "Rustafied.com - EU Monday", "topluluk": "Rustafied", "bm_id": 660901, "bolge": "EU", "gather": "1x", "grup_limiti": 16, "harita_boyutu": 4000,
+      "wipeler": [{ "gun": "pazartesi", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 1025, "yarilanma_saat": null, "guven": "orta",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'Monday wipes (formerly Odd) - Weekly wipe cycle'", "not": "" },
+
+    { "id": "rustafied-eu-small-monday", "ad": "Rustafied.com - EU Small - Monday", "topluluk": "Rustafied", "bm_id": 1395129, "bolge": "EU", "gather": "1x", "grup_limiti": 8, "harita_boyutu": 3000,
+      "wipeler": [{ "gun": "pazartesi", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": 77, "guven": "orta",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'Monday wipes, small map (formerly Odd Jr.) - Weekly wipe cycle'",
+      "not": "Yarilanma 3.2 gun." },
+
+    { "id": "rustafied-eu-solo", "ad": "Rustafied.com - EU Solo", "topluluk": "Rustafied", "bm_id": 1451019, "bolge": "EU", "gather": "1x", "grup_limiti": 1, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 342, "yarilanma_saat": null, "guven": "orta",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'Single players only - Weekly wipe cycle'", "not": "" },
+
+    { "id": "rustafied-eu-medium-small", "ad": "Rustafied.com - EU Medium - Small", "topluluk": "Rustafied", "bm_id": 433255, "bolge": "EU", "gather": "1x", "grup_limiti": 16, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "iki_haftada" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "orta",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'Sweet spot between main and low pop - Biweekly wipe cycle - Small map size'", "not": "" },
+
+    { "id": "rustafied-eu-medium-large", "ad": "Rustafied.com - EU Medium - Large", "topluluk": "Rustafied", "bm_id": 2788421, "bolge": "EU", "gather": "1x", "grup_limiti": 16, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "iki_haftada" }],
+      "kit": false, "wipe_zirvesi": 900, "yarilanma_saat": 144, "guven": "orta",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'Sweet spot between main and low pop - Biweekly wipe cycle - Large map size'",
+      "not": "Yarilanma 6 gun." },
+
+    { "id": "rustafied-eus", "ad": "Rustafied.com - EUS", "topluluk": "Rustafied", "bm_id": 1106399, "bolge": "EU", "gather": "1x", "grup_limiti": 16, "harita_boyutu": 3750,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "dusuk",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'250 slots, 3.75k map - Weekly wipe cycle' - GUN belirtilmemis, varsayilan Persembe", "not": "" },
+
+    { "id": "rustafied-eu-lowpop", "ad": "Rustafied.com - EU Low Pop", "topluluk": "Rustafied", "bm_id": 433154, "bolge": "EU", "gather": "1x", "grup_limiti": 16, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "19:00", "tz": "Europe/London", "tip": "full", "dongu": "aylik_force" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'Less people, fewer wipes - Monthly wipe cycle'", "not": "" },
+
+    { "id": "rustafied-eu-long-small", "ad": "Rustafied.com - EU Long - Small", "topluluk": "Rustafied", "bm_id": 1623880, "bolge": "EU", "gather": "1x", "grup_limiti": 16, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "19:00", "tz": "Europe/London", "tip": "full", "dongu": "aylik_force" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'200 pop, wipes only when forced - Monthly wipe cycle - Small map size'", "not": "" },
+
+    { "id": "rustafied-eu-long-small-2", "ad": "Rustafied.com - EU Long - Small II", "topluluk": "Rustafied", "bm_id": 2139896, "bolge": "EU", "gather": "1x", "grup_limiti": 16, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "19:00", "tz": "Europe/London", "tip": "full", "dongu": "aylik_force" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'200 pop, wipes only when forced - Premium'", "not": "Premium server." },
+
+    { "id": "rustafied-eu-long-large", "ad": "Rustafied.com - EU Long - Large", "topluluk": "Rustafied", "bm_id": 10274718, "bolge": "EU", "gather": "1x", "grup_limiti": 16, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "19:00", "tz": "Europe/London", "tip": "full", "dongu": "aylik_force" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://www.rustafied.com/server", "site_kaynak": "'Even more longer wipes - Monthly wipe cycle - Large map size - Premium'", "not": "Premium server." },
+
+    { "id": "survivors-5", "ad": "Survivors.gg #5 [2x Solo/Duo/Trio]", "topluluk": "Survivors.gg", "bm_id": 13728671, "bolge": "EU/DE", "gather": "2x", "grup_limiti": 3, "harita_boyutu": 3800,
+      "wipeler": [{ "gun": "cuma", "saat": "14:00", "tz": "Europe/Berlin", "tip": "full", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 706, "yarilanma_saat": 24, "guven": "yuksek",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "Survivors metni: 'Fullwipes every Friday at 14:00 CEST - Max Team: 3'",
+      "not": "Organizasyon geneli: no kits, no TP, no P2W; adminler oynamiyor. Elektrik BP'leri acik, yarim eritme/craft, 5dk gece." },
+
+    { "id": "survivors-3", "ad": "Survivors.gg #3 [2x Solo/Duo/Trio]", "topluluk": "Survivors.gg", "bolge": "EU/DE", "gather": "2x", "grup_limiti": 3, "harita_boyutu": 3900,
+      "wipeler": [
+        { "gun": "pazar", "saat": "15:00", "tz": "Europe/Berlin", "tip": "full", "dongu": "haftalik" },
+        { "gun": "çarşamba", "saat": "14:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 660, "yarilanma_saat": 24, "guven": "orta",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "Server adi 'FULLWIPED 16.08' (Pazar) + gozlemlenen Paz/Car dongusu", "not": "" },
+
+    { "id": "survivors-6", "ad": "Survivors.gg #6 [2x Solo/Duo/Trio/Quad]", "topluluk": "Survivors.gg", "bolge": "EU/DE", "gather": "2x", "grup_limiti": 4, "harita_boyutu": 3850,
+      "wipeler": [
+        { "gun": "cumartesi", "saat": "14:59", "tz": "Europe/Berlin", "tip": "full", "dongu": "haftalik" },
+        { "gun": "salı", "saat": "14:59", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 532, "yarilanma_saat": 24, "guven": "orta",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "Server adi 'FULLWIPED 15.08' (Cumartesi) + gozlemlenen Sal/Cmt dongusu", "not": "" },
+
+    { "id": "survivors-2", "ad": "Survivors.gg #2 [2x Vanilla]", "topluluk": "Survivors.gg", "bolge": "EU/DE", "gather": "2x", "grup_limiti": 8, "harita_boyutu": 3850,
+      "wipeler": [
+        { "gun": "cumartesi", "saat": "11:59", "tz": "Europe/Berlin", "tip": "full", "dongu": "haftalik" },
+        { "gun": "salı", "saat": "15:59", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 612, "yarilanma_saat": 29, "guven": "orta",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "gozlemlenen Sal/Cmt dongusu", "not": "" },
+
+    { "id": "survivors-1", "ad": "Survivors.gg #1 [2x Solo/Duo/Trio/Quad]", "topluluk": "Survivors.gg", "bm_id": 11900765, "bolge": "EU/DE", "gather": "2x", "grup_limiti": 4, "harita_boyutu": 3900,
+      "wipeler": [
+        { "gun": "perşembe", "saat": "14:00", "tz": "Europe/Berlin", "tip": "full", "dongu": "haftalik" },
+        { "gun": "pazartesi", "saat": "14:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 725, "yarilanma_saat": 24, "guven": "yuksek",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "Survivors metni: 'Fullwipes every Thursday 14:00 CEST, Map Wipes every Monday 14:00 CEST'", "not": "" },
+
+    { "id": "survivors-4", "ad": "Survivors.gg #4 [2x Solo/Duo/Trio/Quad/Max5]", "topluluk": "Survivors.gg", "bolge": "EU/DE", "gather": "2x", "grup_limiti": 5, "harita_boyutu": 3850,
+      "wipeler": [
+        { "gun": "perşembe", "saat": "15:59", "tz": "Europe/Berlin", "tip": "full", "dongu": "haftalik" },
+        { "gun": "pazar", "saat": "16:59", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 503, "yarilanma_saat": 24, "guven": "dusuk",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "CELISKI: Survivors metni 'Fullwipes Thursday 16:00 CEST, Map Wipes Sundays 18:00 CEST' diyor, gozlemlenen saatler tutmuyor",
+      "not": "Ilan edilen saat ile gerceklesen saat uyusmuyor." },
+
+    { "id": "survivors-monthly-quad", "ad": "Survivors.gg - Monthly [2x Solo/Duo/Trio/Quad, No BP Wipes]", "topluluk": "Survivors.gg", "bolge": "EU/DE", "gather": "2x", "grup_limiti": 4, "harita_boyutu": 4500,
+      "wipeler": [{ "gun": "perşembe", "saat": "19:00", "tz": "Europe/London", "tip": "map", "dongu": "aylik_force" }],
+      "kit": false, "wipe_zirvesi": 670, "yarilanma_saat": 38, "guven": "orta",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "Server adi 'No BP Wipes' + aylik force dongusu",
+      "not": "BP hic silinmiyor. Survivors'in su an en kalabalik serveri." },
+
+    { "id": "survivors-monthly-vanilla", "ad": "Survivors.gg - Monthly [2x Vanilla, No BP Wipes]", "topluluk": "Survivors.gg", "bolge": "EU/GB", "gather": "2x", "grup_limiti": 30, "harita_boyutu": 4750,
+      "wipeler": [{ "gun": "perşembe", "saat": "19:00", "tz": "Europe/London", "tip": "map", "dongu": "aylik_force" }],
+      "kit": false, "wipe_zirvesi": 863, "yarilanma_saat": 96, "guven": "orta",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "Server adi + aylik force dongusu", "not": "Yarilanma 4 gun." },
+
+    { "id": "survivors-mondays", "ad": "Survivors.gg - Mondays [2x Vanilla]", "topluluk": "Survivors.gg", "bolge": "EU/DE", "gather": "2x", "grup_limiti": 10, "harita_boyutu": 3850,
+      "wipeler": [{ "gun": "pazartesi", "saat": "16:00", "tz": "Europe/Berlin", "tip": "full", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 602, "yarilanma_saat": 29, "guven": "orta",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "gozlemlenen haftalik Pazartesi dongusu", "not": "" },
+
+    { "id": "survivors-main", "ad": "Survivors.gg Main [2x Vanilla]", "topluluk": "Survivors.gg", "bm_id": 12240141, "bolge": "EU/GB", "gather": "2x", "grup_limiti": 40, "harita_boyutu": 4250,
+      "wipeler": [{ "gun": "cuma", "saat": "18:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 809, "yarilanma_saat": 36, "guven": "yuksek",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "Survivors metni: 'Map wipes every Friday at 18:00 CEST - Fullwipes every 2 weeks - Max Team: No Limit'", "not": "" },
+
+    { "id": "survivors-7", "ad": "Survivors.gg #7 [2x Vanilla]", "topluluk": "Survivors.gg", "bolge": "EU/DE", "gather": "2x", "grup_limiti": 30, "harita_boyutu": 3900,
+      "wipeler": [
+        { "gun": "pazar", "saat": "11:59", "tz": "Europe/Berlin", "tip": "full", "dongu": "haftalik" },
+        { "gun": "çarşamba", "saat": "15:59", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 791, "yarilanma_saat": 29, "guven": "dusuk",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "gozlemlenen Paz/Car dongusu", "not": "" },
+
+    { "id": "survivors-duo", "ad": "Survivors.gg [2x Solo/Duo]", "topluluk": "Survivors.gg", "bm_id": 14702632, "bolge": "EU/DE", "gather": "2x", "grup_limiti": 2, "harita_boyutu": 3850,
+      "wipeler": [
+        { "gun": "cumartesi", "saat": "18:00", "tz": "Europe/Berlin", "tip": "full", "dongu": "haftalik" },
+        { "gun": "salı", "saat": "14:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 662, "yarilanma_saat": 31, "guven": "yuksek",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "Survivors metni: 'Fullwipes every Saturday at 18:00 CEST, Map wipes every Tuesday at 14:00 CEST - Max Team: 2'", "not": "" },
+
+    { "id": "survivors-weekly-duo", "ad": "Survivors.gg Weekly [2x Solo/Duo]", "topluluk": "Survivors.gg", "bolge": "EU/DE", "gather": "2x", "grup_limiti": 2, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "17:59", "tz": "Europe/Berlin", "tip": "full", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 27, "yarilanma_saat": 24, "guven": "dusuk",
+      "site": "https://survivors.gg/servers/", "site_kaynak": "gozlem", "not": "Wipe zirvesi 27 - pop cok dusuk." },
+
+    { "id": "repulsion-trio", "ad": "Repulsion - Solo/Duo/Trio", "topluluk": "Repulsion", "adres": "64.40.9.43:28015", "bm_id": 5865211, "bolge": "EU/GB (Londra)", "gather": "1x", "grup_limiti": 3, "harita_boyutu": 3500,
+      "wipeler": [
+        { "gun": "salı", "saat": "10:58", "tz": "UTC", "tip": "full", "dongu": "haftalik" },
+        { "gun": "cumartesi", "saat": "10:58", "tz": "UTC", "tip": "full", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 330, "yarilanma_saat": null, "guven": "dusuk",
+      "site": "https://www.repulsion.co.uk/", "site_kaynak": "Repulsion metni: 'Map & BP Wipe Biweekly - Tuesdays & Saturdays - Group Size: 3 - True Vanilla (No Pay-to-Win)' - GUN var, SAAT yok",
+      "not": "Her wipe full wipe, dongu 3 gun. Custom map, wipe oncesi topluluk map oylamasi. Saat gozlemden geldi, kis saatinde kayabilir." },
+
+    { "id": "repulsion-quad", "ad": "Repulsion - Solo/Duo/Trio/Quad", "topluluk": "Repulsion", "bm_id": 17161246, "bolge": "EU/GB (Londra)", "gather": "1x", "grup_limiti": 4, "harita_boyutu": 3500,
+      "wipeler": [
+        { "gun": "pazartesi", "saat": "10:58", "tz": "UTC", "tip": "full", "dongu": "haftalik" },
+        { "gun": "cuma", "saat": "10:58", "tz": "UTC", "tip": "full", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 464, "yarilanma_saat": null, "guven": "dusuk",
+      "site": "https://www.repulsion.co.uk/", "site_kaynak": "Repulsion metni: 'Map & BP Wipe Biweekly - Mondays & Fridays - Group Size: 4'", "not": "" },
+
+    { "id": "repulsion-2x-quad", "ad": "Repulsion - 2x Solo/Duo/Trio/Quad", "topluluk": "Repulsion", "bolge": "EU/GB (Londra)", "gather": "2x", "grup_limiti": 4, "harita_boyutu": null,
+      "wipeler": [
+        { "gun": "perşembe", "saat": "11:57", "tz": "UTC", "tip": "full", "dongu": "haftalik" },
+        { "gun": "pazar", "saat": "11:57", "tz": "UTC", "tip": "full", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "dusuk",
+      "site": "https://www.repulsion.co.uk/", "site_kaynak": "Repulsion metni: 'Map & BP Wipe Biweekly - Thursdays/Sundays - Group Size: 4'", "not": "" },
+
+    { "id": "rusticated-eu-trio-mon", "ad": "Rusticated.com - EU Trio | Monday Wipes", "topluluk": "Rusticated", "adres": "eu-trio-mon.rusticated.com:28010", "bm_id": 9565288, "bolge": "EU/GB", "gather": "1x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [{ "gun": "pazartesi", "saat": "14:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 500, "yarilanma_saat": 43, "guven": "yuksek",
+      "site": "https://rusticated.com/rules", "site_kaynak": "Rusticated metni: 'Monday Weekly wipes, Blueprints wipe @ force'",
+      "not": "Kurallar: TC/kodlarda max 3, base'de 3, roam/raid'de 3; muttefik-kole yasak, baska takimla anlasma yasak, game-banli hesapla oynamak ban sebebi. Chat Ingilizce." },
+
+    { "id": "rusticated-eu-premium-trio-thu", "ad": "Rusticated.com - EU Premium Trio | Thursday Wipes", "topluluk": "Rusticated", "bm_id": 9565289, "bolge": "EU/GB", "gather": "1x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "14:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 500, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://rusticated.com/rules", "site_kaynak": "Rusticated metni: 'Thursday Weekly wipes, Blueprints wipe @ force'",
+      "not": "Ayni sert trio kural seti." },
+
+    { "id": "rusticated-eu-hardcore-trio-thu", "ad": "Rusticated.com - EU Hardcore Trio | Thursday Wipes", "topluluk": "Rusticated", "bm_id": 35137192, "bolge": "EU/GB", "gather": "1x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "14:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "orta",
+      "site": "https://rusticated.com/rules", "site_kaynak": "Rusticated metni: 'Thursday Weekly wipes, Blueprints wipe @ force'",
+      "not": "Hardcore mod: harita/isaretler ve bazi mekanikler kisitli." },
+
+    { "id": "rusticated-eu-2x-monday", "ad": "Rusticated.com - EU | 2x Vanilla | Monday | Shared BPs", "topluluk": "Rusticated", "bolge": "EU/GB", "gather": "2x", "grup_limiti": 0, "harita_boyutu": null,
+      "wipeler": [{ "gun": "pazartesi", "saat": "14:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "orta",
+      "site": "https://rusticated.com/rules", "site_kaynak": "Server adi: 'Monday | Shared Bps'",
+      "not": "Takim BP paylasimi acik. Rusticated'in 3. en kalabalik serveri (294 anlik)." },
+
+    { "id": "rustoria-eu-main", "ad": "Rustoria.co - EU Main", "topluluk": "Rustoria", "adres": "main.rustoria.uk:28010", "bm_id": 9255283, "bolge": "EU/GB", "gather": "1x", "grup_limiti": 16, "harita_boyutu": 4250,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 933, "yarilanma_saat": 72, "guven": "yuksek",
+      "site": "https://rustoria.co/vanilla/rules", "site_kaynak": "Rustoria metni: 'Map - Thursdays @ 3PM UK / 4PM CEST. BPs - Monthly @ Force'",
+      "not": "Organizasyon geneli: oynamayan aktif adminler, ozenle secilmis seedler. Yasak: hack/script, bug abuse, EAC-banli alt hesap, ban kacirma." },
+
+    { "id": "rustoria-eu-small", "ad": "Rustoria.co - EU Small", "topluluk": "Rustoria", "adres": "small.rustoria.uk:28010", "bm_id": 12369419, "bolge": "EU/GB", "gather": "1x", "grup_limiti": 8, "harita_boyutu": 3100,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 300, "yarilanma_saat": 64, "guven": "yuksek",
+      "site": "https://rustoria.co/vanilla/rules", "site_kaynak": "Rustoria metni: 'Map - Weekly on Thursdays @ 3PM UK / 4PM CEST'", "not": "" },
+
+    { "id": "rustoria-eu-mondays", "ad": "Rustoria.co - EU Mondays", "topluluk": "Rustoria", "adres": "mon.rustoria.uk:28012", "bm_id": 20151421, "bolge": "EU/GB", "gather": "1x", "grup_limiti": 12, "harita_boyutu": 4000,
+      "wipeler": [{ "gun": "pazartesi", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 908, "yarilanma_saat": 60, "guven": "yuksek",
+      "site": "https://rustoria.co/vanilla/rules", "site_kaynak": "Rustoria metni: 'Map - Mondays @ 3PM UK / 4PM CET. BPs - Force Wipe'", "not": "" },
+
+    { "id": "rustoria-eu-medium", "ad": "Rustoria.co - EU Medium", "topluluk": "Rustoria", "adres": "medium.rustoria.uk:28010", "bm_id": null, "bolge": "EU/GB", "gather": "1x", "grup_limiti": 12, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "iki_haftada" }],
+      "kit": false, "wipe_zirvesi": 617, "yarilanma_saat": 134, "guven": "yuksek",
+      "site": "https://rustoria.co/vanilla/rules", "site_kaynak": "Rustoria metni: 'Map - Bi-Weekly on Thursdays @ 3PM UK / 4PM CEST'",
+      "not": "Yarilanma 5.6 gun." },
+
+    { "id": "rustoria-eu-long", "ad": "Rustoria.co - EU Long", "topluluk": "Rustoria", "bm_id": null, "bolge": "EU/GB", "gather": "1x", "grup_limiti": 16, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "19:00", "tz": "Europe/London", "tip": "map", "dongu": "aylik_force" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "dusuk",
+      "site": "https://rustoria.co/vanilla/rules", "site_kaynak": "YOK - takvim metni bulunamadi, 'Long' = aylik varsayildi",
+      "not": "Rustoria'nin 3. en kalabalik serveri (388 anlik)." },
+
+    { "id": "rusty-moose-eu-mondays", "ad": "Rusty Moose | EU Mondays", "topluluk": "Rusty Moose", "adres": "monday.eu.moose.gg:28010", "bm_id": 9611134, "bolge": "EU", "gather": "1x", "grup_limiti": 12, "harita_boyutu": 4500,
+      "wipeler": [{ "gun": "pazartesi", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 1300, "yarilanma_saat": 67, "guven": "yuksek",
+      "site": "https://moose.gg", "site_kaynak": "Moose metni: 'Map: Mondays @ 15:00 London Time (unless force wipe). Blueprints: Monthly @ Force Wipe'",
+      "not": "Kendi custom haritalari (Moose Maps)." },
+
+    { "id": "rusty-moose-eu-main", "ad": "Rusty Moose | EU Main", "topluluk": "Rusty Moose", "bm_id": null, "bolge": "EU", "gather": "1x", "grup_limiti": 12, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 1165, "yarilanma_saat": null, "guven": "orta",
+      "site": "https://moose.gg", "site_kaynak": "Moose'un haftalik Persembe dongusu (Mondays serverinin metniyle ayni saat mantigi)", "not": "" },
+
+    { "id": "rusty-moose-eu-monthly", "ad": "Rusty Moose | EU Monthly", "topluluk": "Rusty Moose", "bolge": "EU", "gather": "1x", "grup_limiti": 12, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "19:00", "tz": "Europe/London", "tip": "full", "dongu": "aylik_force" }],
+      "kit": false, "wipe_zirvesi": 1100, "yarilanma_saat": 412, "guven": "yuksek",
+      "site": "https://moose.gg", "site_kaynak": "Moose metni: 'Force wipes are always on the first Thursday of the month at 19:00 London Time'",
+      "not": "Yarilanma 17 gun - listedeki en dayanikli server." },
+
+    { "id": "rusty-moose-eu-small", "ad": "Rusty Moose | EU Small", "topluluk": "Rusty Moose", "bm_id": 3070420, "bolge": "EU", "gather": "1x", "grup_limiti": 8, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "19:00", "tz": "Europe/London", "tip": "full", "dongu": "aylik_force" }],
+      "kit": false, "wipe_zirvesi": 368, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://moose.gg", "site_kaynak": "Moose metni: 'Map: Monthly @ Force Wipe. Blueprints: Monthly @ Force Wipe'", "not": "" },
+
+    { "id": "rustopia-eu-main", "ad": "Rustopia.gg - EU Main", "topluluk": "Rustopia", "adres": "EUMain.Rustopia.gg:28015", "bm_id": 15096801, "bolge": "EU/GB", "gather": "1x", "grup_limiti": 16, "harita_boyutu": 4250,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 765, "yarilanma_saat": 48, "guven": "orta",
+      "site": "https://rustopia.gg", "site_kaynak": "Rustopia metni: 'Map Wipe - Weekly, BPs Wipe - Monthly'",
+      "not": "Kendi custom haritalari (Rustopia Mapping)." },
+
+    { "id": "rustopia-eu-mondays", "ad": "Rustopia.gg - EU Mondays | Premium", "topluluk": "Rustopia", "bm_id": 32290174, "bolge": "EU/LT", "gather": "1x", "grup_limiti": 16, "harita_boyutu": 4250,
+      "wipeler": [{ "gun": "pazartesi", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "orta",
+      "site": "https://rustopia.gg", "site_kaynak": "Rustopia metni: 'Map Wipe - Weekly, BPs Wipe - Monthly'", "not": "Premium server." },
+
+    { "id": "rustopia-eu-medium", "ad": "Rustopia.gg - EU Medium", "topluluk": "Rustopia", "adres": "EUMedium.Rustopia.gg:28015", "bm_id": 15079351, "bolge": "EU", "gather": "1x", "grup_limiti": 12, "harita_boyutu": 4400,
+      "wipeler": [{ "gun": "perşembe", "saat": "15:00", "tz": "Europe/London", "tip": "map", "dongu": "iki_haftada" }],
+      "kit": false, "wipe_zirvesi": 700, "yarilanma_saat": 120, "guven": "orta",
+      "site": "https://rustopia.gg", "site_kaynak": "Rustopia metni: 'Map Wipe - Every 2 Weeks, BPs Wipe - Monthly'", "not": "Yarilanma 5 gun." },
+
+    { "id": "rustopia-eu-large", "ad": "Rustopia.gg - EU Large", "topluluk": "Rustopia", "bm_id": 15079350, "bolge": "EU", "gather": "1x", "grup_limiti": 16, "harita_boyutu": 4750,
+      "wipeler": [{ "gun": "perşembe", "saat": "19:00", "tz": "Europe/London", "tip": "full", "dongu": "aylik_force" }],
+      "kit": false, "wipe_zirvesi": 700, "yarilanma_saat": 317, "guven": "yuksek",
+      "site": "https://rustopia.gg", "site_kaynak": "Rustopia metni: 'Map Wipe - Monthly, BPs Wipe - Monthly'",
+      "not": "Yarilanma 13.2 gun." },
+
+    { "id": "stevious-eu-mondays", "ad": "[EU] Stevious 2x Mondays | Vanilla", "topluluk": "Stevious", "bm_id": 3261388, "bolge": "EU", "gather": "2x", "grup_limiti": 0, "harita_boyutu": null,
+      "wipeler": [{ "gun": "pazartesi", "saat": null, "tz": null, "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 417, "yarilanma_saat": null, "guven": "dusuk",
+      "site": "https://stevious.io", "site_kaynak": "Stevious metni: 'Weekly wipes' + server adi 'Mondays' - SAAT YAYINLANMIYOR",
+      "not": "2x gather (sulfur/odun 2.5x), yarim eritme/craft, Level 1 WB ve yapi BP'leri acik, junk loot cikarilmis. Stevious'un en kalabalik EU serveri." },
+
+    { "id": "stevious-eu-main", "ad": "[EU] Stevious 2x Main | Vanilla", "topluluk": "Stevious", "bm_id": 2569573, "bolge": "EU", "gather": "2x", "grup_limiti": 0, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": null, "tz": null, "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "dusuk",
+      "site": "https://stevious.io", "site_kaynak": "Stevious metni: 'Weekly wipes' - GUN ve SAAT yayinlanmiyor, Persembe varsayildi", "not": "" },
+
+    { "id": "stevious-eu-trio", "ad": "[EU] Stevious 2x | Solo/Duo/Trio", "topluluk": "Stevious", "bm_id": 4138147, "bolge": "EU", "gather": "2x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [{ "gun": null, "saat": null, "tz": null, "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 15, "yarilanma_saat": null, "guven": "yok",
+      "site": "https://stevious.io", "site_kaynak": "Stevious metni: 'Weekly wipes' - gun/saat yok",
+      "not": "Anlik pop 15." },
+
+    { "id": "stevious-eu-large-mondays", "ad": "[EU] Stevious 2x Large Mondays | Vanilla", "topluluk": "Stevious", "bm_id": 6145179, "bolge": "EU", "gather": "2x", "grup_limiti": 0, "harita_boyutu": null,
+      "wipeler": [{ "gun": "pazartesi", "saat": null, "tz": null, "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "dusuk",
+      "site": "https://stevious.io", "site_kaynak": "Stevious metni: 'Wiped weekly on Monday (with update on force)' - saat yok", "not": "" },
+
+    { "id": "warbandits-eu-2x-trio", "ad": "WARBANDITS.GG EU 2X | Solo/Duo/Trio", "topluluk": "WarBandits", "bm_id": 9429855, "bolge": "EU", "gather": "2x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [], "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yok",
+      "site": "https://warbandits.gg/", "site_kaynak": "YOK - WarBandits takvimini sitede/BM'de yayinlamiyor, sadece Discord'da duyuruyor",
+      "not": "2x gather, 2x craft, 2x komponent/scrap, ek monument recycler, uzun gunduz kisa gece, custom anti-cheat, aktif staff. Takvim: discord.gg/warbandits" },
+
+    { "id": "warbandits-eu-2x-trio-weekly-sharedbp", "ad": "WARBANDITS.GG EU 2X Weekly | Solo/Duo/Trio | Shared BPs", "topluluk": "WarBandits", "bm_id": 37095625, "bolge": "EU", "gather": "2x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [], "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yok",
+      "site": "https://warbandits.gg/", "site_kaynak": "YOK - sadece server adinda 'Weekly'",
+      "not": "Takim BP paylasimi acik." },
+
+    { "id": "warbandits-eu-2x-trio-monthly-nobp", "ad": "WARBANDITS.GG EU 2X Monthly | Solo/Duo/Trio | No BP Wipes", "topluluk": "WarBandits", "bm_id": 36901537, "bolge": "EU", "gather": "2x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "19:00", "tz": "Europe/London", "tip": "map", "dongu": "aylik_force" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "dusuk",
+      "site": "https://warbandits.gg/", "site_kaynak": "Sadece server adindan 'Monthly / No BP Wipes'", "not": "" },
+
+    { "id": "warbandits-eu-2x-quad", "ad": "WARBANDITS.GG EU 2X | Solo/Duo/Trio/Quad", "topluluk": "WarBandits", "bm_id": 12156919, "bolge": "EU", "gather": "2x", "grup_limiti": 4, "harita_boyutu": null,
+      "wipeler": [], "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yok",
+      "site": "https://warbandits.gg/", "site_kaynak": "YOK", "not": "" },
+
+    { "id": "warbandits-eu-2x-max5", "ad": "WARBANDITS.GG EU 2X | Solo/Duo/Trio/Quad/Max5", "topluluk": "WarBandits", "bm_id": 15532055, "bolge": "EU", "gather": "2x", "grup_limiti": 5, "harita_boyutu": null,
+      "wipeler": [], "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yok",
+      "site": "https://warbandits.gg/", "site_kaynak": "YOK", "not": "" },
+
+    { "id": "warbandits-eu-2x-duo", "ad": "WARBANDITS.GG EU 2X | Solo/Duo", "topluluk": "WarBandits", "bm_id": 13197398, "bolge": "EU", "gather": "2x", "grup_limiti": 2, "harita_boyutu": null,
+      "wipeler": [], "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yok",
+      "site": "https://warbandits.gg/", "site_kaynak": "YOK", "not": "" },
+
+    { "id": "warbandits-eu-vanilla-trio", "ad": "WARBANDITS.GG | Solo/Duo/Trio | Weekly (Vanilla)", "topluluk": "WarBandits", "bm_id": 13517416, "bolge": "EU", "gather": "1x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [], "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yok",
+      "site": "https://warbandits.gg/", "site_kaynak": "YOK",
+      "not": "WarBandits'in 1x vanilla trio kolu." },
+
+    { "id": "warbandits-eu-5x-trio", "ad": "WARBANDITS.GG EU 5X | Solo/Duo/Trio | Loot+ | TP | Kits", "topluluk": "WarBandits", "bm_id": 9723954, "bolge": "EU", "gather": "5x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [], "kit": true, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yok",
+      "site": "https://warbandits.gg/", "site_kaynak": "YOK",
+      "not": "KIT + TP + tum Tier 1 BP'ler acik + instant craft. kit:true olan tek satir - filtreyi test etmek icin." },
+
+    { "id": "rustplatz-s1", "ad": "[EU] Rustplatz S1 | Solo/Duo/Trio", "topluluk": "Rustplatz", "adres": "149.202.65.22:28010", "bolge": "EU", "gather": "1x", "grup_limiti": 3, "harita_boyutu": 3000,
+      "wipeler": [
+        { "gun": "pazartesi", "saat": "09:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" },
+        { "gun": "perşembe", "saat": "09:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://steamcommunity.com/groups/Rustplatz", "site_kaynak": "Rustplatz Steam grubu: 'WIPETIME: Monday @09:00 CEST & Thursday @09:00 CEST'",
+      "not": "Pop dogrulanmadi." },
+
+    { "id": "rustplatz-s2", "ad": "[EU] Rustplatz S2 | Solo/Duo/Trio", "topluluk": "Rustplatz", "adres": "149.202.65.22:28020", "bolge": "EU", "gather": "1x", "grup_limiti": 3, "harita_boyutu": 3000,
+      "wipeler": [
+        { "gun": "salı", "saat": "09:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" },
+        { "gun": "cuma", "saat": "09:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://steamcommunity.com/groups/Rustplatz", "site_kaynak": "Rustplatz Steam grubu: 'WIPETIME: Tuesday @09:00 CEST & Friday @09:00 CEST'", "not": "Pop dogrulanmadi." },
+
+    { "id": "rustplatz-s3", "ad": "[EU] Rustplatz S3 | Solo/Duo/Trio", "topluluk": "Rustplatz", "adres": "149.202.65.22:28030", "bolge": "EU", "gather": "1x", "grup_limiti": 3, "harita_boyutu": 3000,
+      "wipeler": [
+        { "gun": "çarşamba", "saat": "09:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" },
+        { "gun": "cumartesi", "saat": "09:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://steamcommunity.com/groups/Rustplatz", "site_kaynak": "Rustplatz Steam grubu: 'WIPETIME: Wednesday @09:00 CEST & Saturday @09:00 CEST'", "not": "Pop dogrulanmadi." },
+
+    { "id": "rustplatz-s4", "ad": "[EU] Rustplatz S4 | Solo/Duo/Trio", "topluluk": "Rustplatz", "adres": "149.202.65.22:28040", "bolge": "EU", "gather": "1x", "grup_limiti": 3, "harita_boyutu": 3000,
+      "wipeler": [
+        { "gun": "perşembe", "saat": "16:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" },
+        { "gun": "pazar", "saat": "09:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://steamcommunity.com/groups/Rustplatz", "site_kaynak": "Rustplatz Steam grubu: 'WIPETIME: Thursday @16:00 CEST & Sunday @09:00 CEST'", "not": "Pop dogrulanmadi." },
+
+    { "id": "rustplatz-s5", "ad": "[EU] Rustplatz S5 | Solo/Duo/Trio", "topluluk": "Rustplatz", "adres": "149.202.65.22:28050", "bolge": "EU", "gather": "1x", "grup_limiti": 3, "harita_boyutu": 3500,
+      "wipeler": [
+        { "gun": "pazartesi", "saat": "16:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" },
+        { "gun": "cuma", "saat": "16:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://steamcommunity.com/groups/Rustplatz", "site_kaynak": "Rustplatz Steam grubu: 'WIPETIME: Monday @16:00 CEST & Friday @16:00 CEST'", "not": "Pop dogrulanmadi." },
+
+    { "id": "rustplatz-s6", "ad": "[EU] Rustplatz S6 | Solo/Duo/Trio", "topluluk": "Rustplatz", "adres": "149.202.65.88:28060", "bolge": "EU", "gather": "1x", "grup_limiti": 3, "harita_boyutu": 2500,
+      "wipeler": [
+        { "gun": "salı", "saat": "16:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" },
+        { "gun": "cumartesi", "saat": "16:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://steamcommunity.com/groups/Rustplatz", "site_kaynak": "Rustplatz Steam grubu: 'WIPETIME: Tuesday @16:00 CEST & Saturday @16:00 CEST'", "not": "Pop dogrulanmadi." },
+
+    { "id": "swant-duo-vanilla", "ad": "SWANT-RUST Duo Vanilla", "topluluk": "SWANT", "bolge": "EU/GB", "gather": "1x", "grup_limiti": 2, "harita_boyutu": null,
+      "wipeler": [{ "gun": "cumartesi", "saat": "14:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://www.swant-rust.org", "site_kaynak": "SWANT Steam grubu: 'SWANT-RUST Duo VANILLA - WIPES EVERY SATURDAY @ 14:00 CEST'",
+      "not": "1999'dan beri suren UK klani. Force wipe haftasi normal wipe'i atlayip Persembe guncelliyorlar." },
+
+    { "id": "swant-duo-2x", "ad": "SWANTRust [Duo] x2", "topluluk": "SWANT", "bolge": "EU/GB", "gather": "2x", "grup_limiti": 2, "harita_boyutu": null,
+      "wipeler": [{ "gun": "pazartesi", "saat": "19:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://www.swant-rust.org", "site_kaynak": "SWANT Steam grubu: 'SWANTRust [Duo] x2 - WIPES EVERY MONDAY @ 19:00 CEST'", "not": "" },
+
+    { "id": "swant-solo", "ad": "SWANT-RUST Solo Only", "topluluk": "SWANT", "bolge": "EU/GB", "gather": "1x", "grup_limiti": 1, "harita_boyutu": null,
+      "wipeler": [{ "gun": "salı", "saat": "20:00", "tz": "Europe/Berlin", "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://www.swant-rust.org", "site_kaynak": "SWANT Steam grubu: 'SWANT-RUST SOLO ONLY - WIPES EVERY TUESDAY @ 20:00 CEST'", "not": "" },
+
+    { "id": "novaprospect-2x", "ad": "[EU] NovaProspect 2x | Friday Wipe | Solo/Duo/Trio", "topluluk": "NovaProspect", "bolge": "EU", "gather": "2x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [{ "gun": "cuma", "saat": "13:00", "tz": "Europe/London", "tip": "map", "dongu": "iki_haftada" }],
+      "kit": false, "wipe_zirvesi": null, "yarilanma_saat": null, "guven": "yuksek",
+      "site": "https://rust-servers.net/server/177673/", "site_kaynak": "NovaProspect metni: 'Map: Every 2nd Friday - 13:00 London / 16:00 Moscow. BP: Monthly (force wipe)'",
+      "not": "2x gather, 1.5x eritme, vanilla loot/stack, 'No Kits, No Shop, No P2W' iddiasi. Pop dogrulanmadi." },
+
+    { "id": "rustfornoobs-mondays", "ad": "RustForNoobs.com | Mondays | Solo Duo Trio | EU", "topluluk": "RustForNoobs", "bolge": "EU", "gather": "1x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [{ "gun": "pazartesi", "saat": null, "tz": null, "tip": "map", "dongu": "haftalik" }],
+      "kit": false, "wipe_zirvesi": 150, "yarilanma_saat": null, "guven": "dusuk",
+      "site": "https://just-wiped.net/rust_servers/1778568", "site_kaynak": "Server adi 'Mondays' + 7 gunluk dongu gozlemi; SAAT yayinlanmiyor",
+      "not": "Vanilla, custom map, just-wiped puani %88. 150 slot." },
+
+    { "id": "rustmore-trio", "ad": "[EU] RUSTMORE | Solo/Duo/Trio", "topluluk": "Rustmore", "bolge": "EU", "gather": "1x", "grup_limiti": 3, "harita_boyutu": 2500,
+      "wipeler": [], "kit": false, "wipe_zirvesi": 200, "yarilanma_saat": null, "guven": "yok",
+      "site": "https://just-wiped.net/rust_servers/3171913", "site_kaynak": "YOK - sadece 'FULLWIPED' etiketi ve ~1.7 gunluk dongu gozlemi",
+      "not": "Vanilla, 2500 harita, her wipe full wipe." },
+
+    { "id": "doperust-eu-trio", "ad": "DOPERUST.COM - 2X EU | Solo/Duo/Trio | Monthly", "topluluk": "DopeRust", "adres": "168.100.161.12:28015", "bolge": "EU/GB", "gather": "2x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [{ "gun": "perşembe", "saat": "19:00", "tz": "Europe/London", "tip": "full", "dongu": "aylik_force" }],
+      "kit": false, "wipe_zirvesi": 100, "yarilanma_saat": null, "guven": "dusuk",
+      "site": "https://varq.net/en/servers/rust/option:anticheat", "site_kaynak": "Server adindan 'Monthly'; saat yayinlanmiyor",
+      "not": "Custom map, %50 upkeep. 100 slot." },
+
+    { "id": "mamkalo-trio", "ad": "Mamkalo RUST Solo/Duo/Trio 2x Vanilla", "topluluk": "Mamkalo", "bolge": "EU", "gather": "2x", "grup_limiti": 3, "harita_boyutu": 3700,
+      "wipeler": [], "kit": false, "wipe_zirvesi": 250, "yarilanma_saat": null, "guven": "yok",
+      "site": "https://just-wiped.net/rust_servers/3109861", "site_kaynak": "YOK - sadece ~7 gunluk dongu gozlemi",
+      "not": "250 slot." },
+
+    { "id": "sperrzone-trio", "ad": "SPERRZONE [GER/EN] 2X Solo/Duo/Trio", "topluluk": "Sperrzone", "bolge": "EU/DE", "gather": "2x", "grup_limiti": 3, "harita_boyutu": null,
+      "wipeler": [], "kit": false, "wipe_zirvesi": 100, "yarilanma_saat": null, "guven": "yok",
+      "site": "https://just-wiped.net/rust_servers/3143999", "site_kaynak": "YOK - ~6.8 gunluk dongu gozlemi",
+      "not": "Almanca/Ingilizce, custom map, 100 slot." }
+
+  ]
+}
