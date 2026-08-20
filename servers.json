@@ -1,6 +1,6 @@
 {
  "schema_version": 3,
- "guncelleme_tarihi": "2026-08-19",
+ "guncelleme_tarihi": "2026-08-20",
  "aciklama": "Rust wipe bulucu aracinin veri kaynagi. Saatler ASLA TR'ye cevrilmis halde saklanmaz - server ne yaziyorsa o saat dilimiyle durur, cevirmeyi tarayici yapar.",
  "force_wipe": {
   "kural": "her_ayin_ilk_persembesi",
@@ -12,13 +12,14 @@
   "wipeler[].tip": "full = harita + blueprint | map = sadece harita, blueprintler durur",
   "wipeler[].dongu": "haftalik | iki_haftada | aylik_force",
   "site_kaynak": "Server ORGANIZASYONUNUN kendi yazdigi takvim metni. Bos/YOK = organizasyon takvimini hicbir yerde yayinlamiyor.",
-  "bm_id": "battlemetrics.com/servers/rust/<id> - canli pop, harita boyutu, son wipe buradan cekilir",
+  "bm_id": "ESKI battlemetrics donemi kimligi - artik hicbir sey bunu kullanmiyor, tarihsel not olarak duruyor.",
   "guven": "yuksek = gun+saat organizasyonun kendi metninde net | orta = metinde var ama pratikte kayiyor | dusuk = kismen gozlemden cikarildi | yok = takvim bulunamadi, arac gozlemleyerek ogrenecek",
   "grup_limiti": "0 = limit yok",
   "kit": "true = wipe basinda hazir esya veriliyor veya satiliyor",
   "wipe_zirvesi": "gozlemlenen tepe oyuncu sayisi",
   "yarilanma_saat": "zirvenin yarisina dusme suresi (saat)",
-  "rustalyzer": "RUSTalyzer anahtari: 'IP:PORT' veya sayisal kimlik. null ise arac 'eslestir' dugmesi gosterir. Canli veri (oyuncu, wipe takvimi, kit, grup limiti, harita) bu anahtarla gelir."
+  "rustalyzer": "RUSTalyzer anahtari: 'IP:PORT' veya sayisal kimlik. null ise arac 'eslestir' dugmesi gosterir. Canli veri (oyuncu, wipe takvimi, kit, grup limiti, harita) bu anahtarla gelir.",
+  "rustalyzer_org": "Topluluk -> rustalyzer.com/org/<slug> haritasi. eslestir.mjs scripti bu sayfalardan isim+kimlik cekip eslesmemis serverlari otomatik doldurur."
  },
  "arastirma_notu": {
   "kapsam": "60 EU server / 13 organizasyon.",
@@ -52,7 +53,7 @@
    "site": "https://www.rustafied.com/server",
    "site_kaynak": "'High pop EU action - Weekly wipe cycle' + 'EU servers wipe at 3pm GMT on wipe days'",
    "not": "BP'ler sadece force wipe'ta siliniyor.",
-   "rustalyzer": null
+   "rustalyzer": "13065906"
   },
   {
    "id": "rustafied-eu-friday",
@@ -79,7 +80,7 @@
    "site": "https://www.rustafied.com/server",
    "site_kaynak": "'For the weekend warriors - Weekly wipe cycle - Friday wipe'",
    "not": "900 slot, kuyruk olusuyor. Yarilanma 3 gun.",
-   "rustalyzer": null
+   "rustalyzer": "13066042"
   },
   {
    "id": "rustafied-eu-small-friday",
@@ -106,7 +107,7 @@
    "site": "https://www.rustafied.com/server",
    "site_kaynak": "'Friday wipes, small map (formerly Mini) - Weekly wipe cycle'",
    "not": "",
-   "rustalyzer": null
+   "rustalyzer": "13066033"
   },
   {
    "id": "rustafied-eu-trio",
@@ -161,7 +162,7 @@
    "site": "https://www.rustafied.com/server",
    "site_kaynak": "'Another Trio server for Monday wipes - Weekly wipe cycle - Premium'",
    "not": "Premium server: erisim icin uygunluk sarti var.",
-   "rustalyzer": null
+   "rustalyzer": "13066040"
   },
   {
    "id": "rustafied-eu-small",
@@ -188,7 +189,7 @@
    "site": "https://www.rustafied.com/server",
    "site_kaynak": "'3.75k map for PvP madness - Weekly wipe cycle'",
    "not": "",
-   "rustalyzer": null
+   "rustalyzer": "13066036"
   },
   {
    "id": "rustafied-eu-monday",
@@ -215,7 +216,7 @@
    "site": "https://www.rustafied.com/server",
    "site_kaynak": "'Monday wipes (formerly Odd) - Weekly wipe cycle'",
    "not": "",
-   "rustalyzer": null
+   "rustalyzer": "13066038"
   },
   {
    "id": "rustafied-eu-small-monday",
@@ -242,7 +243,7 @@
    "site": "https://www.rustafied.com/server",
    "site_kaynak": "'Monday wipes, small map (formerly Odd Jr.) - Weekly wipe cycle'",
    "not": "Yarilanma 3.2 gun.",
-   "rustalyzer": null
+   "rustalyzer": "13066034"
   },
   {
    "id": "rustafied-eu-solo",
@@ -269,7 +270,7 @@
    "site": "https://www.rustafied.com/server",
    "site_kaynak": "'Single players only - Weekly wipe cycle'",
    "not": "",
-   "rustalyzer": null
+   "rustalyzer": "13066041"
   },
   {
    "id": "rustafied-eu-medium-small",
@@ -296,7 +297,7 @@
    "site": "https://www.rustafied.com/server",
    "site_kaynak": "'Sweet spot between main and low pop - Biweekly wipe cycle - Small map size'",
    "not": "",
-   "rustalyzer": null
+   "rustalyzer": "13066043"
   },
   {
    "id": "rustafied-eu-medium-large",
@@ -323,7 +324,7 @@
    "site": "https://www.rustafied.com/server",
    "site_kaynak": "'Sweet spot between main and low pop - Biweekly wipe cycle - Large map size'",
    "not": "Yarilanma 6 gun.",
-   "rustalyzer": null
+   "rustalyzer": "13066031"
   },
   {
    "id": "rustafied-eus",
@@ -350,7 +351,7 @@
    "site": "https://www.rustafied.com/server",
    "site_kaynak": "'250 slots, 3.75k map - Weekly wipe cycle' - GUN belirtilmemis, varsayilan Persembe",
    "not": "",
-   "rustalyzer": null
+   "rustalyzer": "13066035"
   },
   {
    "id": "rustafied-eu-lowpop",
@@ -377,7 +378,7 @@
    "site": "https://www.rustafied.com/server",
    "site_kaynak": "'Less people, fewer wipes - Monthly wipe cycle'",
    "not": "",
-   "rustalyzer": null
+   "rustalyzer": "13066037"
   },
   {
    "id": "rustafied-eu-long-small",
@@ -404,7 +405,7 @@
    "site": "https://www.rustafied.com/server",
    "site_kaynak": "'200 pop, wipes only when forced - Monthly wipe cycle - Small map size'",
    "not": "",
-   "rustalyzer": null
+   "rustalyzer": "13065975"
   },
   {
    "id": "rustafied-eu-long-small-2",
@@ -431,7 +432,7 @@
    "site": "https://www.rustafied.com/server",
    "site_kaynak": "'200 pop, wipes only when forced - Premium'",
    "not": "Premium server.",
-   "rustalyzer": null
+   "rustalyzer": "13066039"
   },
   {
    "id": "rustafied-eu-long-large",
@@ -458,7 +459,7 @@
    "site": "https://www.rustafied.com/server",
    "site_kaynak": "'Even more longer wipes - Monthly wipe cycle - Large map size - Premium'",
    "not": "Premium server.",
-   "rustalyzer": null
+   "rustalyzer": "13065926"
   },
   {
    "id": "survivors-5",
@@ -918,7 +919,7 @@
    "site": "https://www.repulsion.co.uk/",
    "site_kaynak": "Repulsion metni: 'Map & BP Wipe Biweekly - Mondays & Fridays - Group Size: 4'",
    "not": "",
-   "rustalyzer": null
+   "rustalyzer": "13064397"
   },
   {
    "id": "repulsion-2x-quad",
@@ -951,7 +952,7 @@
    "site": "https://www.repulsion.co.uk/",
    "site_kaynak": "Repulsion metni: 'Map & BP Wipe Biweekly - Thursdays/Sundays - Group Size: 4'",
    "not": "",
-   "rustalyzer": null
+   "rustalyzer": "324400293"
   },
   {
    "id": "rusticated-eu-trio-mon",
@@ -1006,7 +1007,7 @@
    "site": "https://rusticated.com/rules",
    "site_kaynak": "Rusticated metni: 'Thursday Weekly wipes, Blueprints wipe @ force'",
    "not": "Ayni sert trio kural seti.",
-   "rustalyzer": null
+   "rustalyzer": "13066048"
   },
   {
    "id": "rusticated-eu-hardcore-trio-thu",
@@ -1033,7 +1034,7 @@
    "site": "https://rusticated.com/rules",
    "site_kaynak": "Rusticated metni: 'Thursday Weekly wipes, Blueprints wipe @ force'",
    "not": "Hardcore mod: harita/isaretler ve bazi mekanikler kisitli.",
-   "rustalyzer": null
+   "rustalyzer": "1048353640"
   },
   {
    "id": "rusticated-eu-2x-monday",
@@ -1059,7 +1060,7 @@
    "site": "https://rusticated.com/rules",
    "site_kaynak": "Server adi: 'Monday | Shared Bps'",
    "not": "Takim BP paylasimi acik. Rusticated'in 3. en kalabalik serveri (294 anlik).",
-   "rustalyzer": null
+   "rustalyzer": "13066047"
   },
   {
    "id": "rustoria-eu-main",
@@ -1253,7 +1254,7 @@
    "site": "https://moose.gg",
    "site_kaynak": "Moose'un haftalik Persembe dongusu (Mondays serverinin metniyle ayni saat mantigi)",
    "not": "",
-   "rustalyzer": null
+   "rustalyzer": "1686415431"
   },
   {
    "id": "rusty-moose-eu-monthly",
@@ -1361,7 +1362,7 @@
    "site": "https://rustopia.gg",
    "site_kaynak": "Rustopia metni: 'Map Wipe - Weekly, BPs Wipe - Monthly'",
    "not": "Premium server.",
-   "rustalyzer": null
+   "rustalyzer": "458585687"
   },
   {
    "id": "rustopia-eu-medium",
@@ -1443,7 +1444,7 @@
    "site": "https://stevious.io",
    "site_kaynak": "Stevious metni: 'Weekly wipes' + server adi 'Mondays' - SAAT YAYINLANMIYOR",
    "not": "2x gather (sulfur/odun 2.5x), yarim eritme/craft, Level 1 WB ve yapi BP'leri acik, junk loot cikarilmis. Stevious'un en kalabalik EU serveri.",
-   "rustalyzer": null
+   "rustalyzer": "1574842923"
   },
   {
    "id": "stevious-eu-main",
@@ -1470,7 +1471,7 @@
    "site": "https://stevious.io",
    "site_kaynak": "Stevious metni: 'Weekly wipes' - GUN ve SAAT yayinlanmiyor, Persembe varsayildi",
    "not": "",
-   "rustalyzer": null
+   "rustalyzer": "1534731894"
   },
   {
    "id": "stevious-eu-trio",
@@ -1497,7 +1498,7 @@
    "site": "https://stevious.io",
    "site_kaynak": "Stevious metni: 'Weekly wipes' - gun/saat yok",
    "not": "Anlik pop 15.",
-   "rustalyzer": null
+   "rustalyzer": "1534731919"
   },
   {
    "id": "stevious-eu-large-mondays",
@@ -1524,7 +1525,7 @@
    "site": "https://stevious.io",
    "site_kaynak": "Stevious metni: 'Wiped weekly on Monday (with update on force)' - saat yok",
    "not": "",
-   "rustalyzer": null
+   "rustalyzer": "-35798932"
   },
   {
    "id": "warbandits-eu-2x-trio",
@@ -1543,7 +1544,7 @@
    "site": "https://warbandits.gg/",
    "site_kaynak": "YOK - WarBandits takvimini sitede/BM'de yayinlamiyor, sadece Discord'da duyuruyor",
    "not": "2x gather, 2x craft, 2x komponent/scrap, ek monument recycler, uzun gunduz kisa gece, custom anti-cheat, aktif staff. Takvim: discord.gg/warbandits",
-   "rustalyzer": null
+   "rustalyzer": "13065989"
   },
   {
    "id": "warbandits-eu-2x-trio-weekly-sharedbp",
@@ -1562,7 +1563,7 @@
    "site": "https://warbandits.gg/",
    "site_kaynak": "YOK - sadece server adinda 'Weekly'",
    "not": "Takim BP paylasimi acik.",
-   "rustalyzer": null
+   "rustalyzer": "1547884911"
   },
   {
    "id": "warbandits-eu-2x-trio-monthly-nobp",
@@ -1589,7 +1590,7 @@
    "site": "https://warbandits.gg/",
    "site_kaynak": "Sadece server adindan 'Monthly / No BP Wipes'",
    "not": "",
-   "rustalyzer": null
+   "rustalyzer": "1513625303"
   },
   {
    "id": "warbandits-eu-2x-quad",
@@ -1608,7 +1609,7 @@
    "site": "https://warbandits.gg/",
    "site_kaynak": "YOK",
    "not": "",
-   "rustalyzer": null
+   "rustalyzer": "324606901"
   },
   {
    "id": "warbandits-eu-2x-max5",
@@ -1627,7 +1628,7 @@
    "site": "https://warbandits.gg/",
    "site_kaynak": "YOK",
    "not": "",
-   "rustalyzer": null
+   "rustalyzer": "1856950745"
   },
   {
    "id": "warbandits-eu-2x-duo",
@@ -1646,7 +1647,7 @@
    "site": "https://warbandits.gg/",
    "site_kaynak": "YOK",
    "not": "",
-   "rustalyzer": null
+   "rustalyzer": "1682544756"
   },
   {
    "id": "warbandits-eu-vanilla-trio",
@@ -1665,7 +1666,7 @@
    "site": "https://warbandits.gg/",
    "site_kaynak": "YOK",
    "not": "WarBandits'in 1x vanilla trio kolu.",
-   "rustalyzer": null
+   "rustalyzer": "1445525322"
   },
   {
    "id": "warbandits-eu-5x-trio",
@@ -1684,7 +1685,7 @@
    "site": "https://warbandits.gg/",
    "site_kaynak": "YOK",
    "not": "KIT + TP + tum Tier 1 BP'ler acik + instant craft. kit:true olan tek satir - filtreyi test etmek icin.",
-   "rustalyzer": null
+   "rustalyzer": "325059218"
   },
   {
    "id": "rustplatz-s1",
@@ -2100,6 +2101,1592 @@
    "site_kaynak": "YOK - ~6.8 gunluk dongu gozlemi",
    "not": "Almanca/Ingilizce, custom map, 100 slot.",
    "rustalyzer": null
+  },
+  {
+   "id": "atlas-eu-2x-monthly-vanilla-no-bp-wipes",
+   "ad": "Atlas - EU 2X Monthly | Vanilla+ | No BP Wipes",
+   "topluluk": "Atlas",
+   "bolge": "EU",
+   "gather": "2x",
+   "grup_limiti": 16,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "16:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "iki_haftada"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "13064484",
+   "not": "1./3./5. perşembe map; BP hiç silinmez. EU'nun en kalabalık 2x'i."
+  },
+  {
+   "id": "atlas-eu-2x-monthly-solo-duo-trio-quad-vanilla-n",
+   "ad": "Atlas - EU 2X Monthly Solo/Duo/Trio/Quad | Vanilla+ | No BP Wipes",
+   "topluluk": "Atlas",
+   "bolge": "EU",
+   "gather": "2x",
+   "grup_limiti": 4,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "16:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "iki_haftada"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "13068227",
+   "not": "1./3./5. perşembe map; BP hiç silinmez."
+  },
+  {
+   "id": "atlas-eu-3x-no-bps-mondays",
+   "ad": "Atlas - EU 3x | No BPs | Mondays",
+   "topluluk": "Atlas",
+   "bolge": "EU",
+   "gather": "3x",
+   "grup_limiti": 16,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "pazartesi",
+     "saat": "15:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": true,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "976658659",
+   "not": "BP yok."
+  },
+  {
+   "id": "atlas-eu-2x-medium-vanilla-no-bp-wipes",
+   "ad": "Atlas - EU 2X Medium | Vanilla+ | No BP Wipes",
+   "topluluk": "Atlas",
+   "bolge": "EU",
+   "gather": "2x",
+   "grup_limiti": 16,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "16:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "iki_haftada"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "375498904"
+  },
+  {
+   "id": "atlas-eu-5x-no-bps-kits",
+   "ad": "Atlas - EU 5x | No BPs | Kits",
+   "topluluk": "Atlas",
+   "bolge": "EU",
+   "gather": "5x",
+   "grup_limiti": 20,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "çarşamba",
+     "saat": "12:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    },
+    {
+     "gun": "cumartesi",
+     "saat": "12:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": true,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "13064446"
+  },
+  {
+   "id": "atlas-eu-10x-no-bps-kits-shop",
+   "ad": "Atlas - EU 10x | No BPs | Kits | Shop",
+   "topluluk": "Atlas",
+   "bolge": "EU",
+   "gather": "10x",
+   "grup_limiti": 20,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "pazartesi",
+     "saat": "16:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    },
+    {
+     "gun": "cuma",
+     "saat": "16:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": true,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "13064404"
+  },
+  {
+   "id": "atlas-eu-long-vanilla-no-bp-wipes",
+   "ad": "Atlas - EU Long | Vanilla | No BP wipes",
+   "topluluk": "Atlas",
+   "bolge": "EU",
+   "gather": "1x",
+   "grup_limiti": 16,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "18:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "aylik_force"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1564050949"
+  },
+  {
+   "id": "rustoria-co-eu-east-long",
+   "ad": "Rustoria.co - EU East Long",
+   "topluluk": "Rustoria",
+   "bolge": "EU",
+   "gather": "1x",
+   "grup_limiti": 12,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "18:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "aylik_force"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "824638714",
+   "not": "EU'nun en kalabalık monthly serverlarından; RU lokasyon ama EU East."
+  },
+  {
+   "id": "rustoria-co-eu-east-medium",
+   "ad": "Rustoria.co - EU East Medium",
+   "topluluk": "Rustoria",
+   "bolge": "EU",
+   "gather": "1x",
+   "grup_limiti": 12,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "18:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "iki_haftada"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1815235694"
+  },
+  {
+   "id": "rustoria-co-eu-low-pop",
+   "ad": "Rustoria.co - EU Low Pop",
+   "topluluk": "Rustoria",
+   "bolge": "EU",
+   "gather": "1x",
+   "grup_limiti": 6,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "18:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "aylik_force"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "13065928"
+  },
+  {
+   "id": "eu-rustoria-co-2x-vanilla-no-bp-wipes",
+   "ad": "[EU] Rustoria.co - 2x Vanilla | No BP Wipes",
+   "topluluk": "Rustoria",
+   "bolge": "EU",
+   "gather": "2x",
+   "grup_limiti": 0,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "pazartesi",
+     "saat": "14:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "haftalik"
+    },
+    {
+     "gun": "perşembe",
+     "saat": "14:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "13065849"
+  },
+  {
+   "id": "rustoria-co-10x-no-bps-kits-shop",
+   "ad": "Rustoria.co - 10X | No BPs | Kits | Shop",
+   "topluluk": "Rustoria",
+   "bolge": "EU",
+   "gather": "10x",
+   "grup_limiti": 0,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "salı",
+     "saat": "15:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    },
+    {
+     "gun": "cuma",
+     "saat": "15:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": true,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "13065978"
+  },
+  {
+   "id": "rusty-moose-eu-medium",
+   "ad": "Rusty Moose | EU Medium",
+   "topluluk": "Rusty Moose",
+   "bolge": "EU",
+   "gather": "1x",
+   "grup_limiti": 8,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "14:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "-35745663"
+  },
+  {
+   "id": "rusty-moose-eu-mini",
+   "ad": "Rusty Moose | EU Mini",
+   "topluluk": "Rusty Moose",
+   "bolge": "EU",
+   "gather": "1x",
+   "grup_limiti": 5,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "14:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1688935882"
+  },
+  {
+   "id": "rusty-moose-eu-biweekly",
+   "ad": "Rusty Moose | EU Biweekly",
+   "topluluk": "Rusty Moose",
+   "bolge": "EU",
+   "gather": "1x",
+   "grup_limiti": 12,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "14:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "iki_haftada"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "13064584"
+  },
+  {
+   "id": "rusty-moose-eu-low",
+   "ad": "Rusty Moose | EU Low",
+   "topluluk": "Rusty Moose",
+   "bolge": "EU",
+   "gather": "1x",
+   "grup_limiti": 6,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "14:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "iki_haftada"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "13064586"
+  },
+  {
+   "id": "rusty-moose-hapis-mondays",
+   "ad": "Rusty Moose | Hapis Mondays",
+   "topluluk": "Rusty Moose",
+   "bolge": "EU",
+   "gather": "1x",
+   "grup_limiti": 8,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "pazartesi",
+     "saat": "14:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1464919782",
+   "not": "Hapis (sabit harita)."
+  },
+  {
+   "id": "rusticated-com-eu-main",
+   "ad": "Rusticated.com - EU Main",
+   "topluluk": "Rusticated",
+   "bolge": "EU",
+   "gather": "1x",
+   "grup_limiti": 16,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "13:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "13066049"
+  },
+  {
+   "id": "rusticated-com-eu-premium-medium",
+   "ad": "Rusticated.com - EU Premium Medium",
+   "topluluk": "Rusticated",
+   "bolge": "EU",
+   "gather": "1x",
+   "grup_limiti": 12,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "13:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "456659851",
+   "not": "Premium (kalabalık, kaliteli)."
+  },
+  {
+   "id": "rusticated-com-eu-premium-long",
+   "ad": "Rusticated.com - EU Premium Long",
+   "topluluk": "Rusticated",
+   "bolge": "EU",
+   "gather": "1x",
+   "grup_limiti": 16,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "18:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "aylik_force"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "13090054"
+  },
+  {
+   "id": "rusticated-com-eu-2x-vanilla-thursday-shared-bps",
+   "ad": "Rusticated.com - EU | 2x Vanilla | Thursday | Shared BPs",
+   "topluluk": "Rusticated",
+   "bolge": "EU",
+   "gather": "2x",
+   "grup_limiti": 8,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "13:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "13066050"
+  },
+  {
+   "id": "rustopia-gg-eu-small",
+   "ad": "Rustopia.gg - EU Small",
+   "topluluk": "Rustopia",
+   "bolge": "EU",
+   "gather": "1x",
+   "grup_limiti": 8,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "18:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "aylik_force"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "437942785"
+  },
+  {
+   "id": "magic-rust-27-vanilla-2x-monthly",
+   "ad": "Magic Rust #27 | Vanilla 2x Monthly",
+   "topluluk": "Magic Rust",
+   "bolge": "EU",
+   "gather": "2x",
+   "grup_limiti": 16,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "18:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "aylik_force"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1798837884",
+   "not": "Rusça topluluk; EU bölge, çok kalabalık."
+  },
+  {
+   "id": "magic-rust-long-klassika-x1",
+   "ad": "Magic Rust — Long | Klassika x1",
+   "topluluk": "Magic Rust",
+   "bolge": "EU",
+   "gather": "1x",
+   "grup_limiti": 0,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "18:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "aylik_force"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1798806449",
+   "not": "Rusça topluluk."
+  },
+  {
+   "id": "magic-rust-14-modded-2x-no-limit",
+   "ad": "Magic Rust #14 | Modded 2x (No limit)",
+   "topluluk": "Magic Rust",
+   "bolge": "EU",
+   "gather": "2x",
+   "grup_limiti": 0,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "cuma",
+     "saat": "10:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1691319960",
+   "not": "Rusça topluluk, modlu."
+  },
+  {
+   "id": "eu-renegade-2x-monthly-main-50-upkeep-no-bp-wipe",
+   "ad": "EU RENEGADE 2x Monthly Main | 50% Upkeep | No BP Wipe",
+   "topluluk": "Renegade",
+   "bolge": "EU",
+   "gather": "2x",
+   "grup_limiti": 50,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "18:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "aylik_force"
+    }
+   ],
+   "kit": true,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "13065968",
+   "not": "Noob friendly, %50 upkeep."
+  },
+  {
+   "id": "repulsion-solo-only",
+   "ad": "Repulsion - SOLO ONLY",
+   "topluluk": "Repulsion",
+   "bolge": "EU",
+   "gather": "1x",
+   "grup_limiti": 1,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "pazartesi",
+     "saat": "10:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "iki_haftada"
+    },
+    {
+     "gun": "cuma",
+     "saat": "10:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "iki_haftada"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "64.40.9.43:28035"
+  },
+  {
+   "id": "repulsion-2x-solo-only",
+   "ad": "Repulsion - 2x SOLO ONLY",
+   "topluluk": "Repulsion",
+   "bolge": "EU",
+   "gather": "2x",
+   "grup_limiti": 1,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "cumartesi",
+     "saat": "10:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "iki_haftada"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "195.60.166.73:28045"
+  },
+  {
+   "id": "repulsion-2x-solo-duo",
+   "ad": "Repulsion - 2x Solo/Duo",
+   "topluluk": "Repulsion",
+   "bolge": "EU",
+   "gather": "2x",
+   "grup_limiti": 2,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "pazartesi",
+     "saat": "10:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "iki_haftada"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "64.40.9.211:28035"
+  },
+  {
+   "id": "repulsion-2x-solo-duo-trio",
+   "ad": "Repulsion - 2x Solo/Duo/Trio",
+   "topluluk": "Repulsion",
+   "bolge": "EU",
+   "gather": "2x",
+   "grup_limiti": 3,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "salı",
+     "saat": "13:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "iki_haftada"
+    },
+    {
+     "gun": "cumartesi",
+     "saat": "13:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "iki_haftada"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "324336921"
+  },
+  {
+   "id": "warbandits-gg-main-weekly",
+   "ad": "WARBANDITS.GG | Main | Weekly",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "1x",
+   "grup_limiti": 0,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "12:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1977375527"
+  },
+  {
+   "id": "warbandits-gg-eu-3x-solo-duo-trio-lootx3",
+   "ad": "WARBANDITS.GG EU 3X | Solo/Duo/Trio | LootX3",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "3x",
+   "grup_limiti": 3,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "çarşamba",
+     "saat": "13:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    },
+    {
+     "gun": "pazar",
+     "saat": "13:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": true,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "13065922"
+  },
+  {
+   "id": "warbandits-gg-eu-3x-solo-duo-lootx3",
+   "ad": "WARBANDITS.GG EU 3X | Solo/Duo | LootX3",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "3x",
+   "grup_limiti": 2,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "salı",
+     "saat": "13:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    },
+    {
+     "gun": "cuma",
+     "saat": "13:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": true,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1664087016"
+  },
+  {
+   "id": "warbandits-gg-eu-3x-solo-duo-trio-quad-lootx3",
+   "ad": "WARBANDITS.GG EU 3X | Solo/Duo/Trio/Quad | LootX3",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "3x",
+   "grup_limiti": 4,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "salı",
+     "saat": "13:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    },
+    {
+     "gun": "cumartesi",
+     "saat": "13:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": true,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1653109848"
+  },
+  {
+   "id": "warbandits-gg-eu-3x-quad-max6-lootx3-clans",
+   "ad": "WARBANDITS.GG EU 3X | Quad/Max6 | LootX3 | Clans",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "3x",
+   "grup_limiti": 6,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "pazartesi",
+     "saat": "10:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    },
+    {
+     "gun": "cuma",
+     "saat": "10:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": true,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1985249923"
+  },
+  {
+   "id": "warbandits-gg-eu-3x-solo-duo-trio-quad-max5-loot",
+   "ad": "WARBANDITS.GG EU 3X | Solo/Duo/Trio/Quad/Max5 | LootX3",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "3x",
+   "grup_limiti": 5,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "pazartesi",
+     "saat": "13:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    },
+    {
+     "gun": "cuma",
+     "saat": "13:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": true,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1400869241"
+  },
+  {
+   "id": "warbandits-gg-eu-2x-solo-only-loot",
+   "ad": "WARBANDITS.GG EU 2X SOLO ONLY | Loot+",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "2x",
+   "grup_limiti": 1,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "salı",
+     "saat": "13:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    },
+    {
+     "gun": "cuma",
+     "saat": "13:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "324935802"
+  },
+  {
+   "id": "warbandits-gg-eu-3x-solo-only-loot",
+   "ad": "WARBANDITS.GG EU 3X SOLO ONLY | Loot+",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "3x",
+   "grup_limiti": 1,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "13:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    },
+    {
+     "gun": "pazar",
+     "saat": "13:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "322830358"
+  },
+  {
+   "id": "warbandits-gg-eu-2x-solo-duo-trio-quad-max6",
+   "ad": "WARBANDITS.GG EU 2X | Solo/Duo/Trio/Quad/Max6",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "2x",
+   "grup_limiti": 6,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "10:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    },
+    {
+     "gun": "pazar",
+     "saat": "10:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1985236601"
+  },
+  {
+   "id": "warbandits-gg-solo-duo-weekly",
+   "ad": "WARBANDITS.GG | Solo/Duo | Weekly",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "1x",
+   "grup_limiti": 2,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "pazar",
+     "saat": "13:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1448632877"
+  },
+  {
+   "id": "warbandits-gg-solo-duo-trio-quad-weekly",
+   "ad": "WARBANDITS.GG | Solo/Duo/Trio/Quad | Weekly",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "1x",
+   "grup_limiti": 4,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "cuma",
+     "saat": "14:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1448508094"
+  },
+  {
+   "id": "warbandits-gg-solo-duo-trio-quad-max5-weekly",
+   "ad": "WARBANDITS.GG | Solo/Duo/Trio/Quad/Max5 | Weekly",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "1x",
+   "grup_limiti": 5,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "salı",
+     "saat": "11:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1977242717"
+  },
+  {
+   "id": "warbandits-gg-solo-duo-trio-quad-max6-weekly",
+   "ad": "WARBANDITS.GG | Solo/Duo/Trio/Quad/Max6 | Weekly",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "1x",
+   "grup_limiti": 6,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "pazartesi",
+     "saat": "12:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1977296629"
+  },
+  {
+   "id": "warbandits-gg-solo-only-weekly",
+   "ad": "WARBANDITS.GG Solo Only - Weekly",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "1x",
+   "grup_limiti": 1,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "çarşamba",
+     "saat": "11:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1977085778"
+  },
+  {
+   "id": "warbandits-gg-eu-2x-weekly-solo-duo-shared-bps",
+   "ad": "WARBANDITS.GG EU 2X Weekly | Solo/Duo | Shared BPs",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "2x",
+   "grup_limiti": 2,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "salı",
+     "saat": "14:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1547797117"
+  },
+  {
+   "id": "warbandits-gg-eu-2x-weekly-solo-duo-trio-quad-sh",
+   "ad": "WARBANDITS.GG EU 2X Weekly | Solo/Duo/Trio/Quad | Shared BPs",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "2x",
+   "grup_limiti": 4,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "pazartesi",
+     "saat": "13:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1547926922"
+  },
+  {
+   "id": "warbandits-gg-eu-3x-weekly-solo-duo-lootx3",
+   "ad": "WARBANDITS.GG EU 3X Weekly | Solo/Duo | LootX3",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "3x",
+   "grup_limiti": 2,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "cumartesi",
+     "saat": "13:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": true,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1551356171"
+  },
+  {
+   "id": "warbandits-gg-eu-3x-weekly-solo-duo-trio-lootx3",
+   "ad": "WARBANDITS.GG EU 3X Weekly | Solo/Duo/Trio | LootX3",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "3x",
+   "grup_limiti": 3,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "pazartesi",
+     "saat": "13:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": true,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1551419156"
+  },
+  {
+   "id": "warbandits-gg-eu-3x-weekly-solo-duo-trio-quad-lo",
+   "ad": "WARBANDITS.GG EU 3X Weekly | Solo/Duo/Trio/Quad | LootX3",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "3x",
+   "grup_limiti": 4,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "pazar",
+     "saat": "12:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": true,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1551482300"
+  },
+  {
+   "id": "warbandits-gg-eu-2x-monthly-solo-duo-no-bp-wipes",
+   "ad": "WARBANDITS.GG EU 2X Monthly | Solo/Duo | No BP Wipes",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "2x",
+   "grup_limiti": 2,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "18:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "aylik_force"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1981837993"
+  },
+  {
+   "id": "warbandits-gg-eu-2x-monthly-solo-duo-trio-quad-n",
+   "ad": "WARBANDITS.GG EU 2X Monthly | Solo/Duo/Trio/Quad | No BP Wipes",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "2x",
+   "grup_limiti": 4,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "14:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "aylik_force"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1513657039"
+  },
+  {
+   "id": "warbandits-gg-eu-2x-monthly-max5-no-bp-wipes",
+   "ad": "WARBANDITS.GG EU 2X Monthly | Max5 | No BP Wipes",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "2x",
+   "grup_limiti": 5,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "18:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "aylik_force"
+    }
+   ],
+   "kit": false,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1981837994"
+  },
+  {
+   "id": "warbandits-gg-3x-eu-monthly-solo-duo-shared-bps",
+   "ad": "WARBANDITS.GG 3X EU Monthly | Solo/Duo | Shared BPs",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "3x",
+   "grup_limiti": 2,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "18:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "aylik_force"
+    }
+   ],
+   "kit": true,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1981985031"
+  },
+  {
+   "id": "warbandits-gg-3x-eu-monthly-solo-duo-trio-shared",
+   "ad": "WARBANDITS.GG 3X EU Monthly | Solo/Duo/Trio | Shared BPs",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "3x",
+   "grup_limiti": 3,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "18:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "aylik_force"
+    }
+   ],
+   "kit": true,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1981985030"
+  },
+  {
+   "id": "warbandits-gg-3x-eu-monthly-solo-duo-trio-quad-s",
+   "ad": "WARBANDITS.GG 3X EU Monthly | Solo/Duo/Trio/Quad | Shared BPs",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "3x",
+   "grup_limiti": 4,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "18:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "aylik_force"
+    }
+   ],
+   "kit": true,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1985689522"
+  },
+  {
+   "id": "warbandits-gg-3x-eu-monthly-max5-shared-bps",
+   "ad": "WARBANDITS.GG 3X EU Monthly | Max5 | Shared BPs",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "3x",
+   "grup_limiti": 5,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "perşembe",
+     "saat": "18:00",
+     "tz": "UTC",
+     "tip": "map",
+     "dongu": "aylik_force"
+    }
+   ],
+   "kit": true,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1985680865"
+  },
+  {
+   "id": "warbandits-gg-eu-5x-no-bps-loot-pvp-shop",
+   "ad": "WARBANDITS.GG EU 5X No BPs | Loot++ | PvP | Shop",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "5x",
+   "grup_limiti": 0,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "salı",
+     "saat": "14:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    },
+    {
+     "gun": "cuma",
+     "saat": "14:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": true,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1613522383"
+  },
+  {
+   "id": "warbandits-gg-eu-10x-no-bps-loot-noob-friendly",
+   "ad": "WARBANDITS.GG EU 10X No BPs | Loot++ | Noob Friendly",
+   "topluluk": "WarBandits",
+   "bolge": "EU",
+   "gather": "10x",
+   "grup_limiti": 0,
+   "harita_boyutu": null,
+   "wipeler": [
+    {
+     "gun": "çarşamba",
+     "saat": "12:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    },
+    {
+     "gun": "pazar",
+     "saat": "12:00",
+     "tz": "UTC",
+     "tip": "full",
+     "dongu": "haftalik"
+    }
+   ],
+   "kit": true,
+   "wipe_zirvesi": null,
+   "yarilanma_saat": null,
+   "guven": "orta",
+   "site": null,
+   "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
+   "rustalyzer": "1506559317"
   }
- ]
+ ],
+ "rustalyzer_org": {
+  "Rustafied": "rustafied",
+  "Rustoria": "rustoria",
+  "WarBandits": "warbandits",
+  "Rusty Moose": "rusty-moose",
+  "Survivors.gg": "survivors",
+  "Rusticated": "rusticated",
+  "Rustopia": "rustopia",
+  "Stevious": "stevious",
+  "Atlas": "atlas",
+  "Magic Rust": "magicrust",
+  "Renegade": "renegade-rust",
+  "Reddit/r/PlayRust": "reddit-playrust"
+ }
 }

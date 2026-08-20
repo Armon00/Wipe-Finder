@@ -240,7 +240,6 @@ textarea{width:100%;height:260px;background:var(--zemin);color:var(--kemik);bord
 
   <div class="durum">
     <span id="bmDurum"><span class="nokta" style="background:var(--sonuk2)"></span>RUSTalyzer: bekliyor</span>
-    <span id="otoDurum"></span>
     <span id="ogrDurum"></span>
     <button class="btn" id="yenile">Verileri yenile</button>
     <button class="btn" id="topluBtn">Eşleştirme ekranı</button>
@@ -259,10 +258,10 @@ textarea{width:100%;height:260px;background:var(--zemin);color:var(--kemik);bord
 <dialog id="topluEs" style="max-width:820px">
   <div style="font-family:var(--disp);font-weight:700;font-size:20px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Toplu eşleştirme</div>
   <p style="font-size:13px;color:var(--sonuk);margin:0 0 12px">
-    <strong>Kolay yol:</strong> satırdaki <strong>BM'de ara</strong> düğmesi serverı BattleMetrics'te arar,
-    çıkan adaylardan doğrusuna tıklarsın — adres kutusu kendiliğinden dolar, <code>bm_id</code> de kaydedilir
-    (bir dahaki sefere bu server otomatik eşleşir). <strong>Zor yol:</strong> <strong>ara ↗</strong> ile RUSTalyzer'da bul,
-    <code>/server/</code> numarasını ya da IP:PORT'u kutuya yapıştır. Hepsini doldurmak zorunda değilsin — sonra <strong>Kaydet</strong>.
+    Her satırdaki <strong>ara ↗</strong> bağlantısı o serverın RUSTalyzer aramasını yeni sekmede açar.
+    Doğru serverı tıkla, adres çubuğundaki <code>/server/</code> sonrasındaki numarayı kutuya yapıştır.
+    Hepsini doldurmak zorunda değilsin — sadece işine yarayanları yap, sonra <strong>Kaydet</strong>.
+    Tam adresi de yapıştırabilirsin, numarayı kendim ayıklarım.
   </p>
   <div id="topluListe" style="max-height:58vh;overflow-y:auto;border:1px solid var(--cizgi)"></div>
   <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
@@ -2606,67 +2605,6 @@ function sunucuYaz(id, d){
   return true;
 }
 
-/* ---------- BattleMetrics koprusu (otomatik eslestirme) ----------
-   BM'nin temel GET /servers/<id> ve /servers?filter[search]= uclari ANAHTARSIZ ve bedava
-   (ucretli olan RCON / organizasyon / ban taraflariydi). CORS acik.
-   Mantik: bm_id -> BM'den ip:port (+varsa host adresi) cozulur, bu adres
-   RUSTalyzer anahtari olarak dogrulanip kullanilir. Yani bm_id girmek yetiyor;
-   RUSTalyzer eslesmesi kendiliginden turer. Cozumler kalici onbellege yazilir,
-   her acilista tekrar sorgulanmaz. */
-const BM_UC  = id => `https://api.battlemetrics.com/servers/${id}`;
-const BM_ARA = q  => `https://api.battlemetrics.com/servers?filter[game]=rust&filter[search]=${encodeURIComponent(q)}&page[size]=5`;
-let bmIdEkleri = {};   // toplu ekranda BM aramasindan secilen bm_id'ler (kaydetince servers listesine islenir)
-
-async function bmSunucu(id){
-  const r = await dene(BM_UC(id));
-  if(!r.ok || !r.veri || !r.veri.data) return null;
-  const a = r.veri.data.attributes || {};
-  return {ip:a.ip, port:a.port, adres:a.address||null, ad:a.name};
-}
-
-// bm_id'si olan ama rustalyzer anahtari olmayan serverlari coz
-async function otoEslestir(){
-  const adaylar = VERI.serverlar.filter(s => !s.rustalyzer && s.bm_id);
-  const kutu = document.getElementById("otoDurum");
-  if(!adaylar.length) return false;
-
-  const coz = (await Depo.oku("bm_cozumleri")) || {};   // bm_id -> {anahtar} | {hata:1, ts}
-  const el  = (await Depo.oku("eslesmeler"))  || {};
-  let hazir=0, yeni=0, hata=0, i=0, degisti=false;
-
-  for(const s of adaylar){
-    i++;
-    const c = coz[s.bm_id];
-    if(c && c.anahtar){ s.rustalyzer=c.anahtar; if(el[s.id]!==c.anahtar){el[s.id]=c.anahtar; degisti=true;} hazir++; continue; }
-    if(c && c.hata && Date.now()-c.ts < 24*3600000){ hata++; continue; }   // basarisizi 24 saatte bir dene
-
-    kutu.innerHTML = `<span class="nokta" style="background:var(--sodyum)"></span>Oto eşleştirme: ${i}/${adaylar.length}…`;
-    const bm = await bmSunucu(s.bm_id);
-    if(!bm || !bm.port || !(bm.ip || bm.adres)){ coz[s.bm_id]={hata:1,ts:Date.now()}; hata++; continue; }
-
-    // Once host:port (varsa), sonra ip:port — RUSTalyzer hangisini taniyorsa o
-    const denenecek = [...new Set([bm.adres && `${bm.adres}:${bm.port}`, bm.ip && `${bm.ip}:${bm.port}`].filter(Boolean))];
-    let anahtar=null, veri=null;
-    for(const k of denenecek){
-      const r = await dene(RUST_UC(k));
-      if(r.ok && r.veri && r.veri.server){ anahtar=k; veri=r.veri; break; }
-    }
-    if(anahtar){
-      s.rustalyzer=anahtar; el[s.id]=anahtar; coz[s.bm_id]={anahtar}; yeni++; degisti=true;
-      if(veri) sunucuYaz(s.id, veri);   // dogrulama cevabi bosa gitmesin
-    } else { coz[s.bm_id]={hata:1,ts:Date.now()}; hata++; }
-    await new Promise(r=>setTimeout(r, 350));   // BM anonim limitine saygi
-  }
-
-  await Depo.yaz("bm_cozumleri", coz);
-  if(degisti) await Depo.yaz("eslesmeler", el);
-  const tamam = hazir + yeni;
-  kutu.innerHTML = (tamam || hata)
-    ? `<span class="nokta" style="background:${hata ? "var(--sodyum)" : "var(--hazmat)"}"></span>Oto eşleştirme: ${tamam} tamam${yeni?` (${yeni} yeni)`:""}${hata?` · ${hata} çözülemedi`:""}`
-    : "";
-  return degisti;
-}
-
 async function bmCek(){
   const svler = VERI.serverlar.filter(s => s.rustalyzer);
   const kutu = document.getElementById("bmDurum");
@@ -3086,65 +3024,22 @@ document.getElementById("minPop").addEventListener("change",e=>{ filtre.minPop=+
 document.getElementById("orgSec").addEventListener("change",e=>{ filtre.org=e.target.value; ciz(); });
 document.getElementById("yenile").addEventListener("click", async()=>{ zorlaYenile=true; await bmCek(); ciz(); });
 function topluAc(){
-  bmIdEkleri = {};
   const eksik = VERI.serverlar.filter(x=>!x.rustalyzer);
   document.getElementById("topluListe").innerHTML = eksik.map(x=>{
     const q = encodeURIComponent(x.ad.split("|")[0].split("[")[0].replace(/[—-]/g," ").trim());
-    const bmNot = x.bm_id
-      ? `<span style="color:var(--sodyum)">bm_id var (${x.bm_id}) — oto eşleşme başarısız, elle dene</span>`
-      : `bm_id yok — <strong>BM'de ara</strong> ile bul, kalıcı olsun`;
-    return `<div style="display:grid;grid-template-columns:1fr 84px 96px 190px;gap:10px;align-items:center;
+    return `<div style="display:grid;grid-template-columns:1fr 96px 190px;gap:10px;align-items:center;
        padding:8px 10px;border-bottom:1px solid var(--cizgi)">
       <div><div style="font-family:var(--disp);font-weight:700;font-size:15px">${x.ad}</div>
-        <div style="font-family:var(--mono);font-size:10.5px;color:var(--sonuk2)">${x.topluluk} · ${x.gather} · ${x.grup_limiti===0?"limitsiz":"max "+x.grup_limiti} · ${bmNot}</div></div>
+        <div style="font-family:var(--mono);font-size:10.5px;color:var(--sonuk2)">${x.topluluk} · ${x.gather} · ${x.grup_limiti===0?"limitsiz":"max "+x.grup_limiti}</div></div>
       <a class="gir" href="https://www.rustalyzer.com/search?q=${q}" target="_blank" rel="noopener">ara ↗</a>
-      <button class="gir" data-bmara="${x.id}" type="button">BM'de ara</button>
       <input type="text" data-es="${x.id}" placeholder="numara veya IP:PORT" autocomplete="off"
         style="font-family:var(--mono);font-size:11.5px;background:var(--zemin);color:var(--kemik);
         border:1px solid var(--cizgi2);padding:6px 8px;width:100%">
-    </div>
-    <div data-bmsonuc="${x.id}" style="display:none;padding:6px 10px 10px;border-bottom:1px solid var(--cizgi);
-      background:rgba(0,0,0,.25)"></div>`;
+    </div>`;
   }).join("") || '<div style="padding:16px;color:var(--sonuk)">Hepsi eşleşmiş.</div>';
   document.getElementById("topluSayac").textContent = `${eksik.length} server eşleşmemiş`;
   document.getElementById("topluEs").showModal();
 }
-
-/* BM arama asistani: server adiyla BattleMetrics'te ara, adaylari listele.
-   Adaya tiklayinca adres kutusu dolar ve bm_id not edilir (kaydetle kalicilesir). */
-document.getElementById("topluListe").addEventListener("click", async e=>{
-  const ara = e.target.closest("button[data-bmara]");
-  if(ara){
-    const id = ara.dataset.bmara;
-    const sv = VERI.serverlar.find(x=>x.id===id); if(!sv) return;
-    const kutu = document.querySelector(`div[data-bmsonuc="${CSS.escape(id)}"]`);
-    kutu.style.display="block";
-    kutu.innerHTML = '<span style="font-family:var(--mono);font-size:11px;color:var(--sonuk2)">BattleMetrics aranıyor…</span>';
-    ara.disabled = true;
-    const q = sv.ad.split("|")[0].split("[")[0].replace(/[—]/g," ").trim();
-    const r = await dene(BM_ARA(q));
-    ara.disabled = false;
-    const liste = (r.ok && r.veri && Array.isArray(r.veri.data)) ? r.veri.data : [];
-    kutu.innerHTML = liste.length
-      ? '<div style="display:flex;flex-direction:column;gap:4px">'+liste.map(d=>{
-          const a = d.attributes || {};
-          const anahtar = a.address ? `${a.address}:${a.port}` : `${a.ip}:${a.port}`;
-          return `<button class="gir" type="button" data-bmsec="${id}" data-anahtar="${anahtar}" data-bmid="${d.id}"
-            style="text-align:left;text-transform:none;letter-spacing:0">
-            ${a.name || "?"} — ${a.players ?? "?"}/${a.maxPlayers ?? "?"} oyuncu · ${anahtar}</button>`;
-        }).join("")+'</div>'
-      : `<span style="font-family:var(--mono);font-size:11px;color:var(--sonuk2)">Sonuç yok${r.ok?"":" — "+(r.mesaj||"BM'e ulaşılamadı")}. Adı sadeleştirip RUSTalyzer yolunu dene.</span>`;
-    return;
-  }
-  const sec = e.target.closest("button[data-bmsec]");
-  if(sec){
-    const inp = document.querySelector(`#topluListe input[data-es="${CSS.escape(sec.dataset.bmsec)}"]`);
-    if(inp){ inp.value = sec.dataset.anahtar; inp.style.borderColor = "var(--hazmat)"; }
-    bmIdEkleri[sec.dataset.bmsec] = +sec.dataset.bmid;
-    const kutu = document.querySelector(`div[data-bmsonuc="${CSS.escape(sec.dataset.bmsec)}"]`);
-    if(kutu) kutu.style.display="none";
-  }
-});
 document.getElementById("topluBtn").addEventListener("click", topluAc);
 document.getElementById("topluKapat").addEventListener("click",()=>document.getElementById("topluEs").close());
 document.getElementById("topluKaydet").addEventListener("click", async()=>{
@@ -3157,24 +3052,13 @@ document.getElementById("topluKaydet").addEventListener("click", async()=>{
     const sv = VERI.serverlar.find(x=>x.id===inp.dataset.es);
     if(sv){ sv.rustalyzer = anahtar; el[sv.id] = anahtar; n++; }
   });
-  // BM aramasindan secilen bm_id'ler de kalicilessin — ilerde oto eslesmenin anahtari
-  if(Object.keys(bmIdEkleri).length){
-    const bmEk = (await Depo.oku("bm_ekleri")) || {};
-    for(const [id, bmid] of Object.entries(bmIdEkleri)){
-      const sv = VERI.serverlar.find(x=>x.id===id);
-      if(sv && !sv.bm_id){ sv.bm_id = bmid; }
-      bmEk[id] = bmid;
-    }
-    await Depo.yaz("bm_ekleri", bmEk);
-    bmIdEkleri = {};
-  }
   await Depo.yaz("eslesmeler", el);
   document.getElementById("topluEs").close();
   if(n){ zorlaYenile = true; await bmCek(); ciz(); }
 });
 
 document.getElementById("disaAktar").addEventListener("click",()=>{
-  const cikti = VERI.serverlar.filter(x=>x.rustalyzer).map(x=>({id:x.id, rustalyzer:x.rustalyzer, ...(x.bm_id?{bm_id:x.bm_id}:{})}));
+  const cikti = VERI.serverlar.filter(x=>x.rustalyzer).map(x=>({id:x.id, rustalyzer:x.rustalyzer}));
   const sapan = Object.entries(ogrenilen).map(([k,v])=>{const [id,gun]=k.split("|"); return {id, gun, sapma_dk:v.sapmaDk};});
   document.getElementById("ihracatMetin").value = JSON.stringify({eslesmeler:cikti, ilan_edilen_saat_sapmasi:sapan}, null, 2);
   document.getElementById("ihracat").showModal();
@@ -3202,31 +3086,27 @@ document.getElementById("kopyala").addEventListener("click",()=>{
     const el=document.createElement("option"); el.value=o; el.textContent=o; orgSec.appendChild(el);
   });
   document.getElementById("altNot").innerHTML =
-    `Saatler <strong>TR saatine göre</strong>. Canlı veri <strong>RUSTalyzer</strong>'dan geliyor: anlık oyuncu, son wipe,
+    `Saatler <strong>TR saatine göre</strong>. Tüm canlı veri tek kaynaktan, <strong>RUSTalyzer</strong>'dan geliyor: anlık oyuncu, son wipe,
      wipe tahmini, kit/grup limiti/harita boyutu ve yarılanma süresi. Anahtar gerekmiyor, 30 dakika önbelleklenir.
-     <strong>Eşleştirme otomatik:</strong> <code>servers.json</code>'da <code>bm_id</code> olan her server, BattleMetrics'ten
-     adresi çözülüp RUSTalyzer'a kendiliğinden bağlanır — yeni server eklerken sadece <code>bm_id</code> yazman yeter.
-     bm_id'si olmayanlar için <strong>Eşleştirme ekranı</strong>ndaki <strong>BM'de ara</strong> düğmesi iki tıkla halleder.
-     <strong>Eşleşmeleri dışa aktar</strong> ile sonuçları <code>servers.json</code>'a işleyip paylaşırsın; Eray ve Batu'ya hazır gelir.
-     Canlı veri gelmezse takvim ilan edilen saatlerle çalışmaya devam eder.
+     <strong>Yeni server eklerken:</strong> servers.json'a isim + topluluk yaz, <code>eslestir.mjs</code> scriptini bir kez çalıştır —
+     topluluğun RUSTalyzer org sayfasından kimliği kendisi bulur. Org sayfası olmayan küçük serverlar için
+     <strong>Eşleştirme ekranı</strong> yedek olarak durur; oradaki eşleşmeler artık kalıcıdır ve
+     <strong>Eşleşmeleri dışa aktar</strong> ile servers.json'a işlenebilir. Canlı veri gelmezse takvim ilan edilen saatlerle çalışmaya devam eder.
      Veri: ${VERI.serverlar.length} server, ${new Set(VERI.serverlar.map(s=>s.topluluk)).size} topluluk. Liste kaynağı: <code>${veriKaynagi}</code>.`;
 
   gozlemler = (await Depo.oku("wipe_gozlemleri")) || {};
   ogrenilen = (await Depo.oku("wipe_ogrenilen")) || {};
 
-  /* Daha once elle yapilan eslesmeleri geri uygula.
-     (Onceden bunlar sadece disa aktarilip servers.json'a islenirse kalici oluyordu;
-     artik sayfa her acilista depodan geri yukluyor.) */
+  /* Elle yapilan eslesmeleri acilista geri uygula.
+     (Onceden bunlar depoya yaziliyordu ama sayfa yeniden acilinca
+     serverlara geri yuklenmiyordu - disa aktarilip servers.json'a
+     islenmedikce kayboluyordu. Simdi kalici.) */
   const kayitliEs = (await Depo.oku("eslesmeler")) || {};
   for(const s of VERI.serverlar){ if(!s.rustalyzer && kayitliEs[s.id]) s.rustalyzer = kayitliEs[s.id]; }
-  const kayitliBm = (await Depo.oku("bm_ekleri")) || {};
-  for(const s of VERI.serverlar){ if(!s.bm_id && kayitliBm[s.id]) s.bm_id = kayitliBm[s.id]; }
 
   ogren();
   girisGuncelle("baslangic");
   setInterval(ciz, 30000);
-  ciz();
-  await otoEslestir();   // bm_id'si olanlar kendiliginden eslesir
   bmCek().then(ciz);
 })();
 </script>
