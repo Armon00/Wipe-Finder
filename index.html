@@ -214,9 +214,9 @@ textarea{width:100%;height:260px;background:var(--zemin);color:var(--kemik);bord
     <div class="fgrup">
       <span class="fetiket">En az zirve</span>
       <select id="minPop">
-        <option value="0">hepsi</option>
+        <option value="0" selected>hepsi</option>
         <option value="150">150+</option>
-        <option value="300" selected>300+</option>
+        <option value="300">300+</option>
         <option value="600">600+</option>
       </select>
     </div>
@@ -239,9 +239,10 @@ textarea{width:100%;height:260px;background:var(--zemin);color:var(--kemik);bord
   </div>
 
   <div class="durum">
-    <span id="bmDurum"><span class="nokta" style="background:var(--sonuk2)"></span>BattleMetrics: bekliyor</span>
+    <span id="bmDurum"><span class="nokta" style="background:var(--sonuk2)"></span>RUSTalyzer: bekliyor</span>
     <span id="ogrDurum"></span>
     <button class="btn" id="yenile">Verileri yenile</button>
+    <button class="btn" id="topluBtn">Eşleştirme ekranı</button>
     <button class="btn" id="disaAktar">Eşleşmeleri dışa aktar</button>
     <button class="btn" id="teshisBtn" hidden>Teşhis</button>
     
@@ -253,6 +254,22 @@ textarea{width:100%;height:260px;background:var(--zemin);color:var(--kemik);bord
 
   <p class="aciklama" id="altNot"></p>
 </div>
+
+<dialog id="topluEs" style="max-width:820px">
+  <div style="font-family:var(--disp);font-weight:700;font-size:20px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Toplu eşleştirme</div>
+  <p style="font-size:13px;color:var(--sonuk);margin:0 0 12px">
+    Her satırdaki <strong>ara ↗</strong> bağlantısı o serverın RUSTalyzer aramasını yeni sekmede açar.
+    Doğru serverı tıkla, adres çubuğundaki <code>/server/</code> sonrasındaki numarayı kutuya yapıştır.
+    Hepsini doldurmak zorunda değilsin — sadece işine yarayanları yap, sonra <strong>Kaydet</strong>.
+    Tam adresi de yapıştırabilirsin, numarayı kendim ayıklarım.
+  </p>
+  <div id="topluListe" style="max-height:58vh;overflow-y:auto;border:1px solid var(--cizgi)"></div>
+  <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+    <button class="btn" id="topluKaydet">Kaydet ve çek</button>
+    <button class="btn" id="topluKapat">Kapat</button>
+    <span id="topluSayac" style="font-family:var(--mono);font-size:11.5px;color:var(--sonuk2)"></span>
+  </div>
+</dialog>
 
 <dialog id="teshis">
   <div style="font-family:var(--disp);font-size:20px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Bağlantı teşhisi</div>
@@ -2507,7 +2524,7 @@ let canli = {};          // id -> {players,maxPlayers,rank,worldSize,lastWipe,na
 let aktifSekme = "simdi";
 let sonRapor = [];
 let zorlaYenile = false;
-const filtre = { grup:new Set(["3"]), gather:new Set(["1x","2x"]), tip:new Set(["full","map"]), kitGizle:true, minPop:300, org:"" };
+const filtre = { grup:new Set(["3"]), gather:new Set(["1x","2x"]), tip:new Set(["full","map"]), kitGizle:true, minPop:0, org:"" };
 
 /* ---------- RUSTalyzer veri katmani ----------
    Uc: https://www.rustalyzer.com/api/server/<IP:PORT | sayisal kimlik>
@@ -2593,8 +2610,10 @@ async function bmCek(){
   const kutu = document.getElementById("bmDurum");
   const eksik = VERI.serverlar.length - svler.length;
 
+  const imza = svler.map(s=>s.id+":"+s.rustalyzer).sort().join("|");
   const onb = await Depo.oku("rust_onbellek");
-  const taze = onb && (Date.now() - onb.ts) < ONBELLEK_DK*60000;
+  // Liste degistiyse (yeni eslesme, servers.json guncellemesi) onbellek gecersiz
+  const taze = onb && onb.imza === imza && (Date.now() - onb.ts) < ONBELLEK_DK*60000;
   if(taze && !zorlaYenile){
     canli = onb.canli || {};
     kutu.innerHTML = `<span class="nokta" style="background:var(--hazmat)"></span>RUSTalyzer: önbellekten (${Math.round((Date.now()-onb.ts)/60000)} dk önce)${eksik?` · ${eksik} server eşleşmemiş`:""}`;
@@ -2619,10 +2638,10 @@ async function bmCek(){
 
   kutu.innerHTML = ok
     ? `<span class="nokta" style="background:var(--hazmat)"></span>RUSTalyzer: ${ok} server canlı${hata?` · ${hata} hata`:""}${eksik?` · ${eksik} eşleşmemiş`:""}`
-    : `<span class="nokta" style="background:var(--pas)"></span>RUSTalyzer: veri gelmedi — takvim yine de çalışıyor`;
+    : `<span class="nokta" style="background:var(--pas)"></span>RUSTalyzer: veri gelmedi (${svler.length} denendi) — takvim yine de çalışıyor`;
   document.getElementById("teshisBtn").hidden = !hata;
 
-  if(ok) await Depo.yaz("rust_onbellek", {ts:Date.now(), canli});
+  if(ok) await Depo.yaz("rust_onbellek", {ts:Date.now(), imza, canli});
   await gozlemKaydet();
 }
 
@@ -2845,7 +2864,11 @@ function cizSimdi(){
     </div>`;
   };
 
+  const eslesmemis = VERI.serverlar.filter(s=>!s.rustalyzer).length;
   document.getElementById("panelSimdi").innerHTML = `
+    ${eslesmemis ? `<div class="force" style="border-left-color:var(--pas);margin:8px 0 0">
+        <b style="color:var(--pas)">${eslesmemis} server eşleşmemiş</b>
+        <span>Canlı verisi yok, bu listede görünmüyorlar. Yukarıdaki <strong>Eşleştirme ekranı</strong> düğmesine bas — hepsi tek sayfada.</span></div>` : ""}
     <div class="liste">
       ${gecmis.length? gecmis.map(o=>satir(o,true)).join("") : `<div class="bos">Son 30 saatte filtreye uyan wipe yok.</div>`}
       <div class="suan"><b>Şu an</b><span>${GUN_KISA[trGunIdx(simdi)]} ${trSaat(simdi)} · yukarısı taze başlamış, aşağısı yolda</span></div>
@@ -2895,12 +2918,14 @@ function cizTum(){
       <td>${c?`${c.oyuncu}/${c.maxOyuncu}`:"—"}</td>
       <td>${zirveOf(s)||"—"}</td>
       <td>${(c&&c.sonWipe)? sureMetin(Date.now()-c.sonWipe)+" önce" : "—"}</td>
-      <td>${c?'<span style="color:var(--hazmat)">canlı</span>':(s.rustalyzer?s.guven:'<span style="color:var(--sodyum)">eşleşmemiş</span>')}</td>
+      <td>${c?'<span style="color:var(--hazmat)">canlı</span>'
+             :(s.rustalyzer?`<span style="color:var(--pas)">veri yok</span>`
+             :`<button class="gir" style="width:100%" data-eslestir="${s.id}" data-ad="${s.ad.replace(/"/g,"")}">eşleştir</button>`)}</td>
       <td style="max-width:280px;white-space:normal;color:var(--sonuk)">${s.site_kaynak||""}</td>
     </tr>`;
   }).join("");
   document.getElementById("panelTum").innerHTML = `<table>
-    <thead><tr><th>Server</th><th>İlan edilen takvim</th><th>Kural</th><th>Harita</th><th>Şu an</th><th>Zirve</th><th>Son wipe</th><th>Güven</th><th>Takvim kaynağı</th></tr></thead>
+    <thead><tr><th>Server</th><th>İlan edilen takvim</th><th>Kural</th><th>Harita</th><th>Şu an</th><th>Zirve</th><th>Son wipe</th><th>Durum</th><th>Takvim kaynağı</th></tr></thead>
     <tbody>${sat || `<tr><td colspan="9" style="color:var(--sonuk2)">Filtreye uyan server yok.</td></tr>`}</tbody></table>`;
 }
 
@@ -2998,6 +3023,40 @@ document.addEventListener("click", async e=>{
 document.getElementById("minPop").addEventListener("change",e=>{ filtre.minPop=+e.target.value; ciz(); });
 document.getElementById("orgSec").addEventListener("change",e=>{ filtre.org=e.target.value; ciz(); });
 document.getElementById("yenile").addEventListener("click", async()=>{ zorlaYenile=true; await bmCek(); ciz(); });
+function topluAc(){
+  const eksik = VERI.serverlar.filter(x=>!x.rustalyzer);
+  document.getElementById("topluListe").innerHTML = eksik.map(x=>{
+    const q = encodeURIComponent(x.ad.split("|")[0].split("[")[0].replace(/[—-]/g," ").trim());
+    return `<div style="display:grid;grid-template-columns:1fr 96px 190px;gap:10px;align-items:center;
+       padding:8px 10px;border-bottom:1px solid var(--cizgi)">
+      <div><div style="font-family:var(--disp);font-weight:700;font-size:15px">${x.ad}</div>
+        <div style="font-family:var(--mono);font-size:10.5px;color:var(--sonuk2)">${x.topluluk} · ${x.gather} · ${x.grup_limiti===0?"limitsiz":"max "+x.grup_limiti}</div></div>
+      <a class="gir" href="https://www.rustalyzer.com/search?q=${q}" target="_blank" rel="noopener">ara ↗</a>
+      <input type="text" data-es="${x.id}" placeholder="numara veya IP:PORT" autocomplete="off"
+        style="font-family:var(--mono);font-size:11.5px;background:var(--zemin);color:var(--kemik);
+        border:1px solid var(--cizgi2);padding:6px 8px;width:100%">
+    </div>`;
+  }).join("") || '<div style="padding:16px;color:var(--sonuk)">Hepsi eşleşmiş.</div>';
+  document.getElementById("topluSayac").textContent = `${eksik.length} server eşleşmemiş`;
+  document.getElementById("topluEs").showModal();
+}
+document.getElementById("topluBtn").addEventListener("click", topluAc);
+document.getElementById("topluKapat").addEventListener("click",()=>document.getElementById("topluEs").close());
+document.getElementById("topluKaydet").addEventListener("click", async()=>{
+  const el = (await Depo.oku("eslesmeler")) || {};
+  let n=0;
+  document.querySelectorAll("#topluListe input[data-es]").forEach(inp=>{
+    const ham = inp.value.trim(); if(!ham) return;
+    const anahtar = ham.replace(/^.*\/server\//,"").split(/[?#]/)[0].replace(/[^0-9a-zA-Z.:_-]/g,"");
+    if(!anahtar) return;
+    const sv = VERI.serverlar.find(x=>x.id===inp.dataset.es);
+    if(sv){ sv.rustalyzer = anahtar; el[sv.id] = anahtar; n++; }
+  });
+  await Depo.yaz("eslesmeler", el);
+  document.getElementById("topluEs").close();
+  if(n){ zorlaYenile = true; await bmCek(); ciz(); }
+});
+
 document.getElementById("disaAktar").addEventListener("click",()=>{
   const cikti = VERI.serverlar.filter(x=>x.rustalyzer).map(x=>({id:x.id, rustalyzer:x.rustalyzer}));
   const sapan = Object.entries(ogrenilen).map(([k,v])=>{const [id,gun]=k.split("|"); return {id, gun, sapma_dk:v.sapmaDk};});
