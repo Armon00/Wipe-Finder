@@ -1,4 +1,282 @@
-{
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wipe Finder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --zemin:#0F141B; --panel:#161C25; --panel2:#1D242F; --panel3:#232B37;
+  --cizgi:#2B3542; --cizgi2:#3A4654;
+  --kemik:#E8E4DC; --sonuk:#8B95A2; --sonuk2:#5D6875;
+  --pas:#CE422B; --pas-ac:#E05A42; --pas-koyu:#8E2A18;
+  --sodyum:#E0A32B; --hazmat:#7A9E4B; --sac:#5B7A94; --kan:#A83232;
+  --disp:"Roboto Condensed",system-ui,sans-serif;
+  --mono:"Roboto Mono",ui-monospace,monospace;
+  --body:"Roboto Condensed",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--zemin);color:var(--kemik);font-family:var(--body);font-size:15px;line-height:1.45}
+.kabuk{max-width:1180px;margin:0 auto;padding:0 16px 80px}
+
+.ust{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding:20px 0 14px;border-bottom:1px solid var(--cizgi)}
+.marka{font-family:var(--disp);font-weight:700;font-size:32px;letter-spacing:.06em;text-transform:uppercase;line-height:1}
+.marka span{color:var(--pas)}
+.saat{font-family:var(--mono);font-size:12px;color:var(--sonuk);margin-left:auto;text-align:right}
+.saat b{display:block;font-size:22px;font-weight:500;color:var(--kemik);letter-spacing:.04em}
+
+.force{margin-top:14px;padding:10px 14px;background:var(--panel);border:1px solid var(--cizgi);
+  border-left:3px solid var(--sodyum);font-size:14px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.force b{font-family:var(--disp);font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--sodyum);font-size:15px}
+
+.sekmeler{display:flex;gap:0;margin:18px 0 0}
+.sekme{font-family:var(--disp);font-weight:700;font-size:15px;text-transform:uppercase;letter-spacing:.12em;
+  background:var(--panel);border:1px solid var(--cizgi);border-bottom:none;color:var(--sonuk);
+  padding:10px 22px;cursor:pointer;margin-right:-1px}
+.sekme:hover{color:var(--kemik);background:var(--panel2)}
+.sekme[aria-selected="true"]{background:var(--pas);border-color:var(--pas);color:#fff}
+.sekme:focus-visible{outline:2px solid var(--sodyum);outline-offset:-4px}
+
+.filtre{background:var(--panel);border:1px solid var(--cizgi);padding:12px 14px;
+  display:flex;gap:22px;flex-wrap:wrap;align-items:center}
+.fgrup{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
+.fetiket{font-family:var(--disp);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--sonuk2);margin-right:3px}
+.cip{font-family:var(--disp);font-weight:500;font-size:13px;text-transform:uppercase;letter-spacing:.06em;
+  padding:5px 11px;border:1px solid var(--cizgi2);background:var(--panel2);color:var(--sonuk);cursor:pointer}
+.cip:hover{color:var(--kemik);border-color:var(--sonuk2)}
+.cip[aria-pressed="true"]{background:var(--pas);border-color:var(--pas);color:#fff}
+.cip:focus-visible{outline:2px solid var(--sodyum);outline-offset:1px}
+select,input[type=password]{font-family:var(--mono);font-size:12px;background:var(--panel2);color:var(--kemik);
+  border:1px solid var(--cizgi2);padding:5px 7px}
+select:focus,input:focus{outline:none;border-color:var(--pas)}
+
+.durum{font-family:var(--mono);font-size:11.5px;color:var(--sonuk2);padding:9px 2px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.nokta{width:8px;height:8px;display:inline-block;margin-right:6px;vertical-align:0}
+.btn{font-family:var(--disp);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.09em;
+  background:var(--panel2);border:1px solid var(--cizgi2);color:var(--kemik);padding:6px 14px;cursor:pointer}
+.btn:hover{background:var(--pas);border-color:var(--pas);color:#fff}
+.btn:focus-visible{outline:2px solid var(--sodyum);outline-offset:2px}
+
+.liste{display:flex;flex-direction:column;gap:7px;padding-top:7px}
+.satir{display:grid;grid-template-columns:92px minmax(340px,1fr) 262px 116px 132px;gap:14px;align-items:center;
+  padding:12px 14px;background:var(--panel);border:4px solid var(--cizgi2)}
+.satir:hover{background:var(--panel2);border-color:var(--sonuk2)}
+.satir.gecmis{background:rgba(0,0,0,.28);border-color:var(--cizgi);border-left-color:var(--cizgi)}
+.satir.yakinda{border-left-color:var(--sodyum)}
+.satir.tazewipe{border-left-color:var(--hazmat)}
+.satir.gecmis .ad{color:var(--sonuk)}
+.zaman{font-family:var(--mono);font-size:17px;font-weight:500;letter-spacing:-.02em;text-align:right}
+.zaman small{display:block;font-family:var(--disp);font-size:10px;font-weight:500;text-transform:uppercase;
+  color:var(--sonuk2);letter-spacing:.12em;margin-top:2px}
+.yakin{color:var(--sodyum)}
+.taze{color:var(--hazmat)}
+.eski{color:var(--sonuk)}
+.ad{font-family:var(--disp);font-weight:700;font-size:18px;letter-spacing:.01em;line-height:1.2}
+.altbilgi{font-family:var(--mono);font-size:11px;color:var(--sonuk2);margin-top:4px;display:flex;gap:10px;flex-wrap:wrap}
+.rozet{font-family:var(--disp);font-weight:700;font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;
+  padding:2px 7px;border:1px solid currentColor}
+.r-full{color:var(--hazmat)}
+.r-map{color:var(--sonuk2)}
+.r-kit{color:var(--pas)}
+.r-ogren{color:var(--sac)}
+.r-sapma{color:var(--sodyum)}
+.pop{font-family:var(--mono);font-size:14px;text-align:right}
+.pop small{display:block;font-family:var(--disp);font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--sonuk2);margin-top:2px}
+.olcer{height:4px;background:var(--zemin);margin-top:6px;overflow:hidden}
+.olcer i{display:block;height:100%;background:var(--hazmat)}
+.olcer i.az{background:var(--pas)}
+.olcer i.orta{background:var(--sodyum)}
+.sag{display:flex;flex-direction:column;gap:4px;align-items:stretch}
+.gir{font-family:var(--disp);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--sonuk);text-decoration:none;text-align:center;background:var(--panel2);
+  border:1px solid var(--cizgi2);padding:6px 8px;cursor:pointer;display:block}
+.gir:hover{border-color:var(--pas);background:var(--pas);color:#fff}
+.gir:focus-visible{outline:2px solid var(--sodyum);outline-offset:2px}
+.gir.kopyalandi{border-color:var(--hazmat);color:var(--hazmat)}
+
+.suan{display:flex;align-items:center;gap:14px;padding:0 14px;height:36px;
+  background:var(--panel3);border-top:2px solid var(--pas);border-bottom:2px solid var(--pas)}
+.suan b{font-family:var(--disp);font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.22em;
+  color:#fff;background:var(--pas);padding:4px 12px}
+.suan span{font-family:var(--mono);font-size:11.5px;color:var(--sonuk)}
+
+.hafta{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--cizgi);border:1px solid var(--cizgi)}
+.gun{background:var(--panel);min-height:220px;padding:0 0 8px}
+.gun.bugun{background:var(--panel2)}
+.gunbas{font-family:var(--disp);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.14em;
+  padding:8px 10px;border-bottom:1px solid var(--cizgi);color:var(--sonuk);display:flex;justify-content:space-between;align-items:baseline}
+.gun.bugun .gunbas{color:var(--pas);border-bottom-color:var(--pas)}
+.gunbas em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--sonuk2);letter-spacing:0}
+.kart{padding:7px 10px;border-bottom:1px solid rgba(43,53,66,.6)}
+.kart .s{font-family:var(--mono);font-size:12.5px;font-weight:500;color:var(--sodyum)}
+.kart .n{font-family:var(--disp);font-weight:700;font-size:14px;line-height:1.2;margin-top:2px}
+.kart .m{font-family:var(--mono);font-size:10px;color:var(--sonuk2);margin-top:3px}
+.bos{padding:14px 10px;font-family:var(--mono);font-size:10.5px;color:var(--sonuk2)}
+
+table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--cizgi);border-top:none}
+th{font-family:var(--disp);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--sonuk2);
+  text-align:left;padding:9px 10px;border-bottom:1px solid var(--cizgi);white-space:nowrap;background:var(--panel2)}
+td{padding:9px 10px;border-bottom:1px solid rgba(43,53,66,.55);font-family:var(--mono);font-size:11.5px;vertical-align:top}
+td.isim{font-family:var(--disp);font-weight:700;font-size:16px}
+tbody tr:hover{background:var(--panel2)}
+
+
+/* --- giris saati kaydiricisi --- */
+.girisBar{background:var(--panel);border:1px solid var(--cizgi);border-top:none;padding:11px 14px;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.girisBar .et{font-family:var(--disp);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.13em;color:var(--sonuk2)}
+.girisBar .dg{font-family:var(--mono);font-size:17px;color:var(--sodyum);min-width:132px}
+.girisBar .dg small{display:block;font-family:var(--disp);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--sonuk2)}
+.girisBar input[type=range]{flex:1;min-width:200px;accent-color:#E0A32B;height:5px}
+.girisBar .hz{display:flex;gap:4px;flex-wrap:wrap}
+
+/* --- metrik seridi (isim altinda, sabit genislik) --- */
+.mserit{display:flex;gap:1px;background:var(--cizgi);margin-top:7px;width:max-content;max-width:100%}
+.mh{background:var(--panel2);width:74px;padding:4px 2px;text-align:center;overflow:hidden}
+.mh .v{font-family:var(--mono);font-size:13px;font-weight:500;line-height:1.2;white-space:nowrap}
+.mh .e{font-family:var(--disp);font-size:8px;text-transform:uppercase;letter-spacing:.07em;color:var(--sonuk2);margin-top:1px;white-space:nowrap}
+.m-iyi{color:var(--hazmat)} .m-orta{color:var(--sodyum)} .m-kotu{color:var(--pas)}
+.girisDurum{font-family:var(--disp);font-size:9.5px;text-transform:uppercase;letter-spacing:.11em;color:var(--sonuk2);margin-bottom:3px}
+.girisDurum b{font-weight:700}
+
+.aciklama{font-size:13.5px;color:var(--sonuk);max-width:74ch;margin:16px 2px 0;line-height:1.7}
+.aciklama code{font-family:var(--mono);font-size:11.5px;color:var(--kemik);background:var(--panel2);padding:1px 5px}
+.aciklama strong{color:var(--kemik);font-weight:700}
+dialog{background:var(--panel);color:var(--kemik);border:1px solid var(--cizgi2);border-top:3px solid var(--pas);
+  max-width:640px;width:92%;padding:20px}
+dialog::backdrop{background:rgba(6,9,13,.82)}
+textarea{width:100%;height:260px;background:var(--zemin);color:var(--kemik);border:1px solid var(--cizgi);
+  font-family:var(--mono);font-size:11.5px;padding:9px}
+
+@media (max-width:900px){
+  .satir{grid-template-columns:78px 1fr;gap:8px 12px}
+  .satir>div:nth-child(3),.satir .pop,.satir .sag{grid-column:2}
+  .mserit{overflow-x:auto}
+  .satir .pop,.satir .sag{grid-column:2}
+  .hafta{grid-template-columns:1fr}
+  .gun{min-height:0}
+  .marka{font-size:25px}
+  .filtre{gap:14px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="kabuk">
+
+  <header class="ust">
+    <div>
+      <div class="marka">Wipe <span>Finder</span></div>
+    </div>
+    <div class="saat">
+      <b id="saatKutu">--:--</b>
+      <span id="tarihKutu">—</span>
+    </div>
+  </header>
+
+  <div class="force" id="forceBant" hidden></div>
+
+  <div class="sekmeler" role="tablist">
+    <button class="sekme" role="tab" aria-selected="true" data-sekme="simdi">Şimdi</button>
+    <button class="sekme" role="tab" aria-selected="false" data-sekme="hafta">Hafta</button>
+    <button class="sekme" role="tab" aria-selected="false" data-sekme="tum">Tüm serverlar</button>
+  </div>
+
+  <div class="filtre">
+    <div class="fgrup">
+      <span class="fetiket">Grup</span>
+      <button class="cip" data-f="grup" data-v="1" aria-pressed="false">solo</button>
+      <button class="cip" data-f="grup" data-v="2" aria-pressed="false">duo</button>
+      <button class="cip" data-f="grup" data-v="3" aria-pressed="true">trio</button>
+      <button class="cip" data-f="grup" data-v="4" aria-pressed="false">quad</button>
+      <button class="cip" data-f="grup" data-v="5+" aria-pressed="false">5+</button>
+      <button class="cip" data-f="grup" data-v="0" aria-pressed="false">limitsiz</button>
+    </div>
+    <div class="fgrup">
+      <span class="fetiket">Kasma</span>
+      <button class="cip" data-f="gather" data-v="1x" aria-pressed="true">1x</button>
+      <button class="cip" data-f="gather" data-v="2x" aria-pressed="true">2x</button>
+      <button class="cip" data-f="gather" data-v="5x" aria-pressed="false">5x</button>
+    </div>
+    <div class="fgrup">
+      <span class="fetiket">Wipe</span>
+      <button class="cip" data-f="tip" data-v="full" aria-pressed="true">full</button>
+      <button class="cip" data-f="tip" data-v="map" aria-pressed="true">map</button>
+    </div>
+    <div class="fgrup">
+      <span class="fetiket">Kit</span>
+      <button class="cip" data-f="kit" data-v="gizle" aria-pressed="true">kitli olanları gizle</button>
+    </div>
+    <div class="fgrup">
+      <span class="fetiket">En az zirve</span>
+      <select id="minPop">
+        <option value="0">hepsi</option>
+        <option value="150">150+</option>
+        <option value="300" selected>300+</option>
+        <option value="600">600+</option>
+      </select>
+    </div>
+    <div class="fgrup">
+      <span class="fetiket">Topluluk</span>
+      <select id="orgSec"><option value="">hepsi</option></select>
+    </div>
+  </div>
+
+  <div class="girisBar">
+    <span class="et">Giriş<br>saatiniz</span>
+    <div class="dg" id="girisDeger">—<small id="girisAlt">—</small></div>
+    <input type="range" id="girisRange" min="0" max="120" value="0" step="1">
+    <div class="hz">
+      <button class="cip" data-giris="0" aria-pressed="true">şimdi</button>
+      <button class="cip" data-giris="cuma20" aria-pressed="false">cuma 20:00</button>
+      <button class="cip" data-giris="cmt20" aria-pressed="false">cmt 20:00</button>
+      <button class="cip" data-giris="paz20" aria-pressed="false">paz 20:00</button>
+    </div>
+  </div>
+
+  <div class="durum">
+    <span id="bmDurum"><span class="nokta" style="background:var(--sonuk2)"></span>BattleMetrics: bekliyor</span>
+    <span id="ogrDurum"></span>
+    <button class="btn" id="yenile">Verileri yenile</button>
+    <button class="btn" id="disaAktar">Eşleşmeleri dışa aktar</button>
+    <button class="btn" id="teshisBtn" hidden>Teşhis</button>
+    
+  </div>
+
+  <div id="panelSimdi"></div>
+  <div id="panelHafta" hidden></div>
+  <div id="panelTum" hidden></div>
+
+  <p class="aciklama" id="altNot"></p>
+</div>
+
+<dialog id="teshis">
+  <div style="font-family:var(--disp);font-size:20px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Bağlantı teşhisi</div>
+  <p style="font-size:12.5px;color:var(--sonuk);margin:0 0 10px">Dört yol denendi. Hangisinin nerede takıldığı aşağıda.</p>
+  <div id="teshisIcerik" style="font-family:var(--mono);font-size:11.5px;line-height:1.8"></div>
+  <div id="teshisOneri" style="font-size:12.5px;color:var(--kemik);margin-top:14px;border-top:1px solid var(--cizgi);padding-top:12px"></div>
+  <div style="margin-top:12px"><button class="btn" id="teshisKapat">Kapat</button></div>
+</dialog>
+
+<dialog id="ihracat">
+  <div style="font-family:var(--disp);font-size:20px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Eşleşmeler</div>
+  <p style="font-size:12.5px;color:var(--sonuk);margin:0 0 10px">Eşleştirdiğin server anahtarları burada. Bunları <code>servers.json</code> içindeki <code>rustalyzer</code> alanlarına işleyip depoya yüklersen Eray ve Batu da eşleştirme yapmak zorunda kalmaz.</p>
+  <textarea id="ihracatMetin" readonly></textarea>
+  <div style="margin-top:10px;display:flex;gap:8px">
+    <button class="btn" id="kopyala">Kopyala</button>
+    <button class="btn" id="kapat">Kapat</button>
+  </div>
+</dialog>
+
+<script>
+/* Asagidaki veri YEDEKtir. Sayfa bir adresten (http/https) servis ediliyorsa
+   yanindaki servers.json okunur ve bunun yerine gecer. Boylece server eklemek
+   icin bu dosyaya degil, sadece servers.json'a dokunman yeterli olur. */
+let VERI = {
  "schema_version": 3,
  "guncelleme_tarihi": "2026-08-19",
  "aciklama": "Rust wipe bulucu aracinin veri kaynagi. Saatler ASLA TR'ye cevrilmis halde saklanmaz - server ne yaziyorsa o saat dilimiyle durur, cevirmeyi tarayici yapar.",
@@ -2102,4 +2380,666 @@
    "rustalyzer": null
   }
  ]
+};
+let veriKaynagi = "gömülü yedek";
+
+/* ---------- depolama: window.storage > localStorage > bellek ---------- */
+const Depo = (()=>{
+  const bellek = {};
+  const has = k => k in bellek;
+  async function oku(k){
+    try{ if(window.storage){ const r = await window.storage.get(k); return r? JSON.parse(r.value): null; } }catch(e){}
+    try{ const v = localStorage.getItem(k); return v? JSON.parse(v): (has(k)?bellek[k]:null); }catch(e){}
+    return has(k)?bellek[k]:null;
+  }
+  async function yaz(k,v){
+    bellek[k]=v;
+    try{ if(window.storage){ await window.storage.set(k, JSON.stringify(v)); return; } }catch(e){}
+    try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){}
+  }
+  return {oku,yaz};
+})();
+
+/* ---------- zaman ---------- */
+const GUNLER = ["pazar","pazartesi","salı","çarşamba","perşembe","cuma","cumartesi"];
+const GUN_KISA = ["Paz","Pzt","Sal","Çar","Per","Cum","Cmt"];
+
+function tzOfset(tz, ts){
+  const dtf = new Intl.DateTimeFormat("en-US",{timeZone:tz,hour12:false,
+    year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"});
+  const p = {}; for(const x of dtf.formatToParts(new Date(ts))) p[x.type]=x.value;
+  const asUTC = Date.UTC(+p.year, +p.month-1, +p.day, +p.hour%24, +p.minute, +p.second);
+  return asUTC - ts;
 }
+// tz'deki yerel Y-M-D HH:MM -> mutlak ms
+function yereldenUTC(y,m,d,hh,mm,tz){
+  const tahmin = Date.UTC(y,m-1,d,hh,mm);
+  let ts = tahmin - tzOfset(tz,tahmin);
+  ts = tahmin - tzOfset(tz,ts);
+  return ts;
+}
+// ts anının tz'deki yerel parcalari
+function yerel(ts,tz){
+  const dtf = new Intl.DateTimeFormat("en-US",{timeZone:tz,hour12:false,weekday:"short",
+    year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"});
+  const p={}; for(const x of dtf.formatToParts(new Date(ts))) p[x.type]=x.value;
+  return {y:+p.year,m:+p.month,d:+p.day,hh:+p.hour%24,mm:+p.minute};
+}
+const TR = "Europe/Istanbul";
+function trSaat(ts){ const v=yerel(ts,TR); return String(v.hh).padStart(2,"0")+":"+String(v.mm).padStart(2,"0"); }
+function trGunIdx(ts){ return new Date(ts + tzOfset(TR,ts)).getUTCDay(); }
+function trGunAnahtar(ts){ const v=yerel(ts,TR); return `${v.y}-${String(v.m).padStart(2,"0")}-${String(v.d).padStart(2,"0")}`; }
+
+function sureMetin(ms){
+  const a = Math.abs(ms), dk = Math.round(a/60000);
+  if(dk < 60) return dk+" dk";
+  const s = Math.floor(dk/60), k = dk%60;
+  if(s < 24) return k? s+"s "+k+"dk" : s+" saat";
+  const g = Math.floor(s/24), ks = s%24;
+  return ks? g+"g "+ks+"s" : g+" gün";
+}
+
+/* ayin ilk persembesi 19:00 Europe/London */
+function forceWipe(yil, ay){
+  for(let d=1; d<=7; d++){
+    const ts = yereldenUTC(yil,ay,d,19,0,"Europe/London");
+    const v = new Date(ts + tzOfset("Europe/London",ts));
+    if(v.getUTCDay()===4) return ts;
+  }
+  return null;
+}
+function sonrakiForce(simdi){
+  const v = yerel(simdi,"Europe/London");
+  let f = forceWipe(v.y, v.m);
+  if(f < simdi){ const ay = v.m===12?1:v.m+1, yil = v.m===12?v.y+1:v.y; f = forceWipe(yil,ay); }
+  return f;
+}
+
+/* ---------- wipe anlarini uret ---------- */
+function anlar(sv, wipe, bas, bit, ogrenilen){
+  const o = ogrenilen && ogrenilen[sv.id+"|"+(wipe.gun||"?")];
+  const gun = o? o.gun : wipe.gun;
+  const saat = o? o.saat : wipe.saat;
+  const tz = o? o.tz : wipe.tz;
+  const cikti = [];
+
+  if(wipe.dongu === "aylik_force"){
+    const v0 = yerel(bas,"Europe/London");
+    for(let k=-1;k<=2;k++){
+      let ay=v0.m+k, yil=v0.y;
+      while(ay>12){ay-=12;yil++} while(ay<1){ay+=12;yil--}
+      const ts = forceWipe(yil,ay);
+      if(ts>=bas && ts<=bit) cikti.push({ts, tip:wipe.tip, force:true, belirsiz:false});
+    }
+    return cikti;
+  }
+  if(!gun || !saat || !tz) return cikti;
+
+  const hedefGun = GUNLER.indexOf(gun);
+  if(hedefGun < 0) return cikti;
+  const [hh,mm] = saat.split(":").map(Number);
+
+  for(let off=-9; off<=16; off++){
+    const kaba = bas + off*86400000;
+    const v = yerel(kaba,tz);
+    const ts = yereldenUTC(v.y,v.m,v.d,hh,mm,tz);
+    const gIdx = new Date(ts + tzOfset(tz,ts)).getUTCDay();
+    if(gIdx !== hedefGun) continue;
+    if(ts < bas || ts > bit) continue;
+    if(cikti.some(c=>Math.abs(c.ts-ts)<3600000)) continue;
+
+    let belirsiz = false;
+    if(wipe.dongu === "iki_haftada"){
+      if(sv._sonWipe){
+        const fark = Math.round((ts - sv._sonWipe)/86400000);
+        if(((fark%14)+14)%14 > 2 && ((fark%14)+14)%14 < 12) continue;
+      } else belirsiz = true;
+    }
+    cikti.push({ts, tip:wipe.tip, force:false, belirsiz});
+  }
+  return cikti;
+}
+
+/* ---------- durum ---------- */
+let ogrenilen = {};      // "id|gun" -> {gun,saat,tz,kanit}
+let gozlemler = {};      // id -> [ts,...]
+let canli = {};          // id -> {players,maxPlayers,rank,worldSize,lastWipe,name}
+let aktifSekme = "simdi";
+let sonRapor = [];
+let zorlaYenile = false;
+const filtre = { grup:new Set(["3"]), gather:new Set(["1x","2x"]), tip:new Set(["full","map"]), kitGizle:true, minPop:300, org:"" };
+
+/* ---------- RUSTalyzer veri katmani ----------
+   Uc: https://www.rustalyzer.com/api/server/<IP:PORT | sayisal kimlik>
+   access-control-allow-origin: *  -> anahtar gerekmez, her yerden calisir.
+   Getirdikleri: anlik oyuncu, son wipe (born), tahmini sonraki wipe,
+   sonraki ~13 wipe listesi (force dahil), gecmis wipe'lar tipleriyle,
+   kit / grup limiti / gather / harita boyutu, yarilanma suresi, harita gorseli. */
+const RUST_UC = k => `https://www.rustalyzer.com/api/server/${encodeURIComponent(k)}`;
+const ONBELLEK_DK = 30;
+
+async function dene(url){
+  let r;
+  try{ r = await fetch(url); }
+  catch(e){ return {ok:false, tur:"ag", mesaj:"tarayıcı isteği engelledi veya ağa çıkılamadı"}; }
+  if(!r.ok) return {ok:false, tur:"http", kod:r.status, mesaj:
+    r.status===404 ? "404 — bu anahtarla server bulunamadı" :
+    r.status===429 ? "429 — çok fazla istek, biraz bekle" : `${r.status} döndü`};
+  try{ return {ok:true, veri: await r.json()}; }
+  catch(e){ return {ok:false, tur:"bicim", mesaj:"gelen yanıt JSON değil"}; }
+}
+
+// "2026-08-18 12:52:10+00" -> gecerli zaman. Tarayici "+00" ekini kabul etmiyor.
+function zaman(x){
+  if(!x) return null;
+  const t = Date.parse(String(x).replace(" ","T").replace(/([+-]\d{2})$/, "$1:00"));
+  return isNaN(t) ? null : t;
+}
+
+function sunucuYaz(id, d){
+  if(!d || !d.server) return false;
+  const v = d.server;
+  const wm = (v.wipe_meta && v.wipe_meta.effective) || {};
+  const gelecek = (wm.upcomingWipes || []).map(u => ({
+    ts: zaman(u.time),
+    force: u.kind === "force",
+    skor: u.score
+  })).filter(u => u.ts);
+
+  canli[id] = {
+    ad: v.name,
+    oyuncu: v.players, maxOyuncu: v.max_players, kuyruk: v.players_queued,
+    rank: v.current_rank,
+    harita: v.world_size, haritaAdi: v.map, haritaGorsel: v.map_image_url,
+    logo: v.image, site: v.url,
+    grup: v.group_limit, gather: v.gather_rate ? `${parseFloat(v.gather_rate)}x` : null,
+    kit: !!v.kits, modded: !!v.modded,
+    sonWipe: zaman(v.born),
+    sonrakiWipe: zaman(v.wipe_next),
+    guvenSkoru: v.wipe_confidence ? parseFloat(v.wipe_confidence) : null,
+    gelecekWipeler: gelecek,
+    gecmisWipeler: (v.wipes || []).map(w => ({ts: zaman(w.time), tip: w.wipe_type})).filter(w=>w.ts),
+    zirve: v.avg_max_players ? Math.round(parseFloat(v.avg_max_players)) : null,
+    ort7g: v.avg_player_count_7d ? Math.round(parseFloat(v.avg_player_count_7d)) : null,
+    /* WIPE SONRASI ILK 3 GUN ortalamasi.
+       Takvimdeki son 72 saat degil - her olcumu KENDI wipe'ina gore yasliyoruz,
+       0-72 saat araligindakileri aliyoruz. Boylece sonuc, bakis anindan bagimsiz:
+       "bu server bir wipe'in ilk 3 gununde kac kisi tasiyor". */
+    ort3g: (()=>{
+      const wipeler = [...(v.wipes||[]).map(w=>zaman(w.time)), zaman(v.born)]
+                        .filter(Boolean).sort((a,b)=>a-b);
+      if(!wipeler.length) return null;
+      const secili = (v.smaggh||[])
+        .map(x=>({t:zaman(x.hour), p:parseFloat(x.avg_players)}))
+        .filter(x=>x.t && !isNaN(x.p))
+        .map(x=>{
+          let w = null;
+          for(const t of wipeler){ if(t <= x.t) w = t; else break; }
+          return w ? {yas:(x.t-w)/3600000, p:x.p} : null;
+        })
+        .filter(x => x && x.yas <= 72);
+      if(secili.length < 6) return null;
+      return Math.round(secili.reduce((a,b)=>a+b.p,0)/secili.length);
+    })(),
+    yarilanmaSaat: v.avg_days_to_drop_50 ? Math.round(parseFloat(v.avg_days_to_drop_50)*24) : null,
+    baglanti: v.favendpoint || (v.addr && v.port ? `${v.addr}:${v.port}` : null),
+    etiketler: (v.servertags || []).map(t => t.name)
+  };
+  return true;
+}
+
+async function bmCek(){
+  const svler = VERI.serverlar.filter(s => s.rustalyzer);
+  const kutu = document.getElementById("bmDurum");
+  const eksik = VERI.serverlar.length - svler.length;
+
+  const onb = await Depo.oku("rust_onbellek");
+  const taze = onb && (Date.now() - onb.ts) < ONBELLEK_DK*60000;
+  if(taze && !zorlaYenile){
+    canli = onb.canli || {};
+    kutu.innerHTML = `<span class="nokta" style="background:var(--hazmat)"></span>RUSTalyzer: önbellekten (${Math.round((Date.now()-onb.ts)/60000)} dk önce)${eksik?` · ${eksik} server eşleşmemiş`:""}`;
+    await gozlemKaydet(); return;
+  }
+  zorlaYenile = false;
+
+  kutu.innerHTML = '<span class="nokta" style="background:var(--sodyum)"></span>RUSTalyzer: çekiliyor…';
+  let ok=0, hata=0; sonRapor=[];
+
+  for(let i=0; i<svler.length; i+=4){
+    const grup = svler.slice(i, i+4);
+    const sonuclar = await Promise.all(grup.map(s => dene(RUST_UC(s.rustalyzer))));
+    grup.forEach((s, j) => {
+      const r = sonuclar[j];
+      if(r.ok && sunucuYaz(s.id, r.veri)) ok++;
+      else { hata++; if(sonRapor.length<6) sonRapor.push({ad:s.ad, ok:false, mesaj:r.mesaj, tur:r.tur, kod:r.kod}); }
+    });
+    kutu.innerHTML = `<span class="nokta" style="background:var(--sodyum)"></span>RUSTalyzer: ${ok}/${svler.length}…`;
+    if(i+4 < svler.length) await new Promise(r=>setTimeout(r, 120));
+  }
+
+  kutu.innerHTML = ok
+    ? `<span class="nokta" style="background:var(--hazmat)"></span>RUSTalyzer: ${ok} server canlı${hata?` · ${hata} hata`:""}${eksik?` · ${eksik} eşleşmemiş`:""}`
+    : `<span class="nokta" style="background:var(--pas)"></span>RUSTalyzer: veri gelmedi — takvim yine de çalışıyor`;
+  document.getElementById("teshisBtn").hidden = !hata;
+
+  if(ok) await Depo.yaz("rust_onbellek", {ts:Date.now(), canli});
+  await gozlemKaydet();
+}
+
+/* ---------- gozlem defteri ----------
+   RUSTalyzer wipe takvimini kendi hesapliyor, bizim ogrenme katmanimiz gereksizlesti.
+   Yine de ilan edilen (servers.json) ile olcuLen (canli) saati karsilastirip
+   listedeki eskimis satirlari isaretliyoruz. */
+async function gozlemKaydet(){
+  ogrenilen = {};
+  for(const s of VERI.serverlar){
+    const c = canli[s.id]; if(!c) continue;
+    s._sonWipe = c.sonWipe;
+    for(const w of (s.wipeler||[])){
+      if(!w.gun || !w.saat || !c.gelecekWipeler.length) continue;
+      const ornek = c.gelecekWipeler.find(g=>!g.force);
+      if(!ornek) continue;
+      const bizim = anlar(s, w, ornek.ts - 4*86400000, ornek.ts + 4*86400000, {})
+                    .map(x=>Math.abs(x.ts - ornek.ts)).sort((a,b)=>a-b)[0];
+      if(bizim != null && bizim > 45*60000) ogrenilen[s.id+"|"+w.gun] = {sapmaDk: Math.round(bizim/60000)};
+    }
+  }
+  const o = Object.keys(ogrenilen).length;
+  document.getElementById("ogrDurum").innerHTML = o
+    ? `<span class="nokta" style="background:var(--sodyum)"></span>${o} satırın ilan edilen saati tutmuyor`
+    : `<span class="nokta" style="background:var(--sonuk2)"></span>liste güncel`;
+}
+function ogren(){}
+
+/* ---------- filtre ---------- */
+const TAZE_SAAT = 6;          // taze wipe penceresi
+let girisSaat = 0;            // "giris saatiniz" - simdiden kac saat sonra
+
+const CV = s => canli[s.id] || null;
+
+/* Yogunluk. Olcek RUSTalyzer'in rakamlari tersine cevrilerek bulundu:
+   %100 doluluk = harita^2 / 48400 oyuncu (3500 -> 253 kisi, 4500 -> 418 kisi).
+   FARK: onlar takvim penceresine (son 7 gun) bakiyor, biz WIPE DONGUSUNE bakiyoruz:
+   her wipe'in ilk 72 saati. Sebep: haftalik wipe atan bir server 7 gunluk
+   ortalamada olu gunleri de sayar ve haksiz yere dusuk cikar. Biz zaten
+   wipe'in ilk 1-2 gununde oynuyoruz; olcum de o pencereyi olcmeli.
+   Yan fayda: sonuc bakis anindan bagimsiz - Pazartesi de Cuma da ayni cikar. */
+const DOLULUK_K = 48400;
+function yogunlukOf(s){
+  const c = CV(s); if(!c) return null;
+  const ort = c.ort3g ?? c.ort7g; if(!ort) return null;
+  const h = haritaOf(s); if(!h) return null;
+  return {deger: Math.min(100, Math.round(ort / (h*h) * DOLULUK_K * 100)), gun: c.ort3g?3:7};
+}
+function doluNokta(h){ return h ? Math.round(h*h/DOLULUK_K) : null; }   // %100 icin gereken oyuncu
+const wipePopOf = s => { const c=CV(s); return c && c.zirve ? c.zirve : (s.wipe_zirvesi||null); };
+
+/* Girdiginizde serverin durumu */
+function girisDurumu(s){
+  const c = CV(s); if(!c || !c.sonWipe) return null;
+  const t = Date.now() + girisSaat*3600000;
+  const sonrakiler = (c.gelecekWipeler||[]).map(g=>g.ts).filter(x=>x<=t).sort((a,b)=>b-a);
+  const referans = sonrakiler.length ? sonrakiler[0] : c.sonWipe;
+  const yasSaat = (t - referans)/3600000;
+  const yari = c.yarilanmaSaat || 48;
+  if(yasSaat <= TAZE_SAAT) return {m:"taze wipe", c:"m-iyi"};
+  if(yasSaat <= yari)      return {m:Math.round(yasSaat)+" saatlik", c:"m-orta"};
+  return {m:"sönmüş", c:"m-kotu"};
+}                    // canli veri
+const grupOf   = s => { const c=CV(s); return c && c.grup!=null ? c.grup : s.grup_limiti; };
+const gatherOf = s => { const c=CV(s); return (c && c.gather) || s.gather; };
+const kitOf    = s => { const c=CV(s); return c ? c.kit : s.kit; };
+const zirveOf  = s => { const c=CV(s); return (c && c.zirve) || s.wipe_zirvesi || 0; };
+const yariOf   = s => { const c=CV(s); return (c && c.yarilanmaSaat) || s.yarilanma_saat || null; };
+
+function gecer(s){
+  const gl = grupOf(s);
+  const gg = gl>=5 ? "5+" : String(gl);
+  if(filtre.grup.size && !filtre.grup.has(gg)) return false;
+  if(filtre.gather.size && !filtre.gather.has(gatherOf(s))) return false;
+  if(filtre.kitGizle && kitOf(s)) return false;
+  if(filtre.org && s.topluluk!==filtre.org) return false;
+  const z = zirveOf(s);
+  if(filtre.minPop>0 && z>0 && z<filtre.minPop) return false;
+  return true;
+}
+
+/* ---------- olaylari topla ---------- */
+function olaylar(bas,bit){
+  const cikti=[];
+  for(const s of VERI.serverlar){
+    if(!gecer(s)) continue;
+    const c = CV(s);
+
+    if(c && c.gelecekWipeler.length){
+      // CANLI: RUSTalyzer'in kendi tahmini - gun/saat hesabi yok
+      const varsayilanTip = (c.gecmisWipeler[0] && c.gecmisWipeler[0].tip) ||
+                            ((s.wipeler||[])[0]||{}).tip || "map";
+      for(const g of c.gelecekWipeler){
+        if(g.ts < bas || g.ts > bit) continue;
+        const tip = g.force ? "full" : varsayilanTip;
+        if(filtre.tip.size && !filtre.tip.has(tip)) continue;
+        cikti.push({sv:s, ts:g.ts, tip, force:g.force, belirsiz:false, canliKaynak:true});
+      }
+      for(const g of c.gecmisWipeler){
+        if(g.ts < bas || g.ts > bit) continue;
+        if(filtre.tip.size && !filtre.tip.has(g.tip)) continue;
+        cikti.push({sv:s, ts:g.ts, tip:g.tip, force:false, belirsiz:false, canliKaynak:true});
+      }
+    } else {
+      // YEDEK: servers.json takvimi
+      for(const w of (s.wipeler||[])){
+        for(const a of anlar(s,w,bas,bit,{})){
+          if(filtre.tip.size && a.tip && !filtre.tip.has(a.tip)) continue;
+          cikti.push({sv:s, ...a});
+        }
+      }
+    }
+  }
+  cikti.sort((a,b)=>a.ts-b.ts);
+  const gorulen = new Set();
+  return cikti.filter(o=>{ const k=o.sv.id+"|"+Math.round(o.ts/600000); if(gorulen.has(k)) return false; gorulen.add(k); return true; });
+}
+
+/* ---------- cizim ---------- */
+function rozetler(sv,a){
+  const r=[], c=CV(sv);
+  if(a.force) r.push('<span class="rozet r-full">force wipe</span>');
+  else r.push(a.tip==="full" ? '<span class="rozet r-full">full wipe</span>' : '<span class="rozet r-map">map wipe</span>');
+  if(kitOf(sv)) r.push('<span class="rozet r-kit">kit</span>');
+  if(a.canliKaynak) r.push('<span class="rozet r-ogren">canlı takvim</span>');
+  else if(!sv.rustalyzer) r.push('<span class="rozet r-sapma">eşleşmemiş</span>');
+  if(c && c.guvenSkoru != null && c.guvenSkoru < 0.7 && !a.force)
+    r.push('<span class="rozet r-sapma">tahmin zayıf</span>');
+  if(a.belirsiz) r.push('<span class="rozet r-sapma">hafta belirsiz</span>');
+  return r.join(" ");
+}
+
+/* Dongu cubugu: pencere = son wipe -> sonraki wipe + taze pencere.
+   Yesil sagda kaliyor ki "yesile yaklasiyoruz" gorunsun. */
+function donguCubuk(s, W=250, H=28){
+  const c = CV(s);
+  if(!c || !c.sonWipe) return `<div style="height:${H}px"></div>`;
+  const simdi = Date.now();
+  const son = c.sonWipe;
+  const sonraki = (c.gelecekWipeler||[]).map(g=>g.ts).filter(t=>t>simdi).sort((a,b)=>a-b)[0]
+                 || c.sonrakiWipe || (son + 7*86400000);
+  const taze = TAZE_SAAT*3600000, yari = (c.yarilanmaSaat||48)*3600000;
+  const bas = son, bit = sonraki + taze;
+  const x = t => Math.max(0, Math.min(W, ((t-bas)/(bit-bas))*W));
+  const kutu=(a,b,f,o=1)=>`<rect x="${x(a).toFixed(1)}" y="6" width="${Math.max(0,x(b)-x(a)).toFixed(1)}" height="${H-12}" fill="${f}" opacity="${o}"/>`;
+  let g = `<rect x="0" y="6" width="${W}" height="${H-12}" fill="#232B37"/>`;
+  g += kutu(son, son+yari, "#5B7A94", .42);
+  g += kutu(son, son+taze, "#7A9E4B", .9);
+  g += kutu(sonraki, sonraki+taze, "#7A9E4B", .9);
+  [son, sonraki].forEach(w=>{ g += `<rect x="${(x(w)-1.5).toFixed(1)}" y="2" width="3" height="${H-4}" fill="#CE422B"/>`; });
+  g += `<rect x="${(x(simdi)-1).toFixed(1)}" y="4" width="2" height="${H-8}" fill="#E8E4DC" opacity=".85"/>`;
+  const sx = x(simdi + girisSaat*3600000);
+  g += `<rect x="${(sx-1.5).toFixed(1)}" y="0" width="3" height="${H}" fill="#E0A32B"/>
+        <circle cx="${sx.toFixed(1)}" cy="${H/2}" r="5" fill="#E0A32B" stroke="#0F141B" stroke-width="1.6"/>`;
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="max-width:100%">${g}</svg>`;
+}
+
+/* Metrik seridi - sabit genislikli hucreler, tasma yok */
+function metrikSerit(s){
+  const c = CV(s);
+  const h=(v,e,k="")=>`<div class="mh"><div class="v ${k}">${v}</div><div class="e">${e}</div></div>`;
+  const gl = grupOf(s), yg = yogunlukOf(s), yr = yariOf(s), wp = wipePopOf(s), hb = haritaOf(s);
+  return `<div class="mserit">
+    ${h(gatherOf(s),"gather")}
+    ${h(gl===0?"—":"max "+gl,"grup limiti", gl===0?"m-kotu":gl<=3?"m-iyi":gl<=5?"m-orta":"m-kotu")}
+    ${h(hb??"—","harita")}
+    ${h(wp?wp:"—","wipe popu")}
+    ${h(yg?"%"+yg.deger:"—", yg&&yg.gun===7?"yoğunluk 7g":"yoğunluk 3g", !yg?"":yg.deger>=60?"m-iyi":yg.deger>=30?"m-orta":"m-kotu")}
+    ${h(yr?(yr/24).toFixed(1)+"g":"—","yarılanma", !yr?"":yr>=48?"m-iyi":yr>=24?"m-orta":"m-kotu")}
+  </div>`;
+}
+
+function popHucre(sv){
+  const c = CV(sv);
+  if(c && c.oyuncu!=null){
+    const oran = c.maxOyuncu? Math.min(100, Math.round(c.oyuncu/c.maxOyuncu*100)) : 0;
+    const sinif = oran<25?"az":(oran<60?"orta":"");
+    return `<div class="pop">${c.oyuncu}<small>/${c.maxOyuncu||"?"} şu an${c.kuyruk?` +${c.kuyruk} kuyruk`:""}</small>
+      <div class="olcer"><i class="${sinif}" style="width:${oran}%"></i></div></div>`;
+  }
+  return `<div class="pop">—<small>veri yok</small></div>`;
+}
+function haritaOf(sv){ const c=CV(sv); return (c && c.harita) || sv.harita_boyutu || null; }
+
+const haritaBoyut = haritaOf;
+
+function cizSimdi(){
+  const simdi = Date.now();
+  const olay = olaylar(simdi - 30*3600000, simdi + 5*86400000);
+  const gecmis = olay.filter(o=>o.ts<=simdi).slice(-14);
+  const gelecek = olay.filter(o=>o.ts>simdi).slice(0,22);
+
+  const satir = (o,gec)=>{
+    const s=o.sv, fark=o.ts-simdi;
+    const sinif = gec ? (Math.abs(fark)<6*3600000?"taze":"eski") : (fark<3*3600000?"yakin":"");
+    const kenar = gec ? (Math.abs(fark)<6*3600000?"tazewipe":"") : (fark<3*3600000?"yakinda":"");
+    const gd = girisDurumu(s);
+    return `<div class="satir ${gec?"gecmis":""} ${kenar}">
+      <div class="zaman ${sinif}">${sureMetin(fark)}<small>${gec?"önce wipelandı":"kaldı"}</small></div>
+      <div>
+        <div class="ad">${s.ad}</div>
+        <div class="altbilgi">
+          <span>${GUN_KISA[trGunIdx(o.ts)]} ${trSaat(o.ts)}</span>
+          <span>${s.topluluk}</span>
+          ${rozetler(s,o)}
+        </div>
+        ${metrikSerit(s)}
+      </div>
+      <div>
+        ${gd?`<div class="girisDurum">girdiğinizde: <b class="${gd.c}">${gd.m}</b></div>`:`<div class="girisDurum">&nbsp;</div>`}
+        ${donguCubuk(s)}
+      </div>
+      ${popHucre(s)}
+      <div class="sag">
+        ${(CV(s)?.site || s.site)?`<a class="gir" href="${CV(s)?.site || s.site}" target="_blank" rel="noopener">Server sitesi ↗</a>`:""}
+        ${s.rustalyzer?`<a class="gir" href="https://www.rustalyzer.com/server/${encodeURIComponent(s.rustalyzer)}" target="_blank" rel="noopener">RUSTalyzer ↗</a>`
+          :`<button class="gir" data-eslestir="${s.id}" data-ad="${s.ad.replace(/"/g,"")}">eşleştir</button>`}
+        ${(CV(s)?.baglanti || s.adres)?`<button class="gir" data-adres="connect ${CV(s)?.baglanti || s.adres}">connect kopyala</button>`:""}
+      </div>
+    </div>`;
+  };
+
+  document.getElementById("panelSimdi").innerHTML = `
+    <div class="liste">
+      ${gecmis.length? gecmis.map(o=>satir(o,true)).join("") : `<div class="bos">Son 30 saatte filtreye uyan wipe yok.</div>`}
+      <div class="suan"><b>Şu an</b><span>${GUN_KISA[trGunIdx(simdi)]} ${trSaat(simdi)} · yukarısı taze başlamış, aşağısı yolda</span></div>
+      ${gelecek.length? gelecek.map(o=>satir(o,false)).join("") : `<div class="bos">Önümüzdeki 5 günde filtreye uyan wipe yok. Filtreleri gevşet.</div>`}
+    </div>`;
+}
+
+function cizHafta(){
+  const simdi = Date.now();
+  const bas = simdi - 12*3600000, bit = simdi + 8*86400000;
+  const olay = olaylar(bas,bit);
+  const gunler = [];
+  for(let i=0;i<7;i++){
+    const t = simdi + i*86400000;
+    gunler.push({anahtar:trGunAnahtar(t), idx:trGunIdx(t), ts:t, olaylar:[]});
+  }
+  for(const o of olay){
+    const g = gunler.find(x=>x.anahtar===trGunAnahtar(o.ts));
+    if(g) g.olaylar.push(o);
+  }
+  document.getElementById("panelHafta").innerHTML = `<div class="hafta">${gunler.map((g,i)=>`
+    <div class="gun ${i===0?"bugun":""}">
+      <div class="gunbas"><span>${i===0?"Bugün":GUN_KISA[g.idx]}</span><em>${g.anahtar.slice(8)}.${g.anahtar.slice(5,7)}</em></div>
+      ${g.olaylar.length? g.olaylar.map(o=>`
+        <div class="kart">
+          <div class="s">${trSaat(o.ts)}${o.ts<simdi?" ✓":""}</div>
+          <div class="n">${o.sv.ad}</div>
+          <div class="m">${o.force?"force":o.tip} · ${gatherOf(o.sv)} · ${grupOf(o.sv)===0?"limitsiz":"max "+grupOf(o.sv)}${zirveOf(o.sv)?" · ~"+zirveOf(o.sv)+" zirve":""}</div>
+        </div>`).join("") : `<div class="bos">—</div>`}
+    </div>`).join("")}</div>`;
+}
+
+function cizTum(){
+  const liste = VERI.serverlar.filter(gecer);
+  const sat = liste.map(s=>{
+    const c = CV(s);
+    const tk = (c && c.sonrakiWipe) ? `<span style="color:var(--sodyum)">${GUN_KISA[trGunIdx(c.sonrakiWipe)]} ${trSaat(c.sonrakiWipe)}</span> <span style="color:var(--sonuk2)">canlı${c.guvenSkoru!=null?` · %${Math.round(c.guvenSkoru*100)} güven`:""}</span>`
+      : (s.wipeler||[]).length
+      ? s.wipeler.map(w=>w.dongu==="aylik_force" ? "ayın ilk perşembesi"
+          : `${w.gun??"?"} ${w.saat??"??:??"} ${(w.tz||"").replace("Europe/","")}${w.dongu==="iki_haftada"?" (2 haftada)":""}`).join("<br>")
+      : `<span style="color:var(--sonuk2)">bilinmiyor</span>`;
+    return `<tr>
+      <td class="isim">${s.ad}<div class="altbilgi" style="margin-top:2px">${s.topluluk}</div></td>
+      <td>${tk}</td>
+      <td>${gatherOf(s)} · ${grupOf(s)===0?"limitsiz":"max "+grupOf(s)}${kitOf(s)?" · KİT":""}</td>
+      <td>${haritaBoyut(s)??"—"}</td>
+      <td>${c?`${c.oyuncu}/${c.maxOyuncu}`:"—"}</td>
+      <td>${zirveOf(s)||"—"}</td>
+      <td>${(c&&c.sonWipe)? sureMetin(Date.now()-c.sonWipe)+" önce" : "—"}</td>
+      <td>${c?'<span style="color:var(--hazmat)">canlı</span>':(s.rustalyzer?s.guven:'<span style="color:var(--sodyum)">eşleşmemiş</span>')}</td>
+      <td style="max-width:280px;white-space:normal;color:var(--sonuk)">${s.site_kaynak||""}</td>
+    </tr>`;
+  }).join("");
+  document.getElementById("panelTum").innerHTML = `<table>
+    <thead><tr><th>Server</th><th>İlan edilen takvim</th><th>Kural</th><th>Harita</th><th>Şu an</th><th>Zirve</th><th>Son wipe</th><th>Güven</th><th>Takvim kaynağı</th></tr></thead>
+    <tbody>${sat || `<tr><td colspan="9" style="color:var(--sonuk2)">Filtreye uyan server yok.</td></tr>`}</tbody></table>`;
+}
+
+function ciz(){
+  document.getElementById("panelSimdi").hidden = aktifSekme!=="simdi";
+  document.getElementById("panelHafta").hidden = aktifSekme!=="hafta";
+  document.getElementById("panelTum").hidden   = aktifSekme!=="tum";
+  if(aktifSekme==="simdi") cizSimdi();
+  if(aktifSekme==="hafta") cizHafta();
+  if(aktifSekme==="tum") cizTum();
+
+  const simdi = Date.now();
+  const f = sonrakiForce(simdi), fark = f-simdi;
+  const bant = document.getElementById("forceBant");
+  if(fark < 9*86400000){
+    bant.hidden = false;
+    bant.innerHTML = `<b>Force wipe</b><span>${GUN_KISA[trGunIdx(f)]} ${trGunAnahtar(f).slice(8)}.${trGunAnahtar(f).slice(5,7)} ${trSaat(f)} · ${sureMetin(fark)} kaldı. O gün <strong>bütün</strong> serverlar wipe yer, çoğu o haftaki normal wipe'ını atlar — aşağıdaki takvim o gün için güvenilmez.</span>`;
+  } else bant.hidden = true;
+
+  document.getElementById("saatKutu").textContent = trSaat(simdi);
+  document.getElementById("tarihKutu").textContent = GUN_KISA[trGunIdx(simdi)]+" · "+trGunAnahtar(simdi)+" · TR saati";
+}
+
+/* ---------- giris saati kaydiricisi ---------- */
+function sonrakiGun(hedefGun, saat){          // TR saatiyle sonraki <gun> <saat>
+  const simdi = Date.now();
+  for(let d=0; d<=8; d++){
+    const kaba = simdi + d*86400000;
+    const v = yerel(kaba, TR);
+    const ts = yereldenUTC(v.y, v.m, v.d, saat, 0, TR);
+    if(trGunIdx(ts) === hedefGun && ts > simdi) return Math.round((ts-simdi)/3600000);
+  }
+  return 0;
+}
+function girisGuncelle(kaynak){
+  const t = Date.now() + girisSaat*3600000;
+  document.getElementById("girisDeger").innerHTML =
+    (girisSaat===0 ? "şu an" : `${GUN_KISA[trGunIdx(t)]} ${trSaat(t)}`) +
+    `<small>${girisSaat===0 ? "canlı" : "+"+girisSaat+" saat"}</small>`;
+  const r = document.getElementById("girisRange");
+  if(kaynak!=="range"){ r.value = Math.min(+r.max, girisSaat); }
+  ciz();
+}
+document.getElementById("girisRange").addEventListener("input", e=>{
+  girisSaat = +e.target.value;
+  document.querySelectorAll("[data-giris]").forEach(b=>b.setAttribute("aria-pressed","false"));
+  girisGuncelle("range");
+});
+document.querySelectorAll("[data-giris]").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll("[data-giris]").forEach(x=>x.setAttribute("aria-pressed","false"));
+  b.setAttribute("aria-pressed","true");
+  const v = b.dataset.giris;
+  girisSaat = v==="0" ? 0 : sonrakiGun({cuma20:5, cmt20:6, paz20:0}[v], 20);
+  girisGuncelle("buton");
+}));
+
+/* ---------- olay baglama ---------- */
+document.querySelectorAll(".sekme").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".sekme").forEach(x=>x.setAttribute("aria-selected", x===b));
+  aktifSekme = b.dataset.sekme; ciz();
+}));
+document.querySelectorAll(".cip").forEach(b=>b.addEventListener("click",()=>{
+  const basili = b.getAttribute("aria-pressed")==="true";
+  b.setAttribute("aria-pressed", !basili);
+  const f=b.dataset.f, v=b.dataset.v;
+  if(f==="kit"){ filtre.kitGizle = !basili; }
+  else { const set=filtre[f]; basili? set.delete(v) : set.add(v); }
+  ciz();
+}));
+document.addEventListener("click", async e=>{
+  const m = e.target.closest("button.gir[data-eslestir]");
+  if(m){
+    const id = m.dataset.eslestir, ad = m.dataset.ad;
+    window.open("https://www.rustalyzer.com/search?q="+encodeURIComponent(ad.split("|")[0].split("[")[0].trim()), "_blank");
+    const girdi = prompt(`"${ad}" için RUSTalyzer anahtarı:\n\nAçılan sekmede doğru serverı bul, adres çubuğundaki\nrustalyzer.com/server/XXXXXXX kısmındaki numarayı ya da\nsunucunun IP:PORT bilgisini buraya yapıştır.`);
+    if(girdi && girdi.trim()){
+      const anahtar = girdi.trim().replace(/^.*\/server\//,"").replace(/[^0-9a-zA-Z.:_-]/g,"");
+      const sv = VERI.serverlar.find(x=>x.id===id);
+      if(sv){
+        sv.rustalyzer = anahtar;
+        const el = (await Depo.oku("eslesmeler")) || {};
+        el[id] = anahtar; await Depo.yaz("eslesmeler", el);
+        zorlaYenile = true; await bmCek(); ciz();
+      }
+    }
+    return;
+  }
+  const b = e.target.closest("button.gir[data-adres]");
+  if(!b) return;
+  const eski = b.textContent;
+  navigator.clipboard?.writeText(b.dataset.adres);
+  b.textContent = "kopyalandı"; b.classList.add("kopyalandi");
+  setTimeout(()=>{ b.textContent = eski; b.classList.remove("kopyalandi"); }, 1400);
+});
+document.getElementById("minPop").addEventListener("change",e=>{ filtre.minPop=+e.target.value; ciz(); });
+document.getElementById("orgSec").addEventListener("change",e=>{ filtre.org=e.target.value; ciz(); });
+document.getElementById("yenile").addEventListener("click", async()=>{ zorlaYenile=true; await bmCek(); ciz(); });
+document.getElementById("disaAktar").addEventListener("click",()=>{
+  const cikti = VERI.serverlar.filter(x=>x.rustalyzer).map(x=>({id:x.id, rustalyzer:x.rustalyzer}));
+  const sapan = Object.entries(ogrenilen).map(([k,v])=>{const [id,gun]=k.split("|"); return {id, gun, sapma_dk:v.sapmaDk};});
+  document.getElementById("ihracatMetin").value = JSON.stringify({eslesmeler:cikti, ilan_edilen_saat_sapmasi:sapan}, null, 2);
+  document.getElementById("ihracat").showModal();
+});
+document.getElementById("kapat").addEventListener("click",()=>document.getElementById("ihracat").close());
+document.getElementById("kopyala").addEventListener("click",()=>{
+  const t=document.getElementById("ihracatMetin"); t.select();
+  navigator.clipboard?.writeText(t.value);
+});
+
+/* ---------- baslat ---------- */
+(async function(){
+  try{
+    const r = await fetch("servers.json?v="+Date.now());
+    if(r.ok){
+      const j = await r.json();
+      if(j && Array.isArray(j.serverlar) && j.serverlar.length){
+        VERI = j; veriKaynagi = "servers.json";
+      }
+    }
+  }catch(e){ /* file:// modunda veya dosya yoksa gomulu yedek kullanilir */ }
+
+  const orgSec = document.getElementById("orgSec");
+  [...new Set(VERI.serverlar.map(s=>s.topluluk))].sort().forEach(o=>{
+    const el=document.createElement("option"); el.value=o; el.textContent=o; orgSec.appendChild(el);
+  });
+  document.getElementById("altNot").innerHTML =
+    `Saatler <strong>TR saatine göre</strong>. Canlı veri <strong>RUSTalyzer</strong>'dan geliyor: anlık oyuncu, son wipe,
+     wipe tahmini, kit/grup limiti/harita boyutu ve yarılanma süresi. Anahtar gerekmiyor, 30 dakika önbelleklenir.
+     Eşleşmemiş serverlarda <strong>eşleştir</strong> düğmesi var — bir kez yaparsın, <strong>Eşleşmeleri dışa aktar</strong> ile
+     <code>servers.json</code>'a işleyip paylaşırsın. Canlı veri gelmezse takvim <code>servers.json</code>'daki ilan edilen saatlerle çalışmaya devam eder.
+     Veri: ${VERI.serverlar.length} server, ${new Set(VERI.serverlar.map(s=>s.topluluk)).size} topluluk. Liste kaynağı: <code>${veriKaynagi}</code>.`;
+
+  gozlemler = (await Depo.oku("wipe_gozlemleri")) || {};
+  ogrenilen = (await Depo.oku("wipe_ogrenilen")) || {};
+  ogren();
+  girisGuncelle("baslangic");
+  setInterval(ciz, 30000);
+  bmCek().then(ciz);
+})();
+</script>
+</body>
+</html>
