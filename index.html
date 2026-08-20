@@ -2616,6 +2616,8 @@ async function bmCek(){
   const taze = onb && onb.imza === imza && (Date.now() - onb.ts) < ONBELLEK_DK*60000;
   if(taze && !zorlaYenile){
     canli = onb.canli || {};
+    sonRapor = onb.rapor || [];
+    document.getElementById("teshisBtn").hidden = !sonRapor.length;
     kutu.innerHTML = `<span class="nokta" style="background:var(--hazmat)"></span>RUSTalyzer: önbellekten (${Math.round((Date.now()-onb.ts)/60000)} dk önce)${eksik?` · ${eksik} server eşleşmemiş`:""}`;
     await gozlemKaydet(); return;
   }
@@ -2630,7 +2632,7 @@ async function bmCek(){
     grup.forEach((s, j) => {
       const r = sonuclar[j];
       if(r.ok && sunucuYaz(s.id, r.veri)) ok++;
-      else { hata++; if(sonRapor.length<6) sonRapor.push({ad:s.ad, ok:false, mesaj:r.mesaj, tur:r.tur, kod:r.kod}); }
+      else { hata++; if(sonRapor.length<20) sonRapor.push({ad:s.ad, ok:false, mesaj:r.mesaj, tur:r.tur, kod:r.kod}); }
     });
     kutu.innerHTML = `<span class="nokta" style="background:var(--sodyum)"></span>RUSTalyzer: ${ok}/${svler.length}…`;
     if(i+4 < svler.length) await new Promise(r=>setTimeout(r, 120));
@@ -2641,7 +2643,7 @@ async function bmCek(){
     : `<span class="nokta" style="background:var(--pas)"></span>RUSTalyzer: veri gelmedi (${svler.length} denendi) — takvim yine de çalışıyor`;
   document.getElementById("teshisBtn").hidden = !hata;
 
-  if(ok) await Depo.yaz("rust_onbellek", {ts:Date.now(), imza, canli});
+  if(ok) await Depo.yaz("rust_onbellek", {ts:Date.now(), imza, canli, rapor:sonRapor});
   await gozlemKaydet();
 }
 
@@ -3023,6 +3025,26 @@ document.addEventListener("click", async e=>{
 document.getElementById("minPop").addEventListener("change",e=>{ filtre.minPop=+e.target.value; ciz(); });
 document.getElementById("orgSec").addEventListener("change",e=>{ filtre.org=e.target.value; ciz(); });
 document.getElementById("yenile").addEventListener("click", async()=>{ zorlaYenile=true; await bmCek(); ciz(); });
+
+/* Teşhis penceresi: hangi server neden veri alamadı */
+document.getElementById("teshisBtn").addEventListener("click", ()=>{
+  document.getElementById("teshisIcerik").innerHTML = sonRapor.length
+    ? sonRapor.map(r=>{
+        const sv = VERI.serverlar.find(x=>x.ad===r.ad);
+        return `<div style="margin-bottom:6px"><strong>${r.ad}</strong><br>
+          anahtar: <code>${sv?sv.rustalyzer:"?"}</code> → ${r.mesaj||"bilinmeyen hata"}</div>`;
+      }).join("")
+    : "Kayıtlı hata yok — son çekimden sonra sayfa yenilenmiş olabilir. <strong>Verileri yenile</strong>ye basıp tekrar aç.";
+  const turler = new Set(sonRapor.map(r=>r.kod||r.tur));
+  const oneri = [];
+  if(turler.has(404)) oneri.push("<strong>404:</strong> RUSTalyzer bu anahtarı tanımıyor — server takip edilmiyor ya da anahtar yanlış. Eşleştirme ekranındaki <strong>ara ↗</strong> ile RUSTalyzer'da adıyla bul, doğru numarayı/adresi yapıştır (servers.json'daki eskisini de düzeltmeyi unutma).");
+  if(turler.has(429)) oneri.push("<strong>429:</strong> istek limiti — birkaç dakika sonra <strong>Verileri yenile</strong>.");
+  if(turler.has("ag")) oneri.push("<strong>Ağ:</strong> istek tarayıcıda engellendi ya da internet koptu.");
+  if(turler.has("bicim")) oneri.push("<strong>Biçim:</strong> RUSTalyzer beklenmeyen yanıt döndü — geçici olabilir.");
+  document.getElementById("teshisOneri").innerHTML = oneri.join("<br>") || "";
+  document.getElementById("teshis").showModal();
+});
+document.getElementById("teshisKapat").addEventListener("click",()=>document.getElementById("teshis").close());
 function topluAc(){
   const eksik = VERI.serverlar.filter(x=>!x.rustalyzer);
   document.getElementById("topluListe").innerHTML = eksik.map(x=>{
