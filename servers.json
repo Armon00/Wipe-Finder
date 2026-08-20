@@ -48,7 +48,7 @@
    ],
    "kit": false,
    "wipe_zirvesi": 967,
-   "yarilanma_saat": null,
+   "yarilanma_saat": 55,
    "guven": "orta",
    "site": "https://www.rustafied.com/server",
    "site_kaynak": "'High pop EU action - Weekly wipe cycle' + 'EU servers wipe at 3pm GMT on wipe days'",
@@ -145,7 +145,7 @@
    "bolge": "EU",
    "gather": "1x",
    "grup_limiti": 3,
-   "harita_boyutu": null,
+   "harita_boyutu": 4000,
    "wipeler": [
     {
      "gun": "pazartesi",
@@ -156,8 +156,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 547,
+   "yarilanma_saat": 55,
    "guven": "orta",
    "site": "https://www.rustafied.com/server",
    "site_kaynak": "'Another Trio server for Monday wipes - Weekly wipe cycle - Premium'",
@@ -211,7 +211,7 @@
    ],
    "kit": false,
    "wipe_zirvesi": 1025,
-   "yarilanma_saat": null,
+   "yarilanma_saat": 65,
    "guven": "orta",
    "site": "https://www.rustafied.com/server",
    "site_kaynak": "'Monday wipes (formerly Odd) - Weekly wipe cycle'",
@@ -237,7 +237,7 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
+   "wipe_zirvesi": 341,
    "yarilanma_saat": 77,
    "guven": "orta",
    "site": "https://www.rustafied.com/server",
@@ -253,7 +253,7 @@
    "bolge": "EU",
    "gather": "1x",
    "grup_limiti": 1,
-   "harita_boyutu": null,
+   "harita_boyutu": 3750,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -265,7 +265,7 @@
    ],
    "kit": false,
    "wipe_zirvesi": 342,
-   "yarilanma_saat": null,
+   "yarilanma_saat": 96,
    "guven": "orta",
    "site": "https://www.rustafied.com/server",
    "site_kaynak": "'Single players only - Weekly wipe cycle'",
@@ -307,7 +307,7 @@
    "bolge": "EU",
    "gather": "1x",
    "grup_limiti": 16,
-   "harita_boyutu": null,
+   "harita_boyutu": 4500,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -361,7 +361,7 @@
    "bolge": "EU",
    "gather": "1x",
    "grup_limiti": 16,
-   "harita_boyutu": null,
+   "harita_boyutu": 4000,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -372,8 +372,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 150,
+   "yarilanma_saat": 538,
    "guven": "yuksek",
    "site": "https://www.rustafied.com/server",
    "site_kaynak": "'Less people, fewer wipes - Monthly wipe cycle'",
@@ -388,7 +388,7 @@
    "bolge": "EU",
    "gather": "1x",
    "grup_limiti": 16,
-   "harita_boyutu": null,
+   "harita_boyutu": 4000,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -399,8 +399,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 333,
+   "yarilanma_saat": 300,
    "guven": "yuksek",
    "site": "https://www.rustafied.com/server",
    "site_kaynak": "'200 pop, wipes only when forced - Monthly wipe cycle - Small map size'",
@@ -415,7 +415,7 @@
    "bolge": "EU",
    "gather": "1x",
    "grup_limiti": 16,
-   "harita_boyutu": null,
+   "harita_boyutu": 4000,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -426,8 +426,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 333,
+   "yarilanma_saat": 307,
    "guven": "yuksek",
    "site": "https://www.rustafied.com/server",
    "site_kaynak": "'200 pop, wipes only when forced - Premium'",
@@ -442,7 +442,7 @@
    "bolge": "EU",
    "gather": "1x",
    "grup_limiti": 16,
-   "harita_boyutu": null,
+   "harita_boyutu": 4500,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -453,8 +453,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 788,
+   "yarilanma_saat": 228,
    "guven": "yuksek",
    "site": "https://www.rustafied.com/server",
    "site_kaynak": "'Even more longer wipes - Monthly wipe cycle - Large map size - Premium'",
@@ -880,7 +880,7 @@
    ],
    "kit": false,
    "wipe_zirvesi": 330,
-   "yarilanma_saat": null,
+   "yarilanma_saat": 38,
    "guven": "dusuk",
    "site": "https://www.repulsion.co.uk/",
    "site_kaynak": "Repulsion metni: 'Map & BP Wipe Biweekly - Tuesdays & Saturdays - Group Size: 3 - True Vanilla (No Pay-to-Win)' - GUN var, SAAT yok",
@@ -914,7 +914,7 @@
    ],
    "kit": false,
    "wipe_zirvesi": 464,
-   "yarilanma_saat": null,
+   "yarilanma_saat": 168,
    "guven": "dusuk",
    "site": "https://www.repulsion.co.uk/",
    "site_kaynak": "Repulsion metni: 'Map & BP Wipe Biweekly - Mondays & Fridays - Group Size: 4'",
@@ -963,7 +963,7 @@
    "bolge": "EU/GB",
    "gather": "1x",
    "grup_limiti": 3,
-   "harita_boyutu": null,
+   "harita_boyutu": 4000,
    "wipeler": [
     {
      "gun": "pazartesi",
@@ -980,7 +980,7 @@
    "site": "https://rusticated.com/rules",
    "site_kaynak": "Rusticated metni: 'Monday Weekly wipes, Blueprints wipe @ force'",
    "not": "Kurallar: TC/kodlarda max 3, base'de 3, roam/raid'de 3; muttefik-kole yasak, baska takimla anlasma yasak, game-banli hesapla oynamak ban sebebi. Chat Ingilizce.",
-   "rustalyzer": "eu-trio-mon.rusticated.com:28010"
+   "rustalyzer": "13066046"
   },
   {
    "id": "rusticated-eu-premium-trio-thu",
@@ -990,7 +990,7 @@
    "bolge": "EU/GB",
    "gather": "1x",
    "grup_limiti": 3,
-   "harita_boyutu": null,
+   "harita_boyutu": 4000,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -1002,7 +1002,7 @@
    ],
    "kit": false,
    "wipe_zirvesi": 500,
-   "yarilanma_saat": null,
+   "yarilanma_saat": 72,
    "guven": "yuksek",
    "site": "https://rusticated.com/rules",
    "site_kaynak": "Rusticated metni: 'Thursday Weekly wipes, Blueprints wipe @ force'",
@@ -1043,7 +1043,7 @@
    "bolge": "EU/GB",
    "gather": "2x",
    "grup_limiti": 0,
-   "harita_boyutu": null,
+   "harita_boyutu": 4000,
    "wipeler": [
     {
      "gun": "pazartesi",
@@ -1054,8 +1054,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 391,
+   "yarilanma_saat": 36,
    "guven": "orta",
    "site": "https://rusticated.com/rules",
    "site_kaynak": "Server adi: 'Monday | Shared Bps'",
@@ -1155,7 +1155,7 @@
    "bolge": "EU/GB",
    "gather": "1x",
    "grup_limiti": 12,
-   "harita_boyutu": null,
+   "harita_boyutu": 4250,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -1182,7 +1182,7 @@
    "bolge": "EU/GB",
    "gather": "1x",
    "grup_limiti": 16,
-   "harita_boyutu": null,
+   "harita_boyutu": 4750,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -1193,8 +1193,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 683,
+   "yarilanma_saat": 403,
    "guven": "dusuk",
    "site": "https://rustoria.co/vanilla/rules",
    "site_kaynak": "YOK - takvim metni bulunamadi, 'Long' = aylik varsayildi",
@@ -1237,7 +1237,7 @@
    "bolge": "EU",
    "gather": "1x",
    "grup_limiti": 12,
-   "harita_boyutu": null,
+   "harita_boyutu": 4500,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -1249,7 +1249,7 @@
    ],
    "kit": false,
    "wipe_zirvesi": 1165,
-   "yarilanma_saat": null,
+   "yarilanma_saat": 65,
    "guven": "orta",
    "site": "https://moose.gg",
    "site_kaynak": "Moose'un haftalik Persembe dongusu (Mondays serverinin metniyle ayni saat mantigi)",
@@ -1263,7 +1263,7 @@
    "bolge": "EU",
    "gather": "1x",
    "grup_limiti": 12,
-   "harita_boyutu": null,
+   "harita_boyutu": 4750,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -1290,7 +1290,7 @@
    "bolge": "EU",
    "gather": "1x",
    "grup_limiti": 8,
-   "harita_boyutu": null,
+   "harita_boyutu": 4000,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -1302,7 +1302,7 @@
    ],
    "kit": false,
    "wipe_zirvesi": 368,
-   "yarilanma_saat": null,
+   "yarilanma_saat": 329,
    "guven": "yuksek",
    "site": "https://moose.gg",
    "site_kaynak": "Moose metni: 'Map: Monthly @ Force Wipe. Blueprints: Monthly @ Force Wipe'",
@@ -1356,8 +1356,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 713,
+   "yarilanma_saat": 53,
    "guven": "orta",
    "site": "https://rustopia.gg",
    "site_kaynak": "Rustopia metni: 'Map Wipe - Weekly, BPs Wipe - Monthly'",
@@ -1427,7 +1427,7 @@
    "bolge": "EU",
    "gather": "2x",
    "grup_limiti": 0,
-   "harita_boyutu": null,
+   "harita_boyutu": 3950,
    "wipeler": [
     {
      "gun": "pazartesi",
@@ -1439,7 +1439,7 @@
    ],
    "kit": false,
    "wipe_zirvesi": 417,
-   "yarilanma_saat": null,
+   "yarilanma_saat": 48,
    "guven": "dusuk",
    "site": "https://stevious.io",
    "site_kaynak": "Stevious metni: 'Weekly wipes' + server adi 'Mondays' - SAAT YAYINLANMIYOR",
@@ -1454,7 +1454,7 @@
    "bolge": "EU",
    "gather": "2x",
    "grup_limiti": 0,
-   "harita_boyutu": null,
+   "harita_boyutu": 3950,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -1465,8 +1465,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 620,
+   "yarilanma_saat": 43,
    "guven": "dusuk",
    "site": "https://stevious.io",
    "site_kaynak": "Stevious metni: 'Weekly wipes' - GUN ve SAAT yayinlanmiyor, Persembe varsayildi",
@@ -1481,7 +1481,7 @@
    "bolge": "EU",
    "gather": "2x",
    "grup_limiti": 3,
-   "harita_boyutu": null,
+   "harita_boyutu": 3850,
    "wipeler": [
     {
      "gun": null,
@@ -1493,7 +1493,7 @@
    ],
    "kit": false,
    "wipe_zirvesi": 15,
-   "yarilanma_saat": null,
+   "yarilanma_saat": 36,
    "guven": "yok",
    "site": "https://stevious.io",
    "site_kaynak": "Stevious metni: 'Weekly wipes' - gun/saat yok",
@@ -1535,11 +1535,11 @@
    "bolge": "EU",
    "gather": "2x",
    "grup_limiti": 3,
-   "harita_boyutu": null,
+   "harita_boyutu": 4250,
    "wipeler": [],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 839,
+   "yarilanma_saat": 36,
    "guven": "yok",
    "site": "https://warbandits.gg/",
    "site_kaynak": "YOK - WarBandits takvimini sitede/BM'de yayinlamiyor, sadece Discord'da duyuruyor",
@@ -1573,7 +1573,7 @@
    "bolge": "EU",
    "gather": "2x",
    "grup_limiti": 3,
-   "harita_boyutu": null,
+   "harita_boyutu": 3700,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -1584,8 +1584,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 221,
+   "yarilanma_saat": 278,
    "guven": "dusuk",
    "site": "https://warbandits.gg/",
    "site_kaynak": "Sadece server adindan 'Monthly / No BP Wipes'",
@@ -1600,11 +1600,11 @@
    "bolge": "EU",
    "gather": "2x",
    "grup_limiti": 4,
-   "harita_boyutu": null,
+   "harita_boyutu": 3700,
    "wipeler": [],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 394,
+   "yarilanma_saat": 38,
    "guven": "yok",
    "site": "https://warbandits.gg/",
    "site_kaynak": "YOK",
@@ -1619,11 +1619,11 @@
    "bolge": "EU",
    "gather": "2x",
    "grup_limiti": 5,
-   "harita_boyutu": null,
+   "harita_boyutu": 3700,
    "wipeler": [],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 279,
+   "yarilanma_saat": 53,
    "guven": "yok",
    "site": "https://warbandits.gg/",
    "site_kaynak": "YOK",
@@ -1638,11 +1638,11 @@
    "bolge": "EU",
    "gather": "2x",
    "grup_limiti": 2,
-   "harita_boyutu": null,
+   "harita_boyutu": 4000,
    "wipeler": [],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 540,
+   "yarilanma_saat": 41,
    "guven": "yok",
    "site": "https://warbandits.gg/",
    "site_kaynak": "YOK",
@@ -2109,7 +2109,7 @@
    "bolge": "EU",
    "gather": "2x",
    "grup_limiti": 16,
-   "harita_boyutu": null,
+   "harita_boyutu": 5000,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -2120,8 +2120,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 1250,
+   "yarilanma_saat": 235,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2135,7 +2135,7 @@
    "bolge": "EU",
    "gather": "2x",
    "grup_limiti": 4,
-   "harita_boyutu": null,
+   "harita_boyutu": 5000,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -2146,8 +2146,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 1099,
+   "yarilanma_saat": 247,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2161,7 +2161,7 @@
    "bolge": "EU",
    "gather": "3x",
    "grup_limiti": 16,
-   "harita_boyutu": null,
+   "harita_boyutu": 4750,
    "wipeler": [
     {
      "gun": "pazartesi",
@@ -2172,8 +2172,8 @@
     }
    ],
    "kit": true,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 1080,
+   "yarilanma_saat": 65,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2187,7 +2187,7 @@
    "bolge": "EU",
    "gather": "2x",
    "grup_limiti": 16,
-   "harita_boyutu": null,
+   "harita_boyutu": 5000,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -2198,8 +2198,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 1231,
+   "yarilanma_saat": 173,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2212,7 +2212,7 @@
    "bolge": "EU",
    "gather": "5x",
    "grup_limiti": 20,
-   "harita_boyutu": null,
+   "harita_boyutu": 5000,
    "wipeler": [
     {
      "gun": "çarşamba",
@@ -2230,8 +2230,8 @@
     }
    ],
    "kit": true,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 173,
+   "yarilanma_saat": 168,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2244,7 +2244,7 @@
    "bolge": "EU",
    "gather": "10x",
    "grup_limiti": 20,
-   "harita_boyutu": null,
+   "harita_boyutu": 5000,
    "wipeler": [
     {
      "gun": "pazartesi",
@@ -2262,8 +2262,8 @@
     }
    ],
    "kit": true,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 694,
+   "yarilanma_saat": 252,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2276,7 +2276,7 @@
    "bolge": "EU",
    "gather": "1x",
    "grup_limiti": 16,
-   "harita_boyutu": null,
+   "harita_boyutu": 3750,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -2287,8 +2287,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 25,
+   "yarilanma_saat": 672,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2301,7 +2301,7 @@
    "bolge": "EU",
    "gather": "1x",
    "grup_limiti": 12,
-   "harita_boyutu": null,
+   "harita_boyutu": 4750,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -2312,8 +2312,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 683,
+   "yarilanma_saat": 413,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2327,7 +2327,7 @@
    "bolge": "EU",
    "gather": "1x",
    "grup_limiti": 12,
-   "harita_boyutu": null,
+   "harita_boyutu": 4250,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -2338,8 +2338,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 533,
+   "yarilanma_saat": 319,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2352,7 +2352,7 @@
    "bolge": "EU",
    "gather": "1x",
    "grup_limiti": 6,
-   "harita_boyutu": null,
+   "harita_boyutu": 3750,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -2363,8 +2363,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 200,
+   "yarilanma_saat": 461,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2441,7 +2441,7 @@
    "bolge": "EU",
    "gather": "1x",
    "grup_limiti": 8,
-   "harita_boyutu": null,
+   "harita_boyutu": 4000,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -2452,8 +2452,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 608,
+   "yarilanma_saat": 65,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2477,8 +2477,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 308,
+   "yarilanma_saat": 79,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2491,7 +2491,7 @@
    "bolge": "EU",
    "gather": "1x",
    "grup_limiti": 12,
-   "harita_boyutu": null,
+   "harita_boyutu": 4500,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -2502,8 +2502,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 908,
+   "yarilanma_saat": 139,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2516,7 +2516,7 @@
    "bolge": "EU",
    "gather": "1x",
    "grup_limiti": 6,
-   "harita_boyutu": null,
+   "harita_boyutu": 3500,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -2527,8 +2527,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 438,
+   "yarilanma_saat": 113,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2552,8 +2552,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 161,
+   "yarilanma_saat": 113,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2567,7 +2567,7 @@
    "bolge": "EU",
    "gather": "1x",
    "grup_limiti": 16,
-   "harita_boyutu": null,
+   "harita_boyutu": 4555,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -2578,8 +2578,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 800,
+   "yarilanma_saat": 43,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2592,7 +2592,7 @@
    "bolge": "EU",
    "gather": "1x",
    "grup_limiti": 12,
-   "harita_boyutu": null,
+   "harita_boyutu": 4000,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -2603,8 +2603,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 500,
+   "yarilanma_saat": 72,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2618,7 +2618,7 @@
    "bolge": "EU",
    "gather": "1x",
    "grup_limiti": 16,
-   "harita_boyutu": null,
+   "harita_boyutu": 4255,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -2629,8 +2629,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 492,
+   "yarilanma_saat": 230,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2643,7 +2643,7 @@
    "bolge": "EU",
    "gather": "2x",
    "grup_limiti": 8,
-   "harita_boyutu": null,
+   "harita_boyutu": 4000,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -2654,8 +2654,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 420,
+   "yarilanma_saat": 36,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2668,7 +2668,7 @@
    "bolge": "EU",
    "gather": "1x",
    "grup_limiti": 8,
-   "harita_boyutu": null,
+   "harita_boyutu": 4000,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -2679,8 +2679,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 495,
+   "yarilanma_saat": 307,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2693,7 +2693,7 @@
    "bolge": "EU",
    "gather": "2x",
    "grup_limiti": 16,
-   "harita_boyutu": null,
+   "harita_boyutu": 4500,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -2704,8 +2704,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 783,
+   "yarilanma_saat": 355,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2719,7 +2719,7 @@
    "bolge": "EU",
    "gather": "1x",
    "grup_limiti": 0,
-   "harita_boyutu": null,
+   "harita_boyutu": 4500,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -2730,8 +2730,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 783,
+   "yarilanma_saat": 276,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2745,7 +2745,7 @@
    "bolge": "EU",
    "gather": "2x",
    "grup_limiti": 0,
-   "harita_boyutu": null,
+   "harita_boyutu": 4000,
    "wipeler": [
     {
      "gun": "cuma",
@@ -2756,8 +2756,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 617,
+   "yarilanma_saat": 113,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2771,7 +2771,7 @@
    "bolge": "EU",
    "gather": "2x",
    "grup_limiti": 50,
-   "harita_boyutu": null,
+   "harita_boyutu": 4250,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -2782,8 +2782,8 @@
     }
    ],
    "kit": true,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 831,
+   "yarilanma_saat": 216,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2954,8 +2954,8 @@
     }
    ],
    "kit": true,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 778,
+   "yarilanma_saat": 53,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -2968,7 +2968,7 @@
    "bolge": "EU",
    "gather": "3x",
    "grup_limiti": 2,
-   "harita_boyutu": null,
+   "harita_boyutu": 4000,
    "wipeler": [
     {
      "gun": "salı",
@@ -2986,8 +2986,8 @@
     }
    ],
    "kit": true,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 553,
+   "yarilanma_saat": 53,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -3000,7 +3000,7 @@
    "bolge": "EU",
    "gather": "3x",
    "grup_limiti": 4,
-   "harita_boyutu": null,
+   "harita_boyutu": 4250,
    "wipeler": [
     {
      "gun": "salı",
@@ -3018,8 +3018,8 @@
     }
    ],
    "kit": true,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 648,
+   "yarilanma_saat": 48,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -3082,8 +3082,8 @@
     }
    ],
    "kit": true,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 607,
+   "yarilanma_saat": 96,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -3096,7 +3096,7 @@
    "bolge": "EU",
    "gather": "2x",
    "grup_limiti": 1,
-   "harita_boyutu": null,
+   "harita_boyutu": 3250,
    "wipeler": [
     {
      "gun": "salı",
@@ -3114,8 +3114,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 110,
+   "yarilanma_saat": 43,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -3128,7 +3128,7 @@
    "bolge": "EU",
    "gather": "3x",
    "grup_limiti": 1,
-   "harita_boyutu": null,
+   "harita_boyutu": 3250,
    "wipeler": [
     {
      "gun": "perşembe",
@@ -3146,8 +3146,8 @@
     }
    ],
    "kit": false,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 176,
+   "yarilanma_saat": 48,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",
@@ -3617,7 +3617,7 @@
    "bolge": "EU",
    "gather": "5x",
    "grup_limiti": 0,
-   "harita_boyutu": null,
+   "harita_boyutu": 3400,
    "wipeler": [
     {
      "gun": "salı",
@@ -3635,8 +3635,8 @@
     }
    ],
    "kit": true,
-   "wipe_zirvesi": null,
-   "yarilanma_saat": null,
+   "wipe_zirvesi": 179,
+   "yarilanma_saat": 137,
    "guven": "orta",
    "site": null,
    "site_kaynak": "RUSTalyzer org sayfası gözlenen döngü (2026-08-20). Saatler yaklaşık; canlı veri düzeltir.",

@@ -2617,7 +2617,7 @@ async function bmCek(){
   if(taze && !zorlaYenile){
     canli = onb.canli || {};
     sonRapor = onb.rapor || [];
-    document.getElementById("teshisBtn").hidden = !sonRapor.length;
+    document.getElementById("teshisBtn").hidden = false;
     kutu.innerHTML = `<span class="nokta" style="background:var(--hazmat)"></span>RUSTalyzer: önbellekten (${Math.round((Date.now()-onb.ts)/60000)} dk önce)${eksik?` · ${eksik} server eşleşmemiş`:""}`;
     await gozlemKaydet(); return;
   }
@@ -2641,7 +2641,7 @@ async function bmCek(){
   kutu.innerHTML = ok
     ? `<span class="nokta" style="background:var(--hazmat)"></span>RUSTalyzer: ${ok} server canlı${hata?` · ${hata} hata`:""}${eksik?` · ${eksik} eşleşmemiş`:""}`
     : `<span class="nokta" style="background:var(--pas)"></span>RUSTalyzer: veri gelmedi (${svler.length} denendi) — takvim yine de çalışıyor`;
-  document.getElementById("teshisBtn").hidden = !hata;
+  document.getElementById("teshisBtn").hidden = false;
 
   if(ok) await Depo.yaz("rust_onbellek", {ts:Date.now(), imza, canli, rapor:sonRapor});
   await gozlemKaydet();
@@ -3028,13 +3028,25 @@ document.getElementById("yenile").addEventListener("click", async()=>{ zorlaYeni
 
 /* Teşhis penceresi: hangi server neden veri alamadı */
 document.getElementById("teshisBtn").addEventListener("click", ()=>{
-  document.getElementById("teshisIcerik").innerHTML = sonRapor.length
+  /* Metrik kapsamı: API'den hangi alan kaç serverda dolu geliyor?
+     Buradaki sayılar sıfıra yakınsa sorun veri azlığı değil, alan adı uyuşmazlığıdır. */
+  const cs = Object.values(canli);
+  const say = f => cs.filter(f).length;
+  const kapsam = cs.length ? `<div style="margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--cizgi)">
+    <strong>API alan kapsamı</strong> (${cs.length} canlı server içinde dolu gelenler):<br>
+    anlık oyuncu ${say(c=>c.oyuncu!=null)} · wipe popu ${say(c=>c.zirve!=null)} ·
+    7g ort ${say(c=>c.ort7g!=null)} · 3g ort ${say(c=>c.ort3g!=null)} ·
+    yarılanma ${say(c=>c.yarilanmaSaat!=null)} · harita ${say(c=>c.harita!=null)} ·
+    wipe tahmini ${say(c=>c.sonrakiWipe!=null)}<br>
+    <span style="color:var(--sonuk2)">Bir alan herkeste ~0 ise API o alanın adını değiştirmiş demektir; birkaç serverda eksikse RUSTalyzer o serverları yeterince izlemiyordur (normal).</span>
+  </div>` : "";
+  document.getElementById("teshisIcerik").innerHTML = kapsam + (sonRapor.length
     ? sonRapor.map(r=>{
         const sv = VERI.serverlar.find(x=>x.ad===r.ad);
         return `<div style="margin-bottom:6px"><strong>${r.ad}</strong><br>
           anahtar: <code>${sv?sv.rustalyzer:"?"}</code> → ${r.mesaj||"bilinmeyen hata"}</div>`;
       }).join("")
-    : "Kayıtlı hata yok — son çekimden sonra sayfa yenilenmiş olabilir. <strong>Verileri yenile</strong>ye basıp tekrar aç.";
+    : "Kayıtlı hata yok — tüm eşleşik serverlar veri aldı.");
   const turler = new Set(sonRapor.map(r=>r.kod||r.tur));
   const oneri = [];
   if(turler.has(404)) oneri.push("<strong>404:</strong> RUSTalyzer bu anahtarı tanımıyor — server takip edilmiyor ya da anahtar yanlış. Eşleştirme ekranındaki <strong>ara ↗</strong> ile RUSTalyzer'da adıyla bul, doğru numarayı/adresi yapıştır (servers.json'daki eskisini de düzeltmeyi unutma).");
